@@ -113,8 +113,7 @@ namespace View
         /// <summary>
         /// сохранение данных таблицы
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // lknjrgjkhbrgirg
         private void Save_Click(object sender, EventArgs e)
         {
             try
