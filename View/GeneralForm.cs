@@ -113,7 +113,11 @@ namespace View
         /// <summary>
         /// сохранение данных таблицы
         /// </summary>
+<<<<<<< HEAD
         // lknjrgjkhbrgirg
+=======
+        // ыыыыыыыыыыыыыыыыыыыыыыыыы
+>>>>>>> test1
         private void Save_Click(object sender, EventArgs e)
         {
             try
