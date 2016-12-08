@@ -16,9 +16,16 @@ namespace ValumeFigyre
 
         public Box(double height, double width, double deep)
         {
-            _height = height;
-            _width = width;
-            _deep = deep;
+            if ((height <= 0)||(width<=0)||(deep<=0))
+            {
+                throw new Exception();
+            }
+            else
+            {
+                _height = height;
+                _width = width;
+                _deep = deep;
+            }
         }
 
         //Реализуем свойства интерфейса
