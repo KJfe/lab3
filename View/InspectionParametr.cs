@@ -22,7 +22,7 @@ namespace View
                 throw new CellFormatException(editDesc);
             }
 
-            if (doubleEdit < 0)
+            if (doubleEdit <= 0)
             {
                 throw new CellOutOfRangeExxeption(editDesc);
             }

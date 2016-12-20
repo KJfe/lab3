@@ -12,7 +12,7 @@ namespace UnitTests.Model
     class SphearTest
     {
         /// <summary>
-        /// Тестирование свойства Count.
+        /// Тестирование свойства 
         /// </summary>
         /// <param name=”count”>Значение свойства Count.</param>
         [Test]
@@ -23,13 +23,6 @@ namespace UnitTests.Model
             Sphear ValumeSphear = new Sphear(radius);
             return ValumeSphear.Valume;
         }
-        [TestCase(-1, TestName = "Sphear при (-1)")]
-        [TestCase(0, TestName = "Sphear при (0)")]
-        [TestCase(double.MaxValue, TestName = "Sphear при double.MaxValue.")]
-        [TestCase(double.MinValue, TestName = "Sphear при double.MinValue.")]
-        public void VolumeTestExeption(double radius)
-        {
-            Assert.Throws<Exception>(() => new Sphear(radius));
-        }
+       
     }
 }

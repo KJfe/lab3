@@ -15,18 +15,11 @@ namespace ValumeFigyre
 
         public Box(double height, double width, double deep)
         {
-            if ((height <= 0)||(width<=0)||(deep<=0)||
-                (height>=double.MaxValue)|| (width >= double.MaxValue)|| (deep >= double.MaxValue)||
-                (height*width*deep>=double.MaxValue))
-            {
-                throw new Exception();
-            }
-            else
-            {
+            
                 _height = height;
                 _width =width;
                 _deep = deep;
-            }
+            
         }
 
         //Реализуем свойства интерфейса

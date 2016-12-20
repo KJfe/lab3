@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\BoxTest.cs" />
+    <Compile Include="Model\InspectonParametrTest.cs" />
     <Compile Include="Model\PeramidTest.cs" />
     <Compile Include="Model\SphearTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

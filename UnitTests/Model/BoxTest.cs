@@ -26,25 +26,7 @@ namespace UnitTests.ValumeFigyre
             Box ValumeBox = new Box(height, width, deep);
             return ValumeBox.Valume;
         }
-        [TestCase(-1, -1, -1, TestName ="Box при (-1,-1,-1)")]
-        [TestCase(1, 1, -1, TestName = "Box при (1,1,-1)")]
-        [TestCase(1, -1, 1, TestName = "Box при (1,-1,1)")]
-        [TestCase(-1, 1, 1, TestName = "Box при (-1,1,1)")]
-        [TestCase(0,5,12, TestName = "Box при (0,5,12)")]
-        [TestCase(5, 0, 12, TestName = "Box при (5,0,12)")]
-        [TestCase(5, 12, 0, TestName = "Box при (5,12,0)")]
-        [TestCase(double.MaxValue, double.MaxValue, double.MaxValue, TestName = "Box при double.MaxValue.")]
-        [TestCase(double.MinValue, double.MinValue, double.MinValue, TestName = "Box при double.MinValue.")]
-        public void VolumeTestExeption(double height, double width, double deep)
-        {
-            Assert.Throws<Exception>(() => new Box(height, width, deep));
-        }
+        
     }
 }
 
-/*namespace UnitTests
-{
-    public class Test
-    {
-    }
-}*/

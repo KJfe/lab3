@@ -12,14 +12,9 @@ namespace ValumeFigyre
         private double _radius;
         public Sphear(double radius)
         {
-            if ((radius <= 0)||((4 * Math.PI * Math.Pow(radius, 3)) / 3 >= double.MaxValue))
-            {
-                throw new Exception();
-            }
-            else
-            {
+            
                 _radius = radius;
-            }
+            
                 
         }
 
