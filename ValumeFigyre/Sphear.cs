@@ -10,17 +10,17 @@ namespace ValumeFigyre
     public class Sphear : IValumeFigyre
     {
         private double _radius;
-
-        /*private double rad
-        {
-            set { My_rad = value; }
-            get { return My_rad; }
-        }*/
-
-        //public Sphear() { }
         public Sphear(double radius)
         {
-            _radius = radius;
+            if ((radius <= 0)||((4 * Math.PI * Math.Pow(radius, 3)) / 3 >= double.MaxValue))
+            {
+                throw new Exception();
+            }
+            else
+            {
+                _radius = radius;
+            }
+                
         }
 
         //Реализуем свойства интерфейса
@@ -28,7 +28,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return ((4 * Math.PI * Math.Pow(_radius, 3)) / 3);
+                return Math.Round(((4 * Math.PI * Math.Pow(_radius, 3)) / 3),3);
             }
         }
 

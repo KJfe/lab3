@@ -14,8 +14,18 @@ namespace ValumeFigyre
 
         public Pyramid(double area, double height)
         {
-            _area = area;
-            _height = height;
+            if ((height <= 0) || (area <= 0) ||
+                  (height >= double.MaxValue) || (area >= double.MaxValue) ||
+                  (height * area/3 >= double.MaxValue))
+            {
+                throw new Exception();
+            }
+            else
+            {
+                _area = area;
+                _height = height;
+            }
+               
         }
 
         //Реализуем методы интерфейса
@@ -23,7 +33,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return (_area * _height) / 3;
+                return Math.Round((_area * _height) / 3,3);
             }
             
         }

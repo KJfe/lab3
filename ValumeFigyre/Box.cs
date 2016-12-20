@@ -12,18 +12,19 @@ namespace ValumeFigyre
         private double _height;
         private double _width;
         private double _deep;
-        private string typeFigyre;
 
         public Box(double height, double width, double deep)
         {
-            if ((height <= 0)||(width<=0)||(deep<=0))
+            if ((height <= 0)||(width<=0)||(deep<=0)||
+                (height>=double.MaxValue)|| (width >= double.MaxValue)|| (deep >= double.MaxValue)||
+                (height*width*deep>=double.MaxValue))
             {
                 throw new Exception();
             }
             else
             {
                 _height = height;
-                _width = width;
+                _width =width;
                 _deep = deep;
             }
         }
@@ -33,7 +34,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return (_height * _width * _deep);
+                return Math.Round(_height * _width * _deep,3);
             }
         }
 
