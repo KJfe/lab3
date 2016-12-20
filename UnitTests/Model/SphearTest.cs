@@ -16,8 +16,8 @@ namespace UnitTests.Model
         /// </summary>
         /// <param name=”count”>Значение свойства Count.</param>
         [Test]
-        [TestCase(5.32132, ExpectedResult = 631.171, TestName = "Sphear при (5.32132) и результат 1.418")]
-        [TestCase(3, ExpectedResult = 113.097, TestName = "Sphear при присваивании (3) и получили 2")]
+        [TestCase(5.32132, ExpectedResult = 631.171, TestName = "Sphear при (5.32132) и результат 631.171")]
+        [TestCase(3, ExpectedResult = 113.097, TestName = "Sphear при присваивании (3) и получили 113.097")]
         public double VolumeTest(double radius)
         {
             Sphear ValumeSphear = new Sphear(radius);
