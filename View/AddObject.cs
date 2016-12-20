@@ -24,9 +24,6 @@ namespace View
         /// </summary>
         public IAddObjectDelegate Delegate { get; set; }
 
-        //public delegate Delegate ddelegate();
-        //public event ddelegate onVolumeFigyre;
-
         public AddObject()
         {
             InitializeComponent();
@@ -80,25 +77,6 @@ namespace View
 
             lableValume.Visible = true;
             tbValume.Visible = true;
-
-
-            /*
-            int heightLocation = 30;
-            TextBox[] newTextBox = new TextBox[countTextBox];
-            for (int i = 0; i < countTextBox; i++)
-            {
-
-                newTextBox[i] = new TextBox();
-                //_textBoxes
-                heightLocation = heightLocation + 40;
-                newTextBox[i].Location = new System.Drawing.Point(20, heightLocation);
-                newTextBox[i].Size = new System.Drawing.Size(100, 20);
-                groupBox1.Controls.Add(newTextBox[i]);
-                Controls.Add(newTextBox[i]);
-                Controls.Add(groupBox1);
-            }
-            */
-
         }
 
         private void SelectionFigyre()

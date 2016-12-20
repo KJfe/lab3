@@ -16,9 +16,6 @@ namespace View
     {
         private IValumeFigyre _figyre;
 
-
-
-
         public GeneralForm()
         {
             InitializeComponent();
@@ -26,14 +23,6 @@ namespace View
 
         private void AddFigyre_Click(object sender, EventArgs e)
         {
-            //string[] row1 = new string[] { TextAdd.Text};
-            //ListFigyre.Items.Add(TextAdd.Text);
-            /*object[] rows = new object[] { row1};
-            foreach (string[] rowArray in rows)
-            {
-                Grid.Rows.Add(rowArray);
-            }*/
-            //TextAdd.Clear();
             AddObject AddFigure = new AddObject();
             AddFigure.Delegate=this;
 
@@ -46,7 +35,6 @@ namespace View
                 }
                 
             };
-            //AddFigure.Show();
             AddFigure.ShowDialog();
             
         }
