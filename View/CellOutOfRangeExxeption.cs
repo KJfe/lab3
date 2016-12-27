@@ -11,6 +11,6 @@ namespace View
         public CellOutOfRangeExxeption(string editDesc) : base(string.Format("Range Error in cell {0} ", editDesc))
         {
 
-        }
+        } 
     }
 }

@@ -14,13 +14,13 @@ namespace View
 {
     public partial class GeneralForm : Form, IAddObjectDelegate
     {
-        private IValumeFigyre _figyre;
+        private IValumeFigyre _figure;
 
         public GeneralForm()
         {
             InitializeComponent();
         }
-
+        private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
         private void AddFigyre_Click(object sender, EventArgs e)
         {
             AddObject AddFigure = new AddObject();
@@ -28,12 +28,17 @@ namespace View
 
             AddFigure.FormClosed += (obj, arg) =>
             {
-                if (_figyre != null)
+                if (_figure != null)
                 {
-                    Grid.Rows.Add(_figyre.TypeFigyre, _figyre.Valume);
-                    _figyre = null;
+                    ListFigure.Add(_figure);
+                    _figure = null;
                 }
-                
+                Grid.Rows.Clear();
+                foreach(var figure in ListFigure)
+                {
+                    Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+                }
+
             };
             AddFigure.ShowDialog();
             
@@ -43,25 +48,27 @@ namespace View
         {
             if (Grid.CurrentRow != null)
             {
-                
                 try
                 {
+                    ListFigure.RemoveAt(Grid.CurrentRow.Index);
                     Grid.Rows.Remove(Grid.CurrentRow);
                 }
                 catch (System.InvalidOperationException)  { }
             }
         }
 
+        
+
         public void DidFinish(IValumeFigyre figure)
         {
-            _figyre = figure;
+            _figure = figure;
         }
 
         private void Random_Click(object sender, EventArgs e)
         {
 #if DEBUG
             Random random = new Random();
-            double randomValue;
+            //double randomValue;
             int maxRandom;
             int maxGridSize;
             maxRandom = 10;
@@ -76,28 +83,34 @@ namespace View
                             Box BoxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
                                 width: random.NextDouble() + random.Next(0, maxRandom),
                                 deep: random.NextDouble() + random.Next(0, maxRandom));
-                            Grid.Rows.Add("Parallepiped", BoxVolume.Valume);
+                            ListFigure.Add(BoxVolume);
                             break;
                         }
                     case 1:
                         {
                             Sphear SphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
-                            Grid.Rows.Add("Sphear", SphearVolume.Valume);
+                            ListFigure.Add(SphearVolume);
                             break;
                         }
                     case 2:
                         {
                             Pyramid PyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
                                 height: random.NextDouble() + random.Next(0, maxRandom));
-                            randomValue = Grid.Rows.Add("Pyramid", PyramidVolume.Valume);
+                            ListFigure.Add(PyramidVolume);
                             break;
                         }
                     default:
                         break;
                 }
+
+            }
+            foreach (var figure in ListFigure)
+            {
+                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
             }
 #endif
         }
+
         /// <summary>
         /// сохранение данных таблицы
         /// </summary>
@@ -153,11 +166,40 @@ namespace View
             if (Grid.Rows.Count > 0)
             {
                 Grid.Rows.Clear();
+                ListFigure.Clear();
             }
             else
             {
                 MessageBox.Show("Table is empty", "Error");
             }
+        }
+
+
+        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+                return;
+
+            if (ListFigure[e.RowIndex].TypeFigyre == "Sphear")
+            {
+                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
+                YParametr.Text = "";
+                ZParametr.Text = "";
+            }
+            else if (ListFigure[e.RowIndex].TypeFigyre == "Parallepiped")
+            {
+                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
+                YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();
+                ZParametr.Text = ListFigure[e.RowIndex].Parametr[2].ToString();
+            }
+            else
+            {
+                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
+                YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();
+                ZParametr.Text = "";
+            }
+                
+            //double f=ListFigure[e.RowIndex].;
         }
     }
     }

@@ -39,6 +39,15 @@ namespace ValumeFigyre
             }
         }
 
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(_height,3), Math.Round(_width, 3), Math.Round(_deep, 3) };
+                return p;
+            }
+        }
+
 
     }
 }

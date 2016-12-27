@@ -9,13 +9,10 @@ namespace ValumeFigyre
     //Реализуем интерфейс шара
     public class Sphear : IValumeFigyre
     {
-        private double _radius;
+        public double _radius;
         public Sphear(double radius)
-        {
-            
-                _radius = radius;
-            
-                
+        {         
+                _radius = radius;     
         }
 
         //Реализуем свойства интерфейса
@@ -35,6 +32,14 @@ namespace ValumeFigyre
             }
         }
 
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(_radius,3) };
+                return p;
+            }
+        }
 
 
 

@@ -128,7 +128,6 @@ namespace View
             {
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
-
         }
     }
 }

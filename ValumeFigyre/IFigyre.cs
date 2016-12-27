@@ -19,5 +19,10 @@ namespace ValumeFigyre
             get;
         }
 
+        double[] Parametr
+        {
+            get;
+        }
+
     }
 }
