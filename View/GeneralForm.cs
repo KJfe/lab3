@@ -179,7 +179,7 @@ namespace View
         {
             if (e.RowIndex == -1)
                 return;
-
+            TypeFigure.Text = ListFigure[e.RowIndex].TypeFigyre;
             if (ListFigure[e.RowIndex].TypeFigyre == "Sphear")
             {
                 XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
@@ -198,8 +198,6 @@ namespace View
                 YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();
                 ZParametr.Text = "";
             }
-                
-            //double f=ListFigure[e.RowIndex].;
         }
     }
     }
