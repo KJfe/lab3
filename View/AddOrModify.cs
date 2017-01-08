@@ -14,10 +14,8 @@ namespace View
     public partial class AddOrModify : Form
     {
         public IAddObjectDelegate Delegate { get; set; }
-        //private bool _ModifyOrCreate;
         public AddOrModify(bool ModifyOrCreate, IValumeFigyre ModifyFigure)
         {
-            //_ModifyOrCreate = ModifyOrCreate;
             InitializeComponent();
             objectControl1.ReadOnly = ModifyOrCreate;
             objectControl1.Object = ModifyFigure;

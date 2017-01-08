@@ -43,7 +43,7 @@ namespace ValumeFigyre
         {
             get
             {
-                double[] p = { Math.Round(_height,3), Math.Round(_width, 3), Math.Round(_deep, 3) };
+                double[] p = { Math.Round(_width,3), Math.Round(_height, 3), Math.Round(_deep, 3) };
                 return p;
             }
         }

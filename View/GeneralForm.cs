@@ -20,16 +20,13 @@ namespace View
         {
             InitializeComponent();
         }
+
         private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
 
         private void AddFigyre_Click(object sender, EventArgs e)
         {
-            //AddObject AddFigure = new AddObject();
-            //AddFigure.Delegate=this;
-            AddOrModify AddFigure = new AddOrModify();
-            //AddFigure.Object = _figure;
+            AddOrModify AddFigure = new AddOrModify(false,null);
             AddFigure.Delegate = this;
-            //AddFigure.Delegate =;
             AddFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
@@ -105,6 +102,7 @@ namespace View
                 }
 
             }
+            Grid.Rows.Clear();
             foreach (var figure in ListFigure)
             {
                 Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
@@ -221,10 +219,13 @@ namespace View
             }
         }
 
+        private DataGridViewCellEventArgs _e;
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1)
                 return;
+            _e = e;
+            Modify.Enabled = true;
             TypeFigure.Text = ListFigure[e.RowIndex].TypeFigyre;
             if (ListFigure[e.RowIndex].TypeFigyre == "Sphear")
             {
@@ -248,21 +249,19 @@ namespace View
 
         private void Modify_Click(object sender, EventArgs e)
         {
-            AddOrModify ModifyFigure = new AddOrModify();
+            int index = _e.RowIndex;
+            AddOrModify ModifyFigure = new AddOrModify(false, ListFigure[index]);
             ModifyFigure.Delegate = this;
             ModifyFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
                 {
+                    ListFigure.RemoveAt(index);
                     ListFigure.Add(_figure);
+                    Grid.Rows.RemoveAt(index);
+                    Grid.Rows.Insert(index, _figure.TypeFigyre, _figure.Valume);
                     _figure = null;
-                }
-                Grid.Rows.Clear();
-                foreach (var figure in ListFigure)
-                {
-                    Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
-                }
-
+                }    
             };
             ModifyFigure.ShowDialog();
         }

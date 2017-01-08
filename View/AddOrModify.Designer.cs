@@ -28,19 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.objectControl1 = new View.ObjectControl();
             this.Close = new System.Windows.Forms.Button();
+            this.objectControl1 = new View.ObjectControl();
             this.SuspendLayout();
-            // 
-            // objectControl1
-            // 
-            //this.objectControl1.Delegate = null;
-            this.objectControl1.Location = new System.Drawing.Point(3, 5);
-            this.objectControl1.Name = "objectControl1";
-            this.objectControl1.Object = null;
-            this.objectControl1.ReadOnly = false;
-            this.objectControl1.Size = new System.Drawing.Size(165, 229);
-            this.objectControl1.TabIndex = 0;
             // 
             // Close
             // 
@@ -52,6 +42,15 @@
             this.Close.UseVisualStyleBackColor = true;
             this.Close.Click += new System.EventHandler(this.Close_Click);
             // 
+            // objectControl1
+            // 
+            this.objectControl1.Location = new System.Drawing.Point(3, 5);
+            this.objectControl1.Name = "objectControl1";
+            this.objectControl1.Object = null;
+            this.objectControl1.ReadOnly = false;
+            this.objectControl1.Size = new System.Drawing.Size(165, 229);
+            this.objectControl1.TabIndex = 0;
+            // 
             // AddOrModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -59,6 +58,7 @@
             this.ClientSize = new System.Drawing.Size(168, 237);
             this.Controls.Add(this.Close);
             this.Controls.Add(this.objectControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddOrModify";
             this.Text = "AddOrModify";
             this.ResumeLayout(false);

@@ -12,8 +12,6 @@ namespace View
     };
     public partial class ObjectControl : UserControl
     {
-        //public IAddObjectDelegate Delegate { get; set; }
-
         public ObjectControl()
         {
             InitializeComponent();
@@ -24,7 +22,6 @@ namespace View
         {
             get
             {
-
                 return _VolumeFigure;
             }
             set
@@ -41,7 +38,7 @@ namespace View
                     Width.Visible = true;
                     Height.Visible = false;
                     Deep.Visible = false;
-
+                    cbTypeFigure.SelectedIndex = 1;
                 }
                 else if (value.TypeFigyre == "Parallepiped")
                 {
@@ -52,6 +49,7 @@ namespace View
                     Width.Visible = true;
                     Height.Visible = true;
                     Deep.Visible = true;
+                    cbTypeFigure.SelectedIndex = 0;
                 }
                 else
                 {
@@ -62,6 +60,7 @@ namespace View
                     Width.Visible = true;
                     Height.Visible = true;
                     Deep.Visible = false;
+                    cbTypeFigure.SelectedIndex = 2;
                 }
             }
         }
@@ -76,8 +75,6 @@ namespace View
             set
             {
                 _ReadOnly = value;
-                /*if (_ReadOnly == null)
-                    return;*/
                 Width.Enabled = !value;
                 Height.Enabled = !value;
                 Deep.Enabled = !value;
@@ -128,8 +125,7 @@ namespace View
 
         private void SelectionFigyre()
         {
-            //IValumeFigyre VolumeFigure = null;
-            _VolumeFigure = null;
+            IValumeFigyre VolumeFigure = null;
             switch ((Figures)cbTypeFigure.SelectedIndex)
             {
                 case Figures.Box:
@@ -137,13 +133,13 @@ namespace View
                         double heightBox = InspectionParametr.Parametr(Height.Text, Height.Name);
                         double widthBox = InspectionParametr.Parametr(Width.Text, Width.Name);
                         double deepBox = InspectionParametr.Parametr(Deep.Text, Deep.Name);
-                        _VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
+                        VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
                         break;
                     }
                 case Figures.Sphear:
                     {
                         double radiusSphear = InspectionParametr.Parametr(Width.Text, "Radius");
-                        _VolumeFigure = new Sphear(radius: radiusSphear);
+                        VolumeFigure = new Sphear(radius: radiusSphear);
                         break;
                     }
 
@@ -151,14 +147,14 @@ namespace View
                     {
                         double heightPyramid = InspectionParametr.Parametr(Height.Text, Height.Name);
                         double areaPyramid = InspectionParametr.Parametr(Width.Text, "Area");
-                        _VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
+                        VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
                         break;
                     }
             }
-            if (_VolumeFigure != null)
+            if (VolumeFigure != null)
             {
-                VolumeFigureText.Text = Convert.ToString(_VolumeFigure.Valume);                
-                Object=_VolumeFigure;
+                VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                
+                Object= VolumeFigure;
             }
         }
 

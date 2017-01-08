@@ -173,6 +173,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Ok);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddObject";
             this.Text = "AddObject";
             this.groupBox1.ResumeLayout(false);
