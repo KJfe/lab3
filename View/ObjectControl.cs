@@ -16,7 +16,9 @@ namespace View
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Метод принимающий/отправляющий данные
+        /// </summary>
         private IValumeFigyre _VolumeFigure;
         public IValumeFigyre Object
         {
@@ -61,7 +63,9 @@ namespace View
                 }
             }
         }
-
+        /// <summary>
+        /// Метод разрешающий/запрещающий редактировать параметры
+        /// </summary>
         private bool _ReadOnly;
         public bool ReadOnly
         {
@@ -75,9 +79,15 @@ namespace View
                 Width.Enabled = !value;
                 Height.Enabled = !value;
                 Deep.Enabled = !value;
+                cbTypeFigure.Enabled = !value;
+                Ok.Enabled = !value;
             }
         }
-
+        /// <summary>
+        /// Выбор необходимый тип фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch ((Figures)cbTypeFigure.SelectedIndex)
@@ -119,7 +129,9 @@ namespace View
                     break;
             }
         }
-
+        /// <summary>
+        /// расчет объема фигуры
+        /// </summary>
         private void SelectionFigyre()
         {
             IValumeFigyre VolumeFigure = null;
@@ -154,7 +166,11 @@ namespace View
                 Object= VolumeFigure;
             }
         }
-
+        /// <summary>
+        /// проверка при расчете объема фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ok_Click(object sender, EventArgs e)
         {
             try
@@ -170,6 +186,5 @@ namespace View
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
-
     }
 }

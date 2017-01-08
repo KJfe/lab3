@@ -62,6 +62,8 @@ namespace View
                 {
                     ListFigure.RemoveAt(Grid.CurrentRow.Index);
                     Grid.Rows.Remove(Grid.CurrentRow);
+                    if (ListFigure.Count == 0)
+                        Modify.Enabled = false;
                 }
                 catch (System.InvalidOperationException)  { }
             }
@@ -257,6 +259,7 @@ namespace View
             {
                 Grid.Rows.Clear();
                 ListFigure.Clear();
+                Modify.Enabled = false;
             }
             else
             {
@@ -300,6 +303,8 @@ namespace View
         /// <param name="e"></param>
         private void Modify_Click(object sender, EventArgs e)
         {
+            if (_e == null)
+                return;
             int index = _e.RowIndex;
             AddOrModify ModifyFigure = new AddOrModify(false, ListFigure[index]);
             ModifyFigure.Delegate = this;
