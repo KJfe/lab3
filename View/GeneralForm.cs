@@ -313,7 +313,7 @@ namespace View
                 if (_figure != null)
                 {
                     ListFigure.RemoveAt(index);
-                    ListFigure.Add(_figure);
+                    ListFigure.Insert(index,_figure);
                     Grid.Rows.RemoveAt(index);
                     Grid.Rows.Insert(index, _figure.TypeFigyre, _figure.Valume);
                     _figure = null;
