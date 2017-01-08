@@ -14,8 +14,13 @@ namespace View
 {
     public partial class GeneralForm : Form, IAddObjectDelegate
     {
+        /// <summary>
+        /// Приватное поле
+        /// </summary>
         private IValumeFigyre _figure;
-
+        /// <summary>
+        /// Реализация интефейса при запуске
+        /// </summary>
         public GeneralForm()
         {
             InitializeComponent();
@@ -179,9 +184,9 @@ namespace View
         /// <param name="item"></param>
         private void WrittenInList(DataSet ds)
         {
-            try
+            foreach (DataRow item in ds.Tables["Figures"].Rows)
             {
-                foreach (DataRow item in ds.Tables["Figures"].Rows)
+                try
                 {
                     if (item["Figure"].ToString() == "Parallepiped")
                     {
@@ -204,14 +209,14 @@ namespace View
                             InspectionParametr.ParametrObject(item["Height"], "Height")));
                     }
                 }
-            }
-            catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
-            {
-                MessageBox.Show(cellOutOfRangeExxeption.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-            catch (CellFormatException cellFormatError)
-            {
-                MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
+                {
+                    MessageBox.Show(cellOutOfRangeExxeption.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                catch (CellFormatException cellFormatError)
+                {
+                    MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
             }
         }
         /// <summary>

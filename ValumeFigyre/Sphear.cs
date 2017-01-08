@@ -40,8 +40,5 @@ namespace ValumeFigyre
                 return p;
             }
         }
-
-
-
     }
 }

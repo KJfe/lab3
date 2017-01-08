@@ -17,6 +17,7 @@ namespace ValumeFigyre
                 _area = area;
                 _height = height;
         }
+
         //Реализуем методы интерфейса
         public  double Valume
         {
@@ -24,6 +25,7 @@ namespace ValumeFigyre
             {
                 return Math.Round((_area * _height) / 3,3);
             }
+
         }
 
         public string TypeFigyre
@@ -42,7 +44,5 @@ namespace ValumeFigyre
                 return p;
             }
         }
-
-
     }
 }

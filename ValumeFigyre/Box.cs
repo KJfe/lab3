@@ -15,11 +15,9 @@ namespace ValumeFigyre
 
         public Box(double height, double width, double deep)
         {
-            
                 _height = height;
                 _width =width;
                 _deep = deep;
-            
         }
 
         //Реализуем свойства интерфейса
@@ -47,7 +45,5 @@ namespace ValumeFigyre
                 return p;
             }
         }
-
-
     }
 }
