@@ -9,7 +9,7 @@ namespace ValumeFigyre
     //Реализуем интерфейс шара
     public class Sphear : IValumeFigyre
     {
-        public double _radius;
+        private double _radius;
         public Sphear(double radius)
         {         
                 _radius = radius;     

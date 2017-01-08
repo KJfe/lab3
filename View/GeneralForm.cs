@@ -21,11 +21,15 @@ namespace View
             InitializeComponent();
         }
         private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
+
         private void AddFigyre_Click(object sender, EventArgs e)
         {
-            AddObject AddFigure = new AddObject();
-            AddFigure.Delegate=this;
-
+            //AddObject AddFigure = new AddObject();
+            //AddFigure.Delegate=this;
+            AddOrModify AddFigure = new AddOrModify();
+            //AddFigure.Object = _figure;
+            AddFigure.Delegate = this;
+            //AddFigure.Delegate =;
             AddFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
@@ -41,7 +45,6 @@ namespace View
 
             };
             AddFigure.ShowDialog();
-            
         }
 
         private void RemoveFigyre_Click(object sender, EventArgs e)
@@ -56,8 +59,6 @@ namespace View
                 catch (System.InvalidOperationException)  { }
             }
         }
-
-        
 
         public void DidFinish(IValumeFigyre figure)
         {
@@ -110,7 +111,6 @@ namespace View
             }
 #endif
         }
-
         /// <summary>
         /// сохранение данных таблицы
         /// </summary>
@@ -125,13 +125,41 @@ namespace View
                 dt.TableName = "Figures"; // название таблицы
                 dt.Columns.Add("Figure"); // название колонок
                 dt.Columns.Add("Volume");
+                dt.Columns.Add("Width");
+                dt.Columns.Add("Height");
+                dt.Columns.Add("Deep");
                 ds.Tables.Add(dt); //в ds создается таблица, с названием и колонками, созданными выше
-                foreach (DataGridViewRow r in Grid.Rows) // пока в Grid есть строки
+                /*foreach (DataGridViewRow r in Grid.Rows) // пока в Grid есть строки
                 {
                     DataRow row = ds.Tables["Figures"].NewRow(); // создаем новую строку в таблице, занесенной в ds
                     row["Figure"] = r.Cells[0].Value;  //в столбец этой строки заносим данные из первого столбца dataGridView1
                     row["Volume"] = r.Cells[1].Value; // то же самое со вторыми столбцами
                     ds.Tables["Figures"].Rows.Add(row); //добавление всей этой строки в таблицу ds.
+                }*/
+                foreach(var fig in ListFigure)
+                {
+                    DataRow row = ds.Tables["Figures"].NewRow();
+                    row["Figure"] = fig.TypeFigyre;  //в столбец этой строки заносим данные из первого столбца dataGridView1
+                    row["Volume"] = fig.Valume; // то же самое со вторыми столбцами
+                    if (fig.TypeFigyre=="Parallepiped")
+                    {
+                        row["Width"] = fig.Parametr[0];
+                        row["Height"] = fig.Parametr[1];
+                        row["Deep"] = fig.Parametr[2];
+                    }
+                    else if(fig.TypeFigyre == "Sphear")
+                    {
+                        row["Width"] = fig.Parametr[0];
+                        row["Height"] = "";
+                        row["Deep"] = "";
+                    }
+                    else
+                    {
+                        row["Width"] = fig.Parametr[0];
+                        row["Height"] = fig.Parametr[1];
+                        row["Deep"] = "";
+                    }
+                    ds.Tables["Figures"].Rows.Add(row);
                 }
                 saveDialog.ShowDialog();
                 ds.WriteXml(saveDialog.FileName);
@@ -154,10 +182,29 @@ namespace View
 
                     foreach (DataRow item in ds.Tables["Figures"].Rows)
                     {
-                        int n = Grid.Rows.Add(); // добавляем новую сроку в dataGridView1
-                        Grid.Rows[n].Cells[0].Value = item["Figure"]; // заносим в первый столбец созданной строки данные из первого столбца таблицы ds.
-                        Grid.Rows[n].Cells[1].Value = item["Volume"]; // то же самое со вторым столбцом
+                    int n = Grid.Rows.Add(); // добавляем новую сроку в dataGridView1
+                    Grid.Rows[n].Cells[0].Value = item["Figure"]; // заносим в первый столбец созданной строки данные из первого столбца таблицы ds.
+                    Grid.Rows[n].Cells[1].Value = item["Volume"]; // то же самое со вторым столбцом
+                    double[] dparametrs = { };
+                    if (item["Figure"].ToString()=="Parallepiped")
+                    {
+                        dparametrs[0] = Convert.ToDouble(item["Width"]);
+                        dparametrs[1] = Convert.ToDouble(item["Height"]);
+                        dparametrs[2] = Convert.ToDouble(item["Deep"]);
+
+                        //ListFigure.AddRange(item["Figure"], item["Volume"], dparametrs);
                     }
+                    else if (item["Figure"].ToString() == "Sphear")
+                    {
+                        dparametrs[0] = Convert.ToDouble(item["Width"]);
+                    }
+                    else
+                    {
+                        dparametrs[0] = Convert.ToDouble(item["Width"]);
+                        dparametrs[1] = Convert.ToDouble(item["Height"]);
+                    }
+
+                }
             }
         }
 
@@ -173,7 +220,6 @@ namespace View
                 MessageBox.Show("Table is empty", "Error");
             }
         }
-
 
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -199,5 +245,26 @@ namespace View
                 ZParametr.Text = "";
             }
         }
+
+        private void Modify_Click(object sender, EventArgs e)
+        {
+            AddOrModify ModifyFigure = new AddOrModify();
+            ModifyFigure.Delegate = this;
+            ModifyFigure.FormClosed += (obj, arg) =>
+            {
+                if (_figure != null)
+                {
+                    ListFigure.Add(_figure);
+                    _figure = null;
+                }
+                Grid.Rows.Clear();
+                foreach (var figure in ListFigure)
+                {
+                    Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+                }
+
+            };
+            ModifyFigure.ShowDialog();
+        }
     }
-    }
+}

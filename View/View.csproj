@@ -52,6 +52,12 @@
     <Compile Include="AddObject.Designer.cs">
       <DependentUpon>AddObject.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddOrModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddOrModify.Designer.cs">
+      <DependentUpon>AddOrModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="CellOutOfRangeExxeption.cs" />
     <Compile Include="GeneralForm.cs">
       <SubType>Form</SubType>
@@ -64,11 +70,23 @@
     <Compile Include="InspectionParametr.cs" />
     <Compile Include="CellFormatException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ObjectControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ObjectControl.Designer.cs">
+      <DependentUpon>ObjectControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddObject.resx">
       <DependentUpon>AddObject.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddOrModify.resx">
+      <DependentUpon>AddOrModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GeneralForm.resx">
       <DependentUpon>GeneralForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectControl.resx">
+      <DependentUpon>ObjectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,37 +1,92 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ValumeFigyre;
 
 namespace View
 {
-   
-    public partial class AddObject : Form
+    enum Figures : int
     {
-        /// <summary>
-        /// Деликат на объект фигуру
-        /// </summary>
-        public IAddObjectDelegate Delegate { get; set; }
+        Box = 0,
+        Sphear = 1,
+        Pyramid = 2
+    };
+    public partial class ObjectControl : UserControl
+    {
+        //public IAddObjectDelegate Delegate { get; set; }
 
-        public AddObject()
+        public ObjectControl()
         {
             InitializeComponent();
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private IValumeFigyre _VolumeFigure;
+        public IValumeFigyre Object
         {
-            Close();
+            get
+            {
+
+                return _VolumeFigure;
+            }
+            set
+            {
+                _VolumeFigure = value;
+                if (_VolumeFigure == null)
+                    return;
+                if (value.TypeFigyre == "Sphear")
+                {
+                    
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = "";
+                    Deep.Text = "";
+                    Width.Visible = true;
+                    Height.Visible = false;
+                    Deep.Visible = false;
+
+                }
+                else if (value.TypeFigyre == "Parallepiped")
+                {
+                    
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = value.Parametr[1].ToString();
+                    Deep.Text = value.Parametr[2].ToString();
+                    Width.Visible = true;
+                    Height.Visible = true;
+                    Deep.Visible = true;
+                }
+                else
+                {
+                    
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = value.Parametr[1].ToString();
+                    Deep.Text = "";
+                    Width.Visible = true;
+                    Height.Visible = true;
+                    Deep.Visible = false;
+                }
+            }
         }
 
-        private void cbTypeFigure_SelectionChangeCommitted(object sender, EventArgs e)
+        private bool _ReadOnly;
+        public bool ReadOnly
         {
-            switch((Figures)comboBox1.SelectedIndex)
+            get
+            {
+                return _ReadOnly;
+            }
+            set
+            {
+                _ReadOnly = value;
+                /*if (_ReadOnly == null)
+                    return;*/
+                Width.Enabled = !value;
+                Height.Enabled = !value;
+                Deep.Enabled = !value;
+            }
+        }
+
+        public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch ((Figures)cbTypeFigure.SelectedIndex)
             {
                 case Figures.Box:
                     {
@@ -69,44 +124,41 @@ namespace View
                 default:
                     break;
             }
-
-            lableValume.Visible = true;
-            tbValume.Visible = true;
         }
 
         private void SelectionFigyre()
         {
-            IValumeFigyre VolumeFigure=null;
-            switch ((Figures)comboBox1.SelectedIndex)
-            {           
+            //IValumeFigyre VolumeFigure = null;
+            _VolumeFigure = null;
+            switch ((Figures)cbTypeFigure.SelectedIndex)
+            {
                 case Figures.Box:
                     {
                         double heightBox = InspectionParametr.Parametr(Height.Text, Height.Name);
                         double widthBox = InspectionParametr.Parametr(Width.Text, Width.Name);
                         double deepBox = InspectionParametr.Parametr(Deep.Text, Deep.Name);
-                        VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
+                        _VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
                         break;
                     }
                 case Figures.Sphear:
                     {
                         double radiusSphear = InspectionParametr.Parametr(Width.Text, "Radius");
-                        VolumeFigure = new Sphear(radius: radiusSphear);
+                        _VolumeFigure = new Sphear(radius: radiusSphear);
                         break;
                     }
-                
+
                 case Figures.Pyramid:
                     {
                         double heightPyramid = InspectionParametr.Parametr(Height.Text, Height.Name);
                         double areaPyramid = InspectionParametr.Parametr(Width.Text, "Area");
-                        VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
+                        _VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
                         break;
                     }
             }
-            if (VolumeFigure != null)
+            if (_VolumeFigure != null)
             {
-                tbValume.Text = Convert.ToString(VolumeFigure.Valume);
-                Delegate.DidFinish(VolumeFigure);
-                
+                VolumeFigureText.Text = Convert.ToString(_VolumeFigure.Valume);                
+                Object=_VolumeFigure;
             }
         }
 
@@ -125,6 +177,6 @@ namespace View
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
+
     }
 }
- 

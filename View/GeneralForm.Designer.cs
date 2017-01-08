@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.TypeFigure = new System.Windows.Forms.Label();
             this.ZParametr = new System.Windows.Forms.TextBox();
             this.YParametr = new System.Windows.Forms.TextBox();
             this.XParametr = new System.Windows.Forms.TextBox();
@@ -46,7 +47,7 @@
             this.AddFigure = new System.Windows.Forms.Button();
             this.saveDialog = new System.Windows.Forms.SaveFileDialog();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
-            this.TypeFigure = new System.Windows.Forms.Label();
+            this.Modify = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -54,6 +55,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Modify);
             this.groupBox1.Controls.Add(this.TypeFigure);
             this.groupBox1.Controls.Add(this.ZParametr);
             this.groupBox1.Controls.Add(this.YParametr);
@@ -68,6 +70,14 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elements";
+            // 
+            // TypeFigure
+            // 
+            this.TypeFigure.AutoSize = true;
+            this.TypeFigure.Location = new System.Drawing.Point(6, 268);
+            this.TypeFigure.Name = "TypeFigure";
+            this.TypeFigure.Size = new System.Drawing.Size(0, 13);
+            this.TypeFigure.TabIndex = 9;
             // 
             // ZParametr
             // 
@@ -217,13 +227,15 @@
             this.openDialog.FileName = "openFileDialog1";
             this.openDialog.Filter = "(*.vol)|*.vol";
             // 
-            // TypeFigure
+            // Modify
             // 
-            this.TypeFigure.AutoSize = true;
-            this.TypeFigure.Location = new System.Drawing.Point(6, 268);
-            this.TypeFigure.Name = "TypeFigure";
-            this.TypeFigure.Size = new System.Drawing.Size(0, 13);
-            this.TypeFigure.TabIndex = 9;
+            this.Modify.Location = new System.Drawing.Point(5, 287);
+            this.Modify.Name = "Modify";
+            this.Modify.Size = new System.Drawing.Size(75, 23);
+            this.Modify.TabIndex = 10;
+            this.Modify.Text = "Modify";
+            this.Modify.UseVisualStyleBackColor = true;
+            this.Modify.Click += new System.EventHandler(this.Modify_Click);
             // 
             // GeneralForm
             // 
@@ -264,6 +276,7 @@
         private System.Windows.Forms.TextBox YParametr;
         private System.Windows.Forms.TextBox XParametr;
         private System.Windows.Forms.Label TypeFigure;
+        private System.Windows.Forms.Button Modify;
     }
 }
 
