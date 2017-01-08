@@ -22,11 +22,28 @@ namespace View
                 throw new CellFormatException(editDesc);
             }
 
-            if (doubleEdit < 0)
+            if (doubleEdit <= 0)
             {
                 throw new CellOutOfRangeExxeption(editDesc);
             }
+            return doubleEdit;
+        }
+        public static double ParametrObject(object edit, string editDesc)
+        {
+            double doubleEdit = 0;
+            try
+            {
+                doubleEdit = Convert.ToDouble(edit);
+            }
+            catch (Exception)
+            {
+                throw new CellFormatException(editDesc);
+            }
 
+            if (doubleEdit <= 0)
+            {
+                throw new CellOutOfRangeExxeption(editDesc);
+            }
             return doubleEdit;
         }
     }

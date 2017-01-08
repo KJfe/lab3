@@ -13,9 +13,9 @@ namespace ValumeFigyre
         private double _height;
 
         public Pyramid(double area, double height)
-        {
-            _area = area;
-            _height = height;
+        {  
+                _area = area;
+                _height = height;
         }
 
         //Реализуем методы интерфейса
@@ -23,9 +23,9 @@ namespace ValumeFigyre
         {
             get
             {
-                return (_area * _height) / 3;
+                return Math.Round((_area * _height) / 3,3);
             }
-            
+
         }
 
         public string TypeFigyre
@@ -36,7 +36,13 @@ namespace ValumeFigyre
             }
         }
 
-
-
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(_area,3), Math.Round(_height, 3) };
+                return p;
+            }
+        }
     }
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ValumeFigyre;
 
@@ -17,29 +10,77 @@ namespace View
         Sphear = 1,
         Pyramid = 2
     };
-    public partial class AddObject : Form
+    public partial class ObjectControl : UserControl
     {
-        /// <summary>
-        /// Деликат на объект фигуру
-        /// </summary>
-        public IAddObjectDelegate Delegate { get; set; }
-
-        //public delegate Delegate ddelegate();
-        //public event ddelegate onVolumeFigyre;
-
-        public AddObject()
+        public ObjectControl()
         {
             InitializeComponent();
         }
 
-        private void Cancel_Click(object sender, EventArgs e)
+        private IValumeFigyre _VolumeFigure;
+        public IValumeFigyre Object
         {
-            Close();
+            get
+            {
+                return _VolumeFigure;
+            }
+            set
+            {
+                _VolumeFigure = value;
+                if (_VolumeFigure == null)
+                    return;
+                if (value.TypeFigyre == "Sphear")
+                { 
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = "";
+                    Deep.Text = "";
+                    Width.Visible = true;
+                    Height.Visible = false;
+                    Deep.Visible = false;
+                    cbTypeFigure.SelectedIndex = 1;
+                }
+                else if (value.TypeFigyre == "Parallepiped")
+                {    
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = value.Parametr[1].ToString();
+                    Deep.Text = value.Parametr[2].ToString();
+                    Width.Visible = true;
+                    Height.Visible = true;
+                    Deep.Visible = true;
+                    cbTypeFigure.SelectedIndex = 0;
+                }
+                else
+                {                   
+                    Width.Text = value.Parametr[0].ToString();
+                    Height.Text = value.Parametr[1].ToString();
+                    Deep.Text = "";
+                    Width.Visible = true;
+                    Height.Visible = true;
+                    Deep.Visible = false;
+                    cbTypeFigure.SelectedIndex = 2;
+                }
+            }
         }
 
-        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        private bool _ReadOnly;
+        public bool ReadOnly
         {
-            switch((Figures)comboBox1.SelectedIndex)
+            get
+            {
+                return _ReadOnly;
+            }
+            set
+            {
+                _ReadOnly = value;
+                Width.Enabled = !value;
+                Height.Enabled = !value;
+                Deep.Enabled = !value;
+            }
+        }
+
+        public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch ((Figures)cbTypeFigure.SelectedIndex)
             {
                 case Figures.Box:
                     {
@@ -77,35 +118,13 @@ namespace View
                 default:
                     break;
             }
-
-            lableValume.Visible = true;
-            tbValume.Visible = true;
-
-
-            /*
-            int heightLocation = 30;
-            TextBox[] newTextBox = new TextBox[countTextBox];
-            for (int i = 0; i < countTextBox; i++)
-            {
-
-                newTextBox[i] = new TextBox();
-                //_textBoxes
-                heightLocation = heightLocation + 40;
-                newTextBox[i].Location = new System.Drawing.Point(20, heightLocation);
-                newTextBox[i].Size = new System.Drawing.Size(100, 20);
-                groupBox1.Controls.Add(newTextBox[i]);
-                Controls.Add(newTextBox[i]);
-                Controls.Add(groupBox1);
-            }
-            */
-
         }
 
         private void SelectionFigyre()
         {
-            IValumeFigyre VolumeFigure=null;
-            switch ((Figures)comboBox1.SelectedIndex)
-            {           
+            IValumeFigyre VolumeFigure = null;
+            switch ((Figures)cbTypeFigure.SelectedIndex)
+            {
                 case Figures.Box:
                     {
                         double heightBox = InspectionParametr.Parametr(Height.Text, Height.Name);
@@ -120,7 +139,7 @@ namespace View
                         VolumeFigure = new Sphear(radius: radiusSphear);
                         break;
                     }
-                
+
                 case Figures.Pyramid:
                     {
                         double heightPyramid = InspectionParametr.Parametr(Height.Text, Height.Name);
@@ -131,8 +150,8 @@ namespace View
             }
             if (VolumeFigure != null)
             {
-                tbValume.Text = Convert.ToString(VolumeFigure.Valume);
-                Delegate.DidFinish(VolumeFigure);
+                VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                
+                Object= VolumeFigure;
             }
         }
 
@@ -150,8 +169,7 @@ namespace View
             {
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
-
         }
+
     }
 }
- 

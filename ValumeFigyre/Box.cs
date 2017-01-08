@@ -12,13 +12,12 @@ namespace ValumeFigyre
         private double _height;
         private double _width;
         private double _deep;
-        private string typeFigyre;
 
         public Box(double height, double width, double deep)
         {
-            _height = height;
-            _width = width;
-            _deep = deep;
+                _height = height;
+                _width =width;
+                _deep = deep;
         }
 
         //Реализуем свойства интерфейса
@@ -26,7 +25,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return (_height * _width * _deep);
+                return Math.Round(_height * _width * _deep,3);
             }
         }
 
@@ -38,6 +37,13 @@ namespace ValumeFigyre
             }
         }
 
-
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(_width,3), Math.Round(_height, 3), Math.Round(_deep, 3) };
+                return p;
+            }
+        }
     }
 }
