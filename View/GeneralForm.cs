@@ -20,9 +20,15 @@ namespace View
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Создание List<> для хранения данных в системе и работой с ними
+        /// </summary>
         private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
-
+        /// <summary>
+        /// Вызов формы для создания фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddFigyre_Click(object sender, EventArgs e)
         {
             AddOrModify AddFigure = new AddOrModify(false,null);
@@ -34,16 +40,15 @@ namespace View
                     ListFigure.Add(_figure);
                     _figure = null;
                 }
-                Grid.Rows.Clear();
-                foreach(var figure in ListFigure)
-                {
-                    Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
-                }
-
+                WriteInGrid(); // Запись данных Таблицу
             };
             AddFigure.ShowDialog();
         }
-
+        /// <summary>
+        /// Удаление построчно
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveFigyre_Click(object sender, EventArgs e)
         {
             if (Grid.CurrentRow != null)
@@ -56,12 +61,19 @@ namespace View
                 catch (System.InvalidOperationException)  { }
             }
         }
-
+        /// <summary>
+        /// Сохранения делегата
+        /// </summary>
+        /// <param name="figure"></param>
         public void DidFinish(IValumeFigyre figure)
         {
             _figure = figure;
         }
-
+        /// <summary>
+        /// Создание случайных данных, 10 фигур
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Random_Click(object sender, EventArgs e)
         {
 #if DEBUG
@@ -110,7 +122,7 @@ namespace View
 #endif
         }
         /// <summary>
-        /// сохранение данных таблицы
+        /// сохранение данных таблицы в XML файл
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -127,13 +139,6 @@ namespace View
                 dt.Columns.Add("Height");
                 dt.Columns.Add("Deep");
                 ds.Tables.Add(dt); //в ds создается таблица, с названием и колонками, созданными выше
-                /*foreach (DataGridViewRow r in Grid.Rows) // пока в Grid есть строки
-                {
-                    DataRow row = ds.Tables["Figures"].NewRow(); // создаем новую строку в таблице, занесенной в ds
-                    row["Figure"] = r.Cells[0].Value;  //в столбец этой строки заносим данные из первого столбца dataGridView1
-                    row["Volume"] = r.Cells[1].Value; // то же самое со вторыми столбцами
-                    ds.Tables["Figures"].Rows.Add(row); //добавление всей этой строки в таблицу ds.
-                }*/
                 foreach(var fig in ListFigure)
                 {
                     DataRow row = ds.Tables["Figures"].NewRow();
@@ -168,44 +173,79 @@ namespace View
                 MessageBox.Show("Unable to save file Vol", "Error");
             }
         }
-
-        private void Open_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Запись и проверка данных с XML файла в List<>
+        /// </summary>
+        /// <param name="item"></param>
+        private void WrittenInList(DataSet ds)
         {
-            
-                openDialog.ShowDialog();
-                if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length !=0)) // если существует данный файл
+            try
+            {
+                foreach (DataRow item in ds.Tables["Figures"].Rows)
                 {
-                    DataSet ds = new DataSet(); // создаем новый пустой кэш данных
-                    ds.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла
-
-                    foreach (DataRow item in ds.Tables["Figures"].Rows)
+                    if (item["Figure"].ToString() == "Parallepiped")
                     {
-                    int n = Grid.Rows.Add(); // добавляем новую сроку в dataGridView1
-                    Grid.Rows[n].Cells[0].Value = item["Figure"]; // заносим в первый столбец созданной строки данные из первого столбца таблицы ds.
-                    Grid.Rows[n].Cells[1].Value = item["Volume"]; // то же самое со вторым столбцом
-                    double[] dparametrs = { };
-                    if (item["Figure"].ToString()=="Parallepiped")
-                    {
-                        dparametrs[0] = Convert.ToDouble(item["Width"]);
-                        dparametrs[1] = Convert.ToDouble(item["Height"]);
-                        dparametrs[2] = Convert.ToDouble(item["Deep"]);
 
-                        //ListFigure.AddRange(item["Figure"], item["Volume"], dparametrs);
+                        ListFigure.Add(new Box(
+                            InspectionParametr.ParametrObject(item["Height"], "Height"),
+                            InspectionParametr.ParametrObject(item["Width"], "Width"),
+                            InspectionParametr.ParametrObject(item["Deep"], "Deep")));
                     }
                     else if (item["Figure"].ToString() == "Sphear")
                     {
-                        dparametrs[0] = Convert.ToDouble(item["Width"]);
+                        ListFigure.Add(new Sphear(
+                            InspectionParametr.ParametrObject(item["Width"], "Radius")
+                            ));
                     }
                     else
                     {
-                        dparametrs[0] = Convert.ToDouble(item["Width"]);
-                        dparametrs[1] = Convert.ToDouble(item["Height"]);
+                        ListFigure.Add(new Pyramid(
+                            InspectionParametr.ParametrObject(item["Width"], "Area"),
+                            InspectionParametr.ParametrObject(item["Height"], "Height")));
                     }
-
                 }
             }
+            catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
+            {
+                MessageBox.Show(cellOutOfRangeExxeption.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            catch (CellFormatException cellFormatError)
+            {
+                MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
         }
-
+        /// <summary>
+        /// Открытие сохраненных данных в XML разметке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Open_Click(object sender, EventArgs e)
+        {
+            openDialog.ShowDialog();
+            if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length !=0)) // если существует данный файл
+                {
+                    DataSet ds = new DataSet(); // создаем новый пустой кэш данных
+                    ds.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла
+                    WrittenInList(ds);
+                    WriteInGrid();// Запись данных Таблицу
+                }
+        }
+        /// <summary>
+        /// Запись данных с List<> в Таблицу
+        /// </summary>
+        private void WriteInGrid()
+        {
+            Grid.Rows.Clear();
+            foreach (var figure in ListFigure)
+            {
+                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+            }
+        }
+        /// <summary>
+        /// Очиста данных таблицы и List<>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Clear_Click(object sender, EventArgs e)
         {
             if (Grid.Rows.Count > 0)
@@ -218,7 +258,9 @@ namespace View
                 MessageBox.Show("Table is empty", "Error");
             }
         }
-
+        /// <summary>
+        /// Отображение подробных данных в таблице
+        /// </summary>
         private DataGridViewCellEventArgs _e;
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -246,7 +288,11 @@ namespace View
                 ZParametr.Text = "";
             }
         }
-
+        /// <summary>
+        /// Вызов формы для редактирования данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Modify_Click(object sender, EventArgs e)
         {
             int index = _e.RowIndex;

@@ -30,8 +30,7 @@ namespace View
                 if (_VolumeFigure == null)
                     return;
                 if (value.TypeFigyre == "Sphear")
-                {
-                    
+                { 
                     Width.Text = value.Parametr[0].ToString();
                     Height.Text = "";
                     Deep.Text = "";
@@ -41,8 +40,7 @@ namespace View
                     cbTypeFigure.SelectedIndex = 1;
                 }
                 else if (value.TypeFigyre == "Parallepiped")
-                {
-                    
+                {    
                     Width.Text = value.Parametr[0].ToString();
                     Height.Text = value.Parametr[1].ToString();
                     Deep.Text = value.Parametr[2].ToString();
@@ -52,8 +50,7 @@ namespace View
                     cbTypeFigure.SelectedIndex = 0;
                 }
                 else
-                {
-                    
+                {                   
                     Width.Text = value.Parametr[0].ToString();
                     Height.Text = value.Parametr[1].ToString();
                     Deep.Text = "";
