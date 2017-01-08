@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="View.AddOrModify">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <Members>
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAQAAAEAAAAAACQAAA=</HashCode>
+      <FileName>AddOrModify.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.CellFormatException">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CellFormatException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.CellOutOfRangeExxeption">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CellOutOfRangeExxeption.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.General">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>General.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.GeneralForm" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.75" Width="2.25" />
+    <Members>
+      <Field Name="AddFigure" Hidden="true" />
+      <Field Name="Clear" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Field Name="Figure" Hidden="true" />
+      <Field Name="Grid" Hidden="true" />
+      <Field Name="groupBox1" Hidden="true" />
+      <Field Name="groupBox2" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="Modify" Hidden="true" />
+      <Field Name="Open" Hidden="true" />
+      <Field Name="openDialog" Hidden="true" />
+      <Field Name="Random" Hidden="true" />
+      <Field Name="RemoveFigure" Hidden="true" />
+      <Field Name="Save" Hidden="true" />
+      <Field Name="saveDialog" Hidden="true" />
+      <Field Name="TypeFigure" Hidden="true" />
+      <Field Name="Volume" Hidden="true" />
+      <Field Name="XParametr" Hidden="true" />
+      <Field Name="YParametr" Hidden="true" />
+      <Field Name="ZParametr" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AEAIIoABQCBAoAgAAACABAACFgAAHACCACIAgBBADAA=</HashCode>
+      <FileName>GeneralForm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="View.InspectionParametr">
+    <Position X="7.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>InspectionParametr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.ObjectControl">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <Members>
+      <Field Name="cbTypeFigure" Hidden="true" />
+      <Field Name="components" Hidden="true" />
+      <Field Name="Deep" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Field Name="groupBox1" Hidden="true" />
+      <Field Name="Height" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="labelDeep" Hidden="true" />
+      <Field Name="labelHeight" Hidden="true" />
+      <Field Name="labelWidth" Hidden="true" />
+      <Field Name="Ok" Hidden="true" />
+      <Field Name="VolumeFigureText" Hidden="true" />
+      <Field Name="Width" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AEABAAAERCAAAgAkAACAAEADgAAAAAAAAKIJAAABAAA=</HashCode>
+      <FileName>ObjectControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.Properties.Resources" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="View.Properties.Settings">
+    <Position X="6.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="View.IAddObjectDelegate">
+    <Position X="0.5" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>IAddObjectDelegate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="View.Figures">
+    <Position X="1.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAIAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>ObjectControl.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
