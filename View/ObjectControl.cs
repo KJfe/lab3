@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 using ValumeFigyre;
 
@@ -12,9 +14,22 @@ namespace View
     };
     public partial class ObjectControl : UserControl
     {
+        //private TextBox textBox1;
         public ObjectControl()
         {
             InitializeComponent();
+            //tx();
+        }
+        private TextBox tx(string Name,int LocationX,int LocationY)
+        {
+            TextBox txb = new TextBox();
+            txb.Name = Name;
+            txb.Location = new System.Drawing.Point(LocationX, LocationY);
+            txb.Size = new System.Drawing.Size(100, 20);
+            txb.Visible = true;
+            Controls.Add(txb);
+            groupBox1.Controls.Add(txb);
+            return (txb);
         }
         /// <summary>
         /// Метод принимающий/отправляющий данные
@@ -33,32 +48,32 @@ namespace View
                     return;
                 if (value.TypeFigyre == "Sphear")
                 { 
-                    Width.Text = value.Parametr[0].ToString();
+                    /*Width.Text = value.Parametr[0].ToString();
                     Height.Text = "";
                     Deep.Text = "";
                     Width.Visible = true;
                     Height.Visible = false;
-                    Deep.Visible = false;
+                    Deep.Visible = false;*/
                     cbTypeFigure.SelectedIndex = 1;
                 }
                 else if (value.TypeFigyre == "Parallepiped")
                 {    
-                    Width.Text = value.Parametr[0].ToString();
+                    /*Width.Text = value.Parametr[0].ToString();
                     Height.Text = value.Parametr[1].ToString();
                     Deep.Text = value.Parametr[2].ToString();
                     Width.Visible = true;
                     Height.Visible = true;
-                    Deep.Visible = true;
+                    Deep.Visible = true;*/
                     cbTypeFigure.SelectedIndex = 0;
                 }
                 else
                 {                   
-                    Width.Text = value.Parametr[0].ToString();
+                    /*Width.Text = value.Parametr[0].ToString();
                     Height.Text = value.Parametr[1].ToString();
                     Deep.Text = "";
                     Width.Visible = true;
                     Height.Visible = true;
-                    Deep.Visible = false;
+                    Deep.Visible = false;*/
                     cbTypeFigure.SelectedIndex = 2;
                 }
             }
@@ -76,9 +91,9 @@ namespace View
             set
             {
                 _ReadOnly = value;
-                Width.Enabled = !value;
+                /*Width.Enabled = !value;
                 Height.Enabled = !value;
-                Deep.Enabled = !value;
+                Deep.Enabled = !value;*/
                 cbTypeFigure.Enabled = !value;
                 Ok.Enabled = !value;
             }
@@ -88,46 +103,18 @@ namespace View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch ((Figures)cbTypeFigure.SelectedIndex)
-            {
-                case Figures.Box:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Width";
-                        labelHeight.Visible = true;
-                        Height.Visible = true;
-                        labelDeep.Visible = true;
-                        Deep.Visible = true;
-                        break;
-                    }
-                case Figures.Sphear:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Radius";
-                        labelHeight.Visible = false;
-                        Height.Visible = false;
-                        labelDeep.Visible = false;
-                        Deep.Visible = false;
-                        break;
-                    }
-                case Figures.Pyramid:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Area";
-                        labelHeight.Visible = true;
-                        Height.Visible = true;
-                        labelDeep.Visible = false;
-                        Deep.Visible = false;
-                        break;
-                    }
-                default:
-                    break;
-            }
+            var t = (Figures)cbTypeFigure.SelectedIndex;
+            TextBoxList.Add(tx("Width",6,60));
+            TextBoxList[0].Text = "ekjh";
+
+            //удаление
+            Controls.Remove(TextBoxList[0]);
+            TextBoxList[0].Dispose();
+            TextBoxList.RemoveAt(0);
+            
         }
         /// <summary>
         /// расчет объема фигуры
@@ -135,7 +122,7 @@ namespace View
         private void SelectionFigyre()
         {
             IValumeFigyre VolumeFigure = null;
-            switch ((Figures)cbTypeFigure.SelectedIndex)
+            /*switch ((Figures)cbTypeFigure.SelectedIndex)
             {
                 case Figures.Box:
                     {
@@ -159,7 +146,7 @@ namespace View
                         VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
                         break;
                     }
-            }
+            }*/
             if (VolumeFigure != null)
             {
                 VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                

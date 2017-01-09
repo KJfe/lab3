@@ -240,10 +240,10 @@ namespace View
                         WriteInGrid();// Запись данных Таблицу
                     }
                     catch (Exception)
-                {
-                    MessageBox.Show("Error reading file, the file is corrupted","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    {
+                        MessageBox.Show("Error reading file, the file is corrupted","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                    }
                 }
-            }
         }
         /// <summary>
         /// Запись данных с List<> в Таблицу

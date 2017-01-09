@@ -53,6 +53,9 @@
       <DependentUpon>AddOrModify.cs</DependentUpon>
     </Compile>
     <Compile Include="CellOutOfRangeExxeption.cs" />
+    <Compile Include="CreateTextBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GeneralForm.cs">
       <SubType>Form</SubType>
     </Compile>
