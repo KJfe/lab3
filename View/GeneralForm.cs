@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ValumeFigyre;
 
+
 namespace View
 {
     public partial class GeneralForm : Form, IAddObjectDelegate
@@ -232,10 +233,17 @@ namespace View
             if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length !=0)) // если существует данный файл
                 {
                     DataSet ds = new DataSet(); // создаем новый пустой кэш данных
-                    ds.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла
-                    WrittenInList(ds);
-                    WriteInGrid();// Запись данных Таблицу
+                    try
+                    {
+                        ds.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла                                             
+                        WrittenInList(ds);
+                        WriteInGrid();// Запись данных Таблицу
+                    }
+                    catch (Exception)
+                {
+                    MessageBox.Show("Error reading file, the file is corrupted","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 }
+            }
         }
         /// <summary>
         /// Запись данных с List<> в Таблицу

@@ -34,11 +34,11 @@
             this.Height = new System.Windows.Forms.TextBox();
             this.Deep = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbTypeFigure = new System.Windows.Forms.ComboBox();
             this.labelDeep = new System.Windows.Forms.Label();
             this.labelHeight = new System.Windows.Forms.Label();
             this.labelWidth = new System.Windows.Forms.Label();
             this.VolumeFigureText = new System.Windows.Forms.TextBox();
-            this.cbTypeFigure = new System.Windows.Forms.ComboBox();
             this.Ok = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +81,20 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Volume";
             // 
+            // cbTypeFigure
+            // 
+            this.cbTypeFigure.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTypeFigure.FormattingEnabled = true;
+            this.cbTypeFigure.Items.AddRange(new object[] {
+            "Parallepiped",
+            "Sphear",
+            "Pyramid"});
+            this.cbTypeFigure.Location = new System.Drawing.Point(6, 19);
+            this.cbTypeFigure.Name = "cbTypeFigure";
+            this.cbTypeFigure.Size = new System.Drawing.Size(121, 21);
+            this.cbTypeFigure.TabIndex = 8;
+            this.cbTypeFigure.SelectedIndexChanged += new System.EventHandler(this.cbTypeFigure_SelectedIndexChanged);
+            // 
             // labelDeep
             // 
             this.labelDeep.AutoSize = true;
@@ -115,19 +129,6 @@
             this.VolumeFigureText.Name = "VolumeFigureText";
             this.VolumeFigureText.Size = new System.Drawing.Size(69, 20);
             this.VolumeFigureText.TabIndex = 4;
-            // 
-            // cbTypeFigure
-            // 
-            this.cbTypeFigure.FormattingEnabled = true;
-            this.cbTypeFigure.Items.AddRange(new object[] {
-            "Parallepiped",
-            "Sphear",
-            "Pyramid"});
-            this.cbTypeFigure.Location = new System.Drawing.Point(6, 19);
-            this.cbTypeFigure.Name = "cbTypeFigure";
-            this.cbTypeFigure.Size = new System.Drawing.Size(121, 21);
-            this.cbTypeFigure.TabIndex = 8;
-            this.cbTypeFigure.SelectedIndexChanged += new System.EventHandler(this.cbTypeFigure_SelectedIndexChanged);
             // 
             // Ok
             // 
