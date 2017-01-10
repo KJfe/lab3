@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,7 +19,6 @@ namespace View
         public ObjectControl()
         {
             InitializeComponent();
-            //tx();
         }
         private TextBox tx(string Name,int LocationX,int LocationY)
         {
@@ -104,17 +104,13 @@ namespace View
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
+        private List<ControlCollection> ListContol = new List<ControlCollection>();
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var t = (Figures)cbTypeFigure.SelectedIndex;
-            TextBoxList.Add(tx("Width",6,60));
-            TextBoxList[0].Text = "ekjh";
-
-            //удаление
-            Controls.Remove(TextBoxList[0]);
-            TextBoxList[0].Dispose();
-            TextBoxList.RemoveAt(0);
-            
+            var create = new CreateTextBox();
+            ListContol.Add(Controls);
+            ListContol.Add(groupBox1.Controls);
+            create.PerformOperation(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
         }
         /// <summary>
         /// расчет объема фигуры
