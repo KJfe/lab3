@@ -20,17 +20,9 @@ namespace View
         {
             InitializeComponent();
         }
-        private TextBox tx(string Name,int LocationX,int LocationY)
-        {
-            TextBox txb = new TextBox();
-            txb.Name = Name;
-            txb.Location = new System.Drawing.Point(LocationX, LocationY);
-            txb.Size = new System.Drawing.Size(100, 20);
-            txb.Visible = true;
-            Controls.Add(txb);
-            groupBox1.Controls.Add(txb);
-            return (txb);
-        }
+        private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
+        private List<ControlCollection> ListContol = new List<ControlCollection>();
+
         /// <summary>
         /// Метод принимающий/отправляющий данные
         /// </summary>
@@ -48,32 +40,14 @@ namespace View
                     return;
                 if (value.TypeFigyre == "Sphear")
                 { 
-                    /*Width.Text = value.Parametr[0].ToString();
-                    Height.Text = "";
-                    Deep.Text = "";
-                    Width.Visible = true;
-                    Height.Visible = false;
-                    Deep.Visible = false;*/
                     cbTypeFigure.SelectedIndex = 1;
                 }
                 else if (value.TypeFigyre == "Parallepiped")
                 {    
-                    /*Width.Text = value.Parametr[0].ToString();
-                    Height.Text = value.Parametr[1].ToString();
-                    Deep.Text = value.Parametr[2].ToString();
-                    Width.Visible = true;
-                    Height.Visible = true;
-                    Deep.Visible = true;*/
                     cbTypeFigure.SelectedIndex = 0;
                 }
                 else
                 {                   
-                    /*Width.Text = value.Parametr[0].ToString();
-                    Height.Text = value.Parametr[1].ToString();
-                    Deep.Text = "";
-                    Width.Visible = true;
-                    Height.Visible = true;
-                    Deep.Visible = false;*/
                     cbTypeFigure.SelectedIndex = 2;
                 }
             }
@@ -103,8 +77,6 @@ namespace View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
-        private List<ControlCollection> ListContol = new List<ControlCollection>();
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
             var create = new CreateTextBox();
@@ -118,31 +90,31 @@ namespace View
         private void SelectionFigyre()
         {
             IValumeFigyre VolumeFigure = null;
-            /*switch ((Figures)cbTypeFigure.SelectedIndex)
+            switch ((Figures)cbTypeFigure.SelectedIndex)
             {
                 case Figures.Box:
                     {
-                        double heightBox = InspectionParametr.Parametr(Height.Text, Height.Name);
-                        double widthBox = InspectionParametr.Parametr(Width.Text, Width.Name);
-                        double deepBox = InspectionParametr.Parametr(Deep.Text, Deep.Name);
+                        double heightBox = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
+                        double widthBox = InspectionParametr.Parametr(TextBoxList[1].Text, TextBoxList[1].Name);
+                        double deepBox = InspectionParametr.Parametr(TextBoxList[2].Text, TextBoxList[2].Name);
                         VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
                         break;
                     }
                 case Figures.Sphear:
                     {
-                        double radiusSphear = InspectionParametr.Parametr(Width.Text, "Radius");
+                        double radiusSphear = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
                         VolumeFigure = new Sphear(radius: radiusSphear);
                         break;
                     }
 
                 case Figures.Pyramid:
                     {
-                        double heightPyramid = InspectionParametr.Parametr(Height.Text, Height.Name);
-                        double areaPyramid = InspectionParametr.Parametr(Width.Text, "Area");
+                        double heightPyramid = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
+                        double areaPyramid = InspectionParametr.Parametr(TextBoxList[1].Text, TextBoxList[1].Name);
                         VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
                         break;
                     }
-            }*/
+            }
             if (VolumeFigure != null)
             {
                 VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                
