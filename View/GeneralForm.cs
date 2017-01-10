@@ -291,7 +291,7 @@ namespace View
                 YParametr.Text = "";
                 ZParametr.Text = "";
             }
-            else if (ListFigure[e.RowIndex].TypeFigyre == "Parallepiped")
+            else if (ListFigure[e.RowIndex].TypeFigyre == "Box")
             {
                 XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
                 YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();

@@ -33,7 +33,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return "Parallepiped";
+                return "Box";
             }
         }
 

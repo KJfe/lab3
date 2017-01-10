@@ -21,7 +21,6 @@ namespace View
             InitializeComponent();
         }
         private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
-        private List<ControlCollection> ListContol = new List<ControlCollection>();
 
         /// <summary>
         /// Метод принимающий/отправляющий данные
@@ -36,22 +35,13 @@ namespace View
             set
             {
                 _VolumeFigure = value;
-                if (_VolumeFigure == null)
+                if (_VolumeFigure == null|| value.TypeFigyre == "")
                     return;
-                if (value.TypeFigyre == "Sphear")
-                { 
-                    cbTypeFigure.SelectedIndex = 1;
-                }
-                else if (value.TypeFigyre == "Parallepiped")
-                {    
-                    cbTypeFigure.SelectedIndex = 0;
-                }
-                else
-                {                   
-                    cbTypeFigure.SelectedIndex = 2;
-                }
+                Figures fig = (Figures) Enum.Parse(typeof(Figures), value.TypeFigyre);
+                cbTypeFigure.SelectedIndex = Convert.ToInt32(fig);
             }
         }
+
         /// <summary>
         /// Метод разрешающий/запрещающий редактировать параметры
         /// </summary>
@@ -72,6 +62,7 @@ namespace View
                 Ok.Enabled = !value;
             }
         }
+
         /// <summary>
         /// Выбор необходимый тип фигуры
         /// </summary>
@@ -79,48 +70,26 @@ namespace View
         /// <param name="e"></param>
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
+            List<ControlCollection> ListContol = new List<ControlCollection>();
             var create = new CreateTextBox();
             ListContol.Add(Controls);
             ListContol.Add(groupBox1.Controls);
-            create.PerformOperation(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
-        }
-        /// <summary>
-        /// расчет объема фигуры
-        /// </summary>
-        private void SelectionFigyre()
-        {
-            IValumeFigyre VolumeFigure = null;
-            switch ((Figures)cbTypeFigure.SelectedIndex)
+            try
             {
-                case Figures.Box:
-                    {
-                        double heightBox = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
-                        double widthBox = InspectionParametr.Parametr(TextBoxList[1].Text, TextBoxList[1].Name);
-                        double deepBox = InspectionParametr.Parametr(TextBoxList[2].Text, TextBoxList[2].Name);
-                        VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
-                        break;
-                    }
-                case Figures.Sphear:
-                    {
-                        double radiusSphear = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
-                        VolumeFigure = new Sphear(radius: radiusSphear);
-                        break;
-                    }
-
-                case Figures.Pyramid:
-                    {
-                        double heightPyramid = InspectionParametr.Parametr(TextBoxList[0].Text, TextBoxList[0].Name);
-                        double areaPyramid = InspectionParametr.Parametr(TextBoxList[1].Text, TextBoxList[1].Name);
-                        VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
-                        break;
-                    }
+                TextBoxList = create.PerformOperation(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
+                if (_VolumeFigure!=null)
+                {
+                    var calculateVolume = new CalculateVolumeFigures();
+                    calculateVolume.WriteOperation(_VolumeFigure.TypeFigyre, TextBoxList, _VolumeFigure);
+                }
             }
-            if (VolumeFigure != null)
+            catch (ArgumentException)
             {
-                VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                
-                Object= VolumeFigure;
+                MessageBox.Show("system error: 2");
             }
+            
         }
+        
         /// <summary>
         /// проверка при расчете объема фигуры
         /// </summary>
@@ -139,6 +108,27 @@ namespace View
             catch (CellFormatException cellFormatError)
             {
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("System error: 3");
+            }
+        }
+        /// <summary>
+        /// расчет объема фигуры
+        /// </summary>
+        private void SelectionFigyre()
+        {
+            IValumeFigyre VolumeFigure = null;
+            if (TextBoxList != null)
+            {
+                var calculateVolume = new CalculateVolumeFigures();
+                VolumeFigure = calculateVolume.CalculateOperaion(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList);
+                if (VolumeFigure != null)
+                {
+                    VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);
+                    _VolumeFigure = VolumeFigure;
+                }
             }
         }
     }

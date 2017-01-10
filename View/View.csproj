@@ -52,10 +52,9 @@
     <Compile Include="AddOrModify.Designer.cs">
       <DependentUpon>AddOrModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="CalculateVolumeFigures.cs" />
     <Compile Include="CellOutOfRangeExxeption.cs" />
-    <Compile Include="CreateTextBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CreateTextBox.cs" />
     <Compile Include="GeneralForm.cs">
       <SubType>Form</SubType>
     </Compile>
