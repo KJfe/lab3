@@ -9,7 +9,7 @@ using static System.Windows.Forms.Control;
 
 namespace View
 {
-    public class CreateTextBox
+    public class CreateElementForm
     {     
         /// <summary>
         /// Объявление делегата, создание TextBox
@@ -23,7 +23,7 @@ namespace View
         /// <summary>
         /// Конструктор
         /// </summary>
-        public CreateTextBox()
+        public CreateElementForm()
         {
             _createTextBox =
                 new Dictionary<string, Func<BindingList<TextBox>, List<ControlCollection>, BindingList<TextBox>>>

@@ -7,6 +7,9 @@ using ValumeFigyre;
 
 namespace View
 {
+    /// <summary>
+    /// Список Фигур
+    /// </summary>
     enum Figures : int
     {
         Box = 0,
@@ -15,7 +18,9 @@ namespace View
     };
     public partial class ObjectControl : UserControl
     {
-        //private TextBox textBox1;
+        /// <summary>
+        /// Реализация UserControl (праметр формы)
+        /// </summary>
         public ObjectControl()
         {
             InitializeComponent();
