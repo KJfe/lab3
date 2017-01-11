@@ -94,7 +94,7 @@ namespace View
             }
             catch (ArgumentException)
             {
-                MessageBox.Show("system error: 2");
+                MessageBox.Show("The size of the parameters of the first figure more than necessary", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             
         }

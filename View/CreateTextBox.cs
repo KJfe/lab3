@@ -48,11 +48,11 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public BindingList<TextBox> CreatingTextBox(string op, BindingList<TextBox> ss, List<ControlCollection> control)
+        public BindingList<TextBox> CreatingTextBox(string NameOperation, BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            if (!_createTextBox.ContainsKey(op))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", op), "op");
-            return _createTextBox[op](ss, control);
+            if (!_createTextBox.ContainsKey(NameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
+            return _createTextBox[NameOperation](textBoxList, control);
         }
         /// <summary>
         /// вызов делегата для построения label
@@ -61,11 +61,11 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public BindingList<Label> CreateLabel(string op, BindingList<Label> ss, List<ControlCollection> control)
+        public BindingList<Label> CreateLabel(string NameOperation, BindingList<Label> labelList, List<ControlCollection> control)
         {
-            if (!_createLabel.ContainsKey(op))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", op), "op");
-            return _createLabel[op](ss, control);
+            if (!_createLabel.ContainsKey(NameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
+            return _createLabel[NameOperation](labelList, control);
         }
 
         /// <summary>
@@ -74,93 +74,93 @@ namespace View
         /// <param name="TEST"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> ClearBindingListTextBox(BindingList<TextBox> TEST, List<ControlCollection> control)
+        private BindingList<TextBox> ClearBindingListTextBox(BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            if (TEST != null)
+            if (textBoxList != null)
             {
-                foreach (var t in TEST)
+                foreach (var t in textBoxList)
                 {
                     control[0].Remove(t);
                     t.Dispose();
                 }
-                TEST.Clear();
+                textBoxList.Clear();
             }
-            return TEST;
+            return textBoxList;
 
         }
         /// <summary>
         /// Очистка Label
         /// </summary>
-        /// <param name="LabelList"></param>
+        /// <param name="labelList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<Label> ClearBindingListLabel(BindingList<Label> LabelList, List<ControlCollection> control)
+        private BindingList<Label> ClearBindingListLabel(BindingList<Label> labelList, List<ControlCollection> control)
         {
-            if (LabelList != null)
+            if (labelList != null)
             {
-                foreach (var lable in LabelList)
+                foreach (var lable in labelList)
                 {
                     control[0].Remove(lable);
                     lable.Dispose();
                 }
-                LabelList.Clear();
+                labelList.Clear();
             }
-            return LabelList;
+            return labelList;
         }
 
         /// <summary>
         /// Построка TextBox для параллепипеда
         /// </summary>
-        /// <param name="TEST"></param>
+        /// <param name="TextBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForBox(BindingList<TextBox> TEST, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForBox(BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            ClearBindingListTextBox(TEST,control);
-            TEST.Add(CreatingTextBox("Width", 6, 60, control));
-            TEST.Add(CreatingTextBox("Height", 6, 100, control));
-            TEST.Add(CreatingTextBox("Deep", 6, 140, control));
-            return TEST;
+            ClearBindingListTextBox(textBoxList, control);
+            textBoxList.Add(CreatingTextBox("Width", 6, 60, control));
+            textBoxList.Add(CreatingTextBox("Height", 6, 100, control));
+            textBoxList.Add(CreatingTextBox("Deep", 6, 140, control));
+            return textBoxList;
         }
         /// <summary>
         /// Построка TextBox для шара
         /// </summary>
-        /// <param name="TEST"></param>
+        /// <param name="textBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForSphear(BindingList<TextBox> TEST, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForSphear(BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            ClearBindingListTextBox(TEST, control);
-            TEST.Add(CreatingTextBox("Radius", 6, 60, control));
-            return TEST;
+            ClearBindingListTextBox(textBoxList, control);
+            textBoxList.Add(CreatingTextBox("Radius", 6, 60, control));
+            return textBoxList;
         }
         /// <summary>
         /// Построка TextBox для пирамиды
         /// </summary>
-        /// <param name="TEST"></param>
+        /// <param name="textBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForPyramid(BindingList<TextBox> TEST, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForPyramid(BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            ClearBindingListTextBox(TEST, control);
-            TEST.Add(CreatingTextBox("Area", 6, 60, control));
-            TEST.Add(CreatingTextBox("Height", 6, 100, control));
-            return TEST;
+            ClearBindingListTextBox(textBoxList, control);
+            textBoxList.Add(CreatingTextBox("Area", 6, 60, control));
+            textBoxList.Add(CreatingTextBox("Height", 6, 100, control));
+            return textBoxList;
         }
 
         /// <summary>
         /// Создание Label для Box
         /// </summary>
-        /// <param name="LabelList"></param>
+        /// <param name="labelList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<Label> LabelForBox(BindingList<Label> LabelList, List<ControlCollection> control)
+        private BindingList<Label> LabelForBox(BindingList<Label> labelList, List<ControlCollection> control)
         {
-            ClearBindingListLabel(LabelList, control);
-            LabelList.Add(CreatingLabel("Width", 6, 45, control));
-            LabelList.Add(CreatingLabel("Height", 6, 85, control));
-            LabelList.Add(CreatingLabel("Deep", 6, 125, control));
-            return LabelList;
+            ClearBindingListLabel(labelList, control);
+            labelList.Add(CreatingLabel("Width", 6, 45, control));
+            labelList.Add(CreatingLabel("Height", 6, 85, control));
+            labelList.Add(CreatingLabel("Deep", 6, 125, control));
+            return labelList;
         }
         /// <summary>
         /// Создание Label для шара
@@ -168,11 +168,11 @@ namespace View
         /// <param name="TEST"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<Label> LabelForSphear(BindingList<Label> LabelList, List<ControlCollection> control)
+        private BindingList<Label> LabelForSphear(BindingList<Label> labelList, List<ControlCollection> control)
         {
-            ClearBindingListLabel(LabelList, control);
-            LabelList.Add(CreatingLabel("Radius", 6, 45, control));
-            return LabelList;
+            ClearBindingListLabel(labelList, control);
+            labelList.Add(CreatingLabel("Radius", 6, 45, control));
+            return labelList;
         }
         /// <summary>
         /// Создание Label для пирамиды
@@ -180,51 +180,50 @@ namespace View
         /// <param name="TEST"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<Label> LabelForPyramid(BindingList<Label> LabelList, List<ControlCollection> control)
+        private BindingList<Label> LabelForPyramid(BindingList<Label> labelList, List<ControlCollection> control)
         {
-            ClearBindingListLabel(LabelList, control);
-            LabelList.Add(CreatingLabel("Area", 6, 45, control));
-            LabelList.Add(CreatingLabel("Height", 6, 85, control));
-            return LabelList;
+            ClearBindingListLabel(labelList, control);
+            labelList.Add(CreatingLabel("Area", 6, 45, control));
+            labelList.Add(CreatingLabel("Height", 6, 85, control));
+            return labelList;
         }
         
         /// <summary>
         /// Создание TextBox
         /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="LocationX"></param>
-        /// <param name="LocationY"></param>
+        /// <param name="name"></param>
+        /// <param name="locationX"></param>
+        /// <param name="locationY"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private TextBox CreatingTextBox(string Name, int LocationX, int LocationY, List<ControlCollection> control)
+        private TextBox CreatingTextBox(string name, int locationX, int locationY, List<ControlCollection> control)
         {
-            TextBox txb = new TextBox();
-            txb.Name = Name;
-            txb.Location = new System.Drawing.Point(LocationX, LocationY);
-            txb.Size = new System.Drawing.Size(100, 20);
-            txb.Visible = true;
-            control[0].Add(txb);
-            control[1].Add(txb);
-            return (txb);
+            TextBox textBox = new TextBox();
+            textBox.Name = name;
+            textBox.Location = new System.Drawing.Point(locationX, locationY);
+            textBox.Size = new System.Drawing.Size(100, 20);
+            textBox.Visible = true;
+            control[0].Add(textBox);
+            control[1].Add(textBox);
+            return (textBox);
         }
         /// <summary>
         /// Создание Label
         /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="LocationX"></param>
-        /// <param name="LocationY"></param>
+        /// <param name="name"></param>
+        /// <param name="locationX"></param>
+        /// <param name="locationY"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private Label CreatingLabel(string Name, int LocationX, int LocationY, List<ControlCollection> control)
+        private Label CreatingLabel(string name, int locationX, int locationY, List<ControlCollection> control)
         {
-            Label lab = new Label();
-            lab.Name = "Label" + Name;
-            lab.Text = Name;
-            lab.Location = new System.Drawing.Point(LocationX, LocationY);
-            //lab.Visible = true;
-            control[0].Add(lab);
-            control[1].Add(lab);
-            return (lab);
+            Label label = new Label();
+            label.Name = "Label" + name;
+            label.Text = name;
+            label.Location = new System.Drawing.Point(locationX, locationY);
+            control[0].Add(label);
+            control[1].Add(label);
+            return (label);
         }
     }
 }
