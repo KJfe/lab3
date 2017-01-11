@@ -20,6 +20,10 @@ namespace View
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// объявление Подписей к TextBox
+        /// </summary>
+        private BindingList<Label> LabelList = new BindingList<Label>();
         private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
 
         /// <summary>
@@ -76,7 +80,8 @@ namespace View
             ListContol.Add(groupBox1.Controls);
             try
             {
-                TextBoxList = create.PerformOperation(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
+                TextBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
+                LabelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), LabelList, ListContol);
                 if (_VolumeFigure!=null)
                 {
                     var calculateVolume = new CalculateVolumeFigures();
