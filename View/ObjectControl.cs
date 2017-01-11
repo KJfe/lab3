@@ -24,41 +24,45 @@ namespace View
         /// объявление Подписей к TextBox
         /// </summary>
         private BindingList<Label> LabelList = new BindingList<Label>();
+        /// <summary>
+        /// Объявление подписй к Label
+        /// </summary>
         private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
 
+        private IValumeFigyre _volumeFigure;
         /// <summary>
         /// Метод принимающий/отправляющий данные
         /// </summary>
-        private IValumeFigyre _VolumeFigure;
-        public IValumeFigyre Object
+        public IValumeFigyre ObjectFigur
         {
             get
             {
-                return _VolumeFigure;
+                return _volumeFigure;
             }
             set
             {
-                _VolumeFigure = value;
-                if (_VolumeFigure == null|| value.TypeFigyre == "")
+                _volumeFigure = value;
+                if (_volumeFigure == null|| value.TypeFigyre == "")
                     return;
                 Figures fig = (Figures) Enum.Parse(typeof(Figures), value.TypeFigyre);
                 cbTypeFigure.SelectedIndex = Convert.ToInt32(fig);
             }
         }
 
+        
+        private bool _readOnly;
         /// <summary>
         /// Метод разрешающий/запрещающий редактировать параметры
         /// </summary>
-        private bool _ReadOnly;
         public bool ReadOnly
         {
             get
             {
-                return _ReadOnly;
+                return _readOnly;
             }
             set
             {
-                _ReadOnly = value;
+                _readOnly = value;
                 /*Width.Enabled = !value;
                 Height.Enabled = !value;
                 Deep.Enabled = !value;*/
@@ -82,10 +86,10 @@ namespace View
             {
                 TextBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
                 LabelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), LabelList, ListContol);
-                if (_VolumeFigure!=null)
+                if (_volumeFigure!=null)
                 {
                     var calculateVolume = new CalculateVolumeFigures();
-                    calculateVolume.WriteOperation(_VolumeFigure.TypeFigyre, TextBoxList, _VolumeFigure);
+                    calculateVolume.WriteOperation(_volumeFigure.TypeFigyre, TextBoxList, _volumeFigure);
                 }
             }
             catch (ArgumentException)
@@ -132,7 +136,7 @@ namespace View
                 if (VolumeFigure != null)
                 {
                     VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);
-                    _VolumeFigure = VolumeFigure;
+                    _volumeFigure = VolumeFigure;
                 }
             }
         }

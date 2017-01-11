@@ -18,12 +18,12 @@ namespace View
         {
             InitializeComponent();
             objectControl1.ReadOnly = ModifyOrCreate;
-            objectControl1.Object = ModifyFigure;
+            objectControl1.ObjectFigur = ModifyFigure;
         }
 
         private void Close_Click(object sender, EventArgs e)
         {
-            Delegate.DidFinish(objectControl1.Object);
+            Delegate.DidFinish(objectControl1.ObjectFigur);
             Close();
         }
     }

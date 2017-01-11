@@ -46,7 +46,7 @@
             // 
             this.objectControl1.Location = new System.Drawing.Point(3, 5);
             this.objectControl1.Name = "objectControl1";
-            this.objectControl1.Object = null;
+            this.objectControl1.ObjectFigur = null;
             this.objectControl1.ReadOnly = false;
             this.objectControl1.Size = new System.Drawing.Size(165, 229);
             this.objectControl1.TabIndex = 0;

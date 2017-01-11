@@ -10,13 +10,19 @@ using static System.Windows.Forms.Control;
 namespace View
 {
     public class CreateTextBox
-    {
-        
+    {     
         /// <summary>
-        /// Объявление делегата
+        /// Объявление делегата, создание TextBox
         /// </summary>
         private Dictionary<string, Func< BindingList<TextBox>, List<ControlCollection>, BindingList<TextBox>>> _createTextBox;
+        /// <summary>
+        ///Объявление делегата, создание Label
+        /// </summary>
         private Dictionary<string, Func<BindingList<Label>, List<ControlCollection>, BindingList<Label>>> _createLabel;
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public CreateTextBox()
         {
             _createTextBox =
@@ -34,8 +40,9 @@ namespace View
                     { "Pyramid", this.LabelForPyramid},
                 };
         }
+
         /// <summary>
-        /// вызов делегата
+        /// вызов делегата для построения TextBox
         /// </summary>
         /// <param name="op"></param>
         /// <param name="ss"></param>
@@ -48,7 +55,7 @@ namespace View
             return _createTextBox[op](ss, control);
         }
         /// <summary>
-        /// вызов делегата
+        /// вызов делегата для построения label
         /// </summary>
         /// <param name="op"></param>
         /// <param name="ss"></param>
@@ -60,8 +67,9 @@ namespace View
                 throw new ArgumentException(string.Format("Operation {0} is invalid", op), "op");
             return _createLabel[op](ss, control);
         }
+
         /// <summary>
-        /// Очистка формы перед созданием TextBox
+        /// Очистка TextBox
         /// </summary>
         /// <param name="TEST"></param>
         /// <param name="control"></param>
@@ -80,7 +88,12 @@ namespace View
             return TEST;
 
         }
-
+        /// <summary>
+        /// Очистка Label
+        /// </summary>
+        /// <param name="LabelList"></param>
+        /// <param name="control"></param>
+        /// <returns></returns>
         private BindingList<Label> ClearBindingListLabel(BindingList<Label> LabelList, List<ControlCollection> control)
         {
             if (LabelList != null)
@@ -135,6 +148,12 @@ namespace View
             return TEST;
         }
 
+        /// <summary>
+        /// Создание Label для Box
+        /// </summary>
+        /// <param name="LabelList"></param>
+        /// <param name="control"></param>
+        /// <returns></returns>
         private BindingList<Label> LabelForBox(BindingList<Label> LabelList, List<ControlCollection> control)
         {
             ClearBindingListLabel(LabelList, control);
@@ -144,7 +163,7 @@ namespace View
             return LabelList;
         }
         /// <summary>
-        /// Построка TextBox для шара
+        /// Создание Label для шара
         /// </summary>
         /// <param name="TEST"></param>
         /// <param name="control"></param>
@@ -156,7 +175,7 @@ namespace View
             return LabelList;
         }
         /// <summary>
-        /// Построка TextBox для пирамиды
+        /// Создание Label для пирамиды
         /// </summary>
         /// <param name="TEST"></param>
         /// <param name="control"></param>
@@ -168,6 +187,7 @@ namespace View
             LabelList.Add(CreatingLabel("Height", 6, 85, control));
             return LabelList;
         }
+        
         /// <summary>
         /// Создание TextBox
         /// </summary>
@@ -187,7 +207,14 @@ namespace View
             control[1].Add(txb);
             return (txb);
         }
-
+        /// <summary>
+        /// Создание Label
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="LocationX"></param>
+        /// <param name="LocationY"></param>
+        /// <param name="control"></param>
+        /// <returns></returns>
         private Label CreatingLabel(string Name, int LocationX, int LocationY, List<ControlCollection> control)
         {
             Label lab = new Label();

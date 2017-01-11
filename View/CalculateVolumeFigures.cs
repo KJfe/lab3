@@ -11,12 +11,22 @@ namespace View
 {
     class CalculateVolumeFigures
     {
+        /// <summary>
+        /// Объявление итерфейса
+        /// </summary>
         private IValumeFigyre VolumeFigure = null;
         /// <summary>
-        /// Объявление делегата
+        /// Объявление делегата, расчитывающий объем
         /// </summary>
         private Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre>> _calculateVolume;
+        /// <summary>
+        /// Объявление делегата, записывающий имеющиеся данные в TextBox
+        /// </summary>
         private Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre, int>> _writeTextBox;
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public CalculateVolumeFigures()
         {
             _calculateVolume =
@@ -34,6 +44,7 @@ namespace View
                     { "Pyramid", this.WriteForPyramid},
                 };
         }
+        
         /// <summary>
         /// вызов делегата для расчета данных
         /// </summary>
@@ -60,6 +71,7 @@ namespace View
                 throw new ArgumentException(string.Format("Operation {0} is invalid", op), "op");
             return _writeTextBox[op](TextBoxList, Parametrs);
         }
+        
         /// <summary>
         /// Расчет объема параллепипеда
         /// </summary>
