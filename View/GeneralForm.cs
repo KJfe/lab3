@@ -25,11 +25,11 @@ namespace View
         /// <summary>
         /// объявление Подписей к TextBox
         /// </summary>
-        private BindingList<Label> labelList = new BindingList<Label>();
+        private BindingList<Label> LabelList = new BindingList<Label>();
         /// <summary>
         /// Объявление подписй к Label
         /// </summary>
-        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
+        private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
 
         /// <summary>
         /// Реализация интефейса при запуске
@@ -42,7 +42,7 @@ namespace View
         /// Создание List<> для хранения данных в системе и работой с ними
         /// </summary>
        
-        public List<IValumeFigyre> listFigure = new List<IValumeFigyre>();
+        private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
         /// <summary>
         /// Вызов формы для создания фигуры
         /// </summary>
@@ -56,7 +56,7 @@ namespace View
             {
                 if (_figure != null)
                 {
-                    listFigure.Add(_figure);
+                    ListFigure.Add(_figure);
                     _figure = null;
                 }
                 WriteInGrid(); // Запись данных Таблицу
@@ -73,14 +73,14 @@ namespace View
             if (_rowIndexGrid == -1)
                 return;
             //int index = _e.RowIndex;
-            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, listFigure[_rowIndexGrid]);
+            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, ListFigure[_rowIndexGrid]);
             modifyFigure.Delegate = this;
             modifyFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
                 {
-                    listFigure.RemoveAt(_rowIndexGrid);
-                    listFigure.Insert(_rowIndexGrid, _figure);
+                    ListFigure.RemoveAt(_rowIndexGrid);
+                    ListFigure.Insert(_rowIndexGrid, _figure);
                     Grid.Rows.RemoveAt(_rowIndexGrid);
                     Grid.Rows.Insert(_rowIndexGrid, _figure.TypeFigyre, _figure.Valume);
                     _figure = null;
@@ -99,9 +99,9 @@ namespace View
             {
                 try
                 {
-                    listFigure.RemoveAt(Grid.CurrentRow.Index);
+                    ListFigure.RemoveAt(Grid.CurrentRow.Index);
                     Grid.Rows.Remove(Grid.CurrentRow);
-                    if (listFigure.Count == 0)
+                    if (ListFigure.Count == 0)
                         Modify.Enabled = false;
                 }
                 catch (System.InvalidOperationException)  { }
@@ -130,7 +130,7 @@ namespace View
                 dataTabel.Columns.Add("Deep");
                 dataSet.Tables.Add(dataTabel); //в ds создается таблица, с названием и колонками, созданными выше
                 
-                foreach (var figures in listFigure)
+                foreach (var figures in ListFigure)
                 {
                     
 
@@ -179,20 +179,20 @@ namespace View
                     if (item["Figure"].ToString() == "Parallepiped")
                     {
 
-                        listFigure.Add(new Box(
+                        ListFigure.Add(new Box(
                             InspectionParametr.ParametrObject(item["Height"], "Height"),
                             InspectionParametr.ParametrObject(item["Width"], "Width"),
                             InspectionParametr.ParametrObject(item["Deep"], "Deep")));
                     }
                     else if (item["Figure"].ToString() == "Sphear")
                     {
-                        listFigure.Add(new Sphear(
+                        ListFigure.Add(new Sphear(
                             InspectionParametr.ParametrObject(item["Width"], "Radius")
                             ));
                     }
                     else
                     {
-                        listFigure.Add(new Pyramid(
+                        ListFigure.Add(new Pyramid(
                             InspectionParametr.ParametrObject(item["Width"], "Area"),
                             InspectionParametr.ParametrObject(item["Height"], "Height")));
                     }
@@ -244,7 +244,7 @@ namespace View
         private void WriteInGrid()
         {
             Grid.Rows.Clear();
-            foreach (var figur in listFigure)
+            foreach (var figur in ListFigure)
             {
                 Grid.Rows.Add(figur.TypeFigyre, figur.Valume);
             }
@@ -259,7 +259,7 @@ namespace View
             if (Grid.Rows.Count > 0)
             {
                 Grid.Rows.Clear();
-                listFigure.Clear();
+                ListFigure.Clear();
                 Modify.Enabled = false;
             }
             else
@@ -312,20 +312,20 @@ namespace View
                             Box boxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
                                 width: random.NextDouble() + random.Next(0, maxRandom),
                                 deep: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(boxVolume);
+                            ListFigure.Add(boxVolume);
                             break;
                         }
                     case 1:
                         {
                             Sphear sphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(sphearVolume);
+                            ListFigure.Add(sphearVolume);
                             break;
                         }
                     case 2:
                         {
                             Pyramid pyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
                                 height: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(pyramidVolume);
+                            ListFigure.Add(pyramidVolume);
                             break;
                         }
                     default:
@@ -334,7 +334,7 @@ namespace View
 
             }
             Grid.Rows.Clear();
-            foreach (var figure in listFigure)
+            foreach (var figure in ListFigure)
             {
                 Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
             }
