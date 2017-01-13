@@ -48,11 +48,11 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public BindingList<TextBox> CreatingTextBox(string NameOperation, BindingList<TextBox> textBoxList, List<ControlCollection> control)
+        public BindingList<TextBox> CreatingTextBox(string nameOperation, BindingList<TextBox> textBoxList, List<ControlCollection> control)
         {
-            if (!_createTextBox.ContainsKey(NameOperation))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
-            return _createTextBox[NameOperation](textBoxList, control);
+            if (!_createTextBox.ContainsKey(nameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
+            return _createTextBox[nameOperation](textBoxList, control);
         }
         /// <summary>
         /// вызов делегата для построения label
@@ -61,11 +61,11 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public BindingList<Label> CreateLabel(string NameOperation, BindingList<Label> labelList, List<ControlCollection> control)
+        public BindingList<Label> CreateLabel(string nameOperation, BindingList<Label> labelList, List<ControlCollection> control)
         {
-            if (!_createLabel.ContainsKey(NameOperation))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
-            return _createLabel[NameOperation](labelList, control);
+            if (!_createLabel.ContainsKey(nameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
+            return _createLabel[nameOperation](labelList, control);
         }
 
         /// <summary>
@@ -203,7 +203,8 @@ namespace View
             textBox.Location = new System.Drawing.Point(locationX, locationY);
             textBox.Size = new System.Drawing.Size(100, 20);
             textBox.Visible = true;
-            control[0].Add(textBox);
+            //не обязательно передавать в обычнх контрол можно сразу передедать через groupBox
+            //control[0].Add(textBox);
             control[1].Add(textBox);
             return (textBox);
         }
@@ -221,7 +222,8 @@ namespace View
             label.Name = "Label" + name;
             label.Text = name;
             label.Location = new System.Drawing.Point(locationX, locationY);
-            control[0].Add(label);
+            //не обязательно передавать в обычнх контрол можно сразу передедать через groupBox
+            //control[0].Add(label);
             control[1].Add(label);
             return (label);
         }

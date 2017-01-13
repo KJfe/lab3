@@ -48,28 +48,28 @@ namespace View
         /// <summary>
         /// вызов делегата для расчета данных
         /// </summary>
-        /// <param name="NameOperation"></param>
+        /// <param name="nameOperation"></param>
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public IValumeFigyre CalculateOperaion(string NameOperation, BindingList<TextBox> textBoxList)
+        public IValumeFigyre CalculateOperaion(string nameOperation, BindingList<TextBox> textBoxList)
         {
-            if (!_calculateVolume.ContainsKey(NameOperation))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
-            return _calculateVolume[NameOperation](textBoxList);
+            if (!_calculateVolume.ContainsKey(nameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
+            return _calculateVolume[nameOperation](textBoxList);
         }
         /// <summary>
         /// вызов делегата для вывода данных на TextBox
         /// </summary>
-        /// <param name="NameOperation"></param>
+        /// <param name="nameOperation"></param>
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int WriteOperation(string NameOperation, BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
+        public int WriteOperation(string nameOperation, BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
         {
-            if (!_writeTextBox.ContainsKey(NameOperation))
-                throw new ArgumentException(string.Format("Operation {0} is invalid", NameOperation), "op");
-            return _writeTextBox[NameOperation](textBoxList, parametrs);
+            if (!_writeTextBox.ContainsKey(nameOperation))
+                throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
+            return _writeTextBox[nameOperation](textBoxList, parametrs);
         }
         
         /// <summary>

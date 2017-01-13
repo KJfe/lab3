@@ -9,17 +9,25 @@ namespace ValumeFigyre
     //Реализуем интерфейс пирамиды
     public class Pyramid : IValumeFigyre
     {
+        /// <summary>
+        /// реализация полей
+        /// </summary>
         private double _area;
         private double _height;
-
+        /// <summary>
+        /// Конструктор класса пирамиды, прием параметров фигуры
+        /// </summary>
+        /// <param name="area"></param>
+        /// <param name="height"></param>
         public Pyramid(double area, double height)
         {  
                 _area = area;
                 _height = height;
         }
-
-        //Реализуем методы интерфейса
-        public  double Valume
+        /// <summary>
+        /// Реализация интерфеййса, расчет объема
+        /// </summary>
+        public double Valume
         {
             get
             {
@@ -27,7 +35,9 @@ namespace ValumeFigyre
             }
 
         }
-
+        /// <summary>
+        /// Реализация интерфеййса, передача типа фигуры
+        /// </summary>
         public string TypeFigyre
         {
             get
@@ -35,7 +45,9 @@ namespace ValumeFigyre
                 return "Pyramid";
             }
         }
-
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
         public double[] Parametr
         {
             get

@@ -9,13 +9,21 @@ namespace ValumeFigyre
     //Реализуем интерфейс шара
     public class Sphear : IValumeFigyre
     {
+        /// <summary>
+        /// реализация поля
+        /// </summary>
         private double _radius;
+        /// <summary>
+        /// Конструктор класса шара, приме параметров
+        /// </summary>
+        /// <param name="radius"></param>
         public Sphear(double radius)
         {         
                 _radius = radius;     
         }
-
-        //Реализуем свойства интерфейса
+        /// <summary>
+        /// Реализация интерфеййса, расчет объема
+        /// </summary>
         public double Valume
         {
             get
@@ -23,7 +31,9 @@ namespace ValumeFigyre
                 return Math.Round(((4 * Math.PI * Math.Pow(_radius, 3)) / 3),3);
             }
         }
-
+        /// <summary>
+        /// Реализация интерфеййса, передача типа фигуры
+        /// </summary>
         public string TypeFigyre
         {
             get
@@ -31,7 +41,9 @@ namespace ValumeFigyre
                 return "Sphear";
             }
         }
-
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
         public double[] Parametr
         {
             get

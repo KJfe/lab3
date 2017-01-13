@@ -19,6 +19,11 @@ namespace View
     public partial class ObjectControl : UserControl
     {
         /// <summary>
+        /// Реализация полей
+        /// </summary>
+        private bool _readOnly;
+        private IValumeFigyre _volumeFigure;
+        /// <summary>
         /// Реализация UserControl (праметр формы)
         /// </summary>
         public ObjectControl()
@@ -34,7 +39,6 @@ namespace View
         /// </summary>
         private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
 
-        private IValumeFigyre _volumeFigure;
         /// <summary>
         /// Метод принимающий/отправляющий данные
         /// </summary>
@@ -49,13 +53,10 @@ namespace View
                 _volumeFigure = value;
                 if (_volumeFigure == null|| value.TypeFigyre == "")
                     return;
-                Figures fig = (Figures) Enum.Parse(typeof(Figures), value.TypeFigyre);
-                cbTypeFigure.SelectedIndex = Convert.ToInt32(fig);
+                Figures typeFigur = (Figures) Enum.Parse(typeof(Figures), value.TypeFigyre);
+                cbTypeFigure.SelectedIndex = Convert.ToInt32(typeFigur);
             }
         }
-
-        
-        private bool _readOnly;
         /// <summary>
         /// Метод разрешающий/запрещающий редактировать параметры
         /// </summary>
@@ -83,14 +84,14 @@ namespace View
         /// <param name="e"></param>
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<ControlCollection> ListContol = new List<ControlCollection>();
-            var create = new CreateTextBox();
-            ListContol.Add(Controls);
-            ListContol.Add(groupBox1.Controls);
+            List<ControlCollection> listContol = new List<ControlCollection>();
+            var create = new CreateElementForm();
+            listContol.Add(Controls);
+            listContol.Add(groupBox1.Controls);
             try
             {
-                TextBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, ListContol);
-                LabelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), LabelList, ListContol);
+                TextBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, listContol);
+                LabelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), LabelList, listContol);
                 if (_volumeFigure!=null)
                 {
                     var calculateVolume = new CalculateVolumeFigures();

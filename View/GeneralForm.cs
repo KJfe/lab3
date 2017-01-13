@@ -19,6 +19,7 @@ namespace View
         /// Приватное поле
         /// </summary>
         private IValumeFigyre _figure;
+        private DataGridViewCellEventArgs _e;
         /// <summary>
         /// Реализация интефейса при запуске
         /// </summary>
@@ -29,7 +30,7 @@ namespace View
         /// <summary>
         /// Создание List<> для хранения данных в системе и работой с ними
         /// </summary>
-        private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
+        private List<IValumeFigyre> listFigure = new List<IValumeFigyre>();
         /// <summary>
         /// Вызов формы для создания фигуры
         /// </summary>
@@ -37,18 +38,43 @@ namespace View
         /// <param name="e"></param>
         private void AddFigyre_Click(object sender, EventArgs e)
         {
-            AddOrModify AddFigure = new AddOrModify(false,null);
-            AddFigure.Delegate = this;
-            AddFigure.FormClosed += (obj, arg) =>
+            AddOrModify addFigure = new AddOrModify(false,null);
+            addFigure.Delegate = this;
+            addFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
                 {
-                    ListFigure.Add(_figure);
+                    listFigure.Add(_figure);
                     _figure = null;
                 }
                 WriteInGrid(); // Запись данных Таблицу
             };
-            AddFigure.ShowDialog();
+            addFigure.ShowDialog();
+        }
+        /// <summary>
+        /// Вызов формы для редактирования данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Modify_Click(object sender, EventArgs e)
+        {
+            if (_e == null)
+                return;
+            int index = _e.RowIndex;
+            AddOrModify modifyFigure = new AddOrModify(false, listFigure[index]);
+            modifyFigure.Delegate = this;
+            modifyFigure.FormClosed += (obj, arg) =>
+            {
+                if (_figure != null)
+                {
+                    listFigure.RemoveAt(index);
+                    listFigure.Insert(index, _figure);
+                    Grid.Rows.RemoveAt(index);
+                    Grid.Rows.Insert(index, _figure.TypeFigyre, _figure.Valume);
+                    _figure = null;
+                }
+            };
+            modifyFigure.ShowDialog();
         }
         /// <summary>
         /// Удаление построчно
@@ -61,9 +87,9 @@ namespace View
             {
                 try
                 {
-                    ListFigure.RemoveAt(Grid.CurrentRow.Index);
+                    listFigure.RemoveAt(Grid.CurrentRow.Index);
                     Grid.Rows.Remove(Grid.CurrentRow);
-                    if (ListFigure.Count == 0)
+                    if (listFigure.Count == 0)
                         Modify.Enabled = false;
                 }
                 catch (System.InvalidOperationException)  { }
@@ -98,23 +124,23 @@ namespace View
                 {
                     case 0:
                         {
-                            Box BoxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
+                            Box boxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
                                 width: random.NextDouble() + random.Next(0, maxRandom),
                                 deep: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(BoxVolume);
+                            listFigure.Add(boxVolume);
                             break;
                         }
                     case 1:
                         {
-                            Sphear SphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(SphearVolume);
+                            Sphear sphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
+                            listFigure.Add(sphearVolume);
                             break;
                         }
                     case 2:
                         {
-                            Pyramid PyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
+                            Pyramid pyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
                                 height: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(PyramidVolume);
+                            listFigure.Add(pyramidVolume);
                             break;
                         }
                     default:
@@ -123,7 +149,7 @@ namespace View
 
             }
             Grid.Rows.Clear();
-            foreach (var figure in ListFigure)
+            foreach (var figure in listFigure)
             {
                 Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
             }
@@ -138,42 +164,42 @@ namespace View
         {
             try
             {
-                DataSet ds = new DataSet(); // создаем пока что пустой кэш данных
-                DataTable dt = new DataTable(); // создаем пока что пустую таблицу данных
-                dt.TableName = "Figures"; // название таблицы
-                dt.Columns.Add("Figure"); // название колонок
-                dt.Columns.Add("Volume");
-                dt.Columns.Add("Width");
-                dt.Columns.Add("Height");
-                dt.Columns.Add("Deep");
-                ds.Tables.Add(dt); //в ds создается таблица, с названием и колонками, созданными выше
-                foreach(var fig in ListFigure)
+                DataSet dataSet = new DataSet(); // создаем пока что пустой кэш данных
+                DataTable dataTabel = new DataTable(); // создаем пока что пустую таблицу данных
+                dataTabel.TableName = "Figures"; // название таблицы
+                dataTabel.Columns.Add("Figure"); // название колонок
+                dataTabel.Columns.Add("Volume");
+                dataTabel.Columns.Add("Width");
+                dataTabel.Columns.Add("Height");
+                dataTabel.Columns.Add("Deep");
+                dataSet.Tables.Add(dataTabel); //в ds создается таблица, с названием и колонками, созданными выше
+                foreach(var figures in listFigure)
                 {
-                    DataRow row = ds.Tables["Figures"].NewRow();
-                    row["Figure"] = fig.TypeFigyre;  //в столбец этой строки заносим данные из первого столбца dataGridView1
-                    row["Volume"] = fig.Valume; // то же самое со вторыми столбцами
-                    if (fig.TypeFigyre=="Parallepiped")
+                    DataRow daraRow = dataSet.Tables["Figures"].NewRow();
+                    daraRow["Figure"] = figures.TypeFigyre;  //в столбец этой строки заносим данные из первого столбца dataGridView1
+                    daraRow["Volume"] = figures.Valume; // то же самое со вторыми столбцами
+                    if (figures.TypeFigyre=="Parallepiped")
                     {
-                        row["Width"] = fig.Parametr[0];
-                        row["Height"] = fig.Parametr[1];
-                        row["Deep"] = fig.Parametr[2];
+                        daraRow["Width"] = figures.Parametr[0];
+                        daraRow["Height"] = figures.Parametr[1];
+                        daraRow["Deep"] = figures.Parametr[2];
                     }
-                    else if(fig.TypeFigyre == "Sphear")
+                    else if(figures.TypeFigyre == "Sphear")
                     {
-                        row["Width"] = fig.Parametr[0];
-                        row["Height"] = "";
-                        row["Deep"] = "";
+                        daraRow["Width"] = figures.Parametr[0];
+                        daraRow["Height"] = "";
+                        daraRow["Deep"] = "";
                     }
                     else
                     {
-                        row["Width"] = fig.Parametr[0];
-                        row["Height"] = fig.Parametr[1];
-                        row["Deep"] = "";
+                        daraRow["Width"] = figures.Parametr[0];
+                        daraRow["Height"] = figures.Parametr[1];
+                        daraRow["Deep"] = "";
                     }
-                    ds.Tables["Figures"].Rows.Add(row);
+                    dataSet.Tables["Figures"].Rows.Add(daraRow);
                 }
                 saveDialog.ShowDialog();
-                ds.WriteXml(saveDialog.FileName);
+                dataSet.WriteXml(saveDialog.FileName);
                 MessageBox.Show("Vol file successfully saved.", "Complete");
             }
             catch
@@ -185,29 +211,29 @@ namespace View
         /// Запись и проверка данных с XML файла в List<>
         /// </summary>
         /// <param name="item"></param>
-        private void WrittenInList(DataSet ds)
+        private void WrittenInList(DataSet dataSet)
         {
-            foreach (DataRow item in ds.Tables["Figures"].Rows)
+            foreach (DataRow item in dataSet.Tables["Figures"].Rows)
             {
                 try
                 {
                     if (item["Figure"].ToString() == "Parallepiped")
                     {
 
-                        ListFigure.Add(new Box(
+                        listFigure.Add(new Box(
                             InspectionParametr.ParametrObject(item["Height"], "Height"),
                             InspectionParametr.ParametrObject(item["Width"], "Width"),
                             InspectionParametr.ParametrObject(item["Deep"], "Deep")));
                     }
                     else if (item["Figure"].ToString() == "Sphear")
                     {
-                        ListFigure.Add(new Sphear(
+                        listFigure.Add(new Sphear(
                             InspectionParametr.ParametrObject(item["Width"], "Radius")
                             ));
                     }
                     else
                     {
-                        ListFigure.Add(new Pyramid(
+                        listFigure.Add(new Pyramid(
                             InspectionParametr.ParametrObject(item["Width"], "Area"),
                             InspectionParametr.ParametrObject(item["Height"], "Height")));
                     }
@@ -229,21 +255,25 @@ namespace View
         /// <param name="e"></param>
         private void Open_Click(object sender, EventArgs e)
         {
-            openDialog.ShowDialog();
-            if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length !=0)) // если существует данный файл
+            // openDialog.ShowDialog();
+            if (openDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            else if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length != 0)) // если существует данный файл
+            {
+                DataSet dataSet = new DataSet(); // создаем новый пустой кэш данных
+                try
                 {
-                    DataSet ds = new DataSet(); // создаем новый пустой кэш данных
-                    try
-                    {
-                        ds.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла                                             
-                        WrittenInList(ds);
-                        WriteInGrid();// Запись данных Таблицу
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Error reading file, the file is corrupted","Error", MessageBoxButtons.OK,MessageBoxIcon.Error);
-                    }
+                    dataSet.ReadXml(openDialog.FileName); // записываем в него XML-данные из файла                                             
+                    WrittenInList(dataSet);
+                    WriteInGrid();// Запись данных Таблицу
                 }
+                catch (Exception)
+                {
+                    MessageBox.Show("Error reading file, the file is corrupted", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
         /// <summary>
         /// Запись данных с List<> в Таблицу
@@ -251,9 +281,9 @@ namespace View
         private void WriteInGrid()
         {
             Grid.Rows.Clear();
-            foreach (var figure in ListFigure)
+            foreach (var figur in listFigure)
             {
-                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+                Grid.Rows.Add(figur.TypeFigyre, figur.Valume);
             }
         }
         /// <summary>
@@ -266,7 +296,7 @@ namespace View
             if (Grid.Rows.Count > 0)
             {
                 Grid.Rows.Clear();
-                ListFigure.Clear();
+                listFigure.Clear();
                 Modify.Enabled = false;
             }
             else
@@ -277,57 +307,56 @@ namespace View
         /// <summary>
         /// Отображение подробных данных в таблице
         /// </summary>
-        private DataGridViewCellEventArgs _e;
+        
+        /// <summary>
+        /// объявление Подписей к TextBox
+        /// </summary>
+        private BindingList<Label> labelList = new BindingList<Label>();
+        /// <summary>
+        /// Объявление подписй к Label
+        /// </summary>
+        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
+
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1)
                 return;
             _e = e;
             Modify.Enabled = true;
-            TypeFigure.Text = ListFigure[e.RowIndex].TypeFigyre;
-            if (ListFigure[e.RowIndex].TypeFigyre == "Sphear")
+            TypeFigure.Text = listFigure[e.RowIndex].TypeFigyre;
+            if (listFigure[e.RowIndex].TypeFigyre == "Sphear")
             {
-                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
+                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
                 YParametr.Text = "";
                 ZParametr.Text = "";
             }
-            else if (ListFigure[e.RowIndex].TypeFigyre == "Box")
+            else if (listFigure[e.RowIndex].TypeFigyre == "Box")
             {
-                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
-                YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();
-                ZParametr.Text = ListFigure[e.RowIndex].Parametr[2].ToString();
+                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
+                YParametr.Text = listFigure[e.RowIndex].Parametr[1].ToString();
+                ZParametr.Text = listFigure[e.RowIndex].Parametr[2].ToString();
             }
             else
             {
-                XParametr.Text = ListFigure[e.RowIndex].Parametr[0].ToString();
-                YParametr.Text = ListFigure[e.RowIndex].Parametr[1].ToString();
+                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
+                YParametr.Text = listFigure[e.RowIndex].Parametr[1].ToString();
                 ZParametr.Text = "";
             }
-        }
-        /// <summary>
-        /// Вызов формы для редактирования данных
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Modify_Click(object sender, EventArgs e)
-        {
-            if (_e == null)
-                return;
-            int index = _e.RowIndex;
-            AddOrModify ModifyFigure = new AddOrModify(false, ListFigure[index]);
-            ModifyFigure.Delegate = this;
-            ModifyFigure.FormClosed += (obj, arg) =>
+            // возможно переделать под динамическое создание текст боксов для отображения свойств выбранного объекта в Grid
+            /*List<System.Windows.Forms.Control.ControlCollection> listContol = new List<System.Windows.Forms.Control.ControlCollection>();
+            listContol.Add(Controls);
+            listContol.Add(groupBox1.Controls);
+            CreateElementForm textBox = new CreateElementForm();
+            textBox.CreatingTextBox(ListFigure[e.RowIndex].TypeFigyre, TextBoxList, listContol);
+            try
             {
-                if (_figure != null)
-                {
-                    ListFigure.RemoveAt(index);
-                    ListFigure.Insert(index,_figure);
-                    Grid.Rows.RemoveAt(index);
-                    Grid.Rows.Insert(index, _figure.TypeFigyre, _figure.Valume);
-                    _figure = null;
-                }    
-            };
-            ModifyFigure.ShowDialog();
+                TextBoxList = textBox.CreatingTextBox(ListFigure[e.RowIndex].TypeFigyre, TextBoxList, listContol);
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("The size of the parameters of the first figure more than necessary", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }*/
         }
+        
     }
 }
