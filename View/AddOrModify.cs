@@ -13,14 +13,26 @@ namespace View
 {
     public partial class AddOrModify : Form
     {
+        /// <summary>
+        /// объявление делегата
+        /// </summary>
         public IAddObjectDelegate Delegate { get; set; }
+        /// <summary>
+        /// инициализация конструктора и входных параметров
+        /// </summary>
+        /// <param name="ModifyOrCreate"></param>
+        /// <param name="ModifyFigure"></param>
         public AddOrModify(bool ModifyOrCreate, IValumeFigyre ModifyFigure)
         {
             InitializeComponent();
             objectControl1.ReadOnly = ModifyOrCreate;
             objectControl1.ObjectFigur = ModifyFigure;
         }
-
+        /// <summary>
+        /// Закрытие ормы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close_Click(object sender, EventArgs e)
         {
             Delegate.DidFinish(objectControl1.ObjectFigur);

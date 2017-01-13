@@ -33,11 +33,11 @@ namespace View
         /// <summary>
         /// объявление Подписей к TextBox
         /// </summary>
-        private BindingList<Label> LabelList = new BindingList<Label>();
+        private BindingList<Label> labelList = new BindingList<Label>();
         /// <summary>
         /// Объявление подписй к Label
         /// </summary>
-        private BindingList<TextBox> TextBoxList = new BindingList<TextBox>();
+        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
 
         /// <summary>
         /// Метод принимающий/отправляющий данные
@@ -90,12 +90,12 @@ namespace View
             listContol.Add(groupBox1.Controls);
             try
             {
-                TextBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList, listContol);
-                LabelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), LabelList, listContol);
+                textBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList, listContol);
+                labelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), labelList, listContol);
                 if (_volumeFigure!=null)
                 {
                     var calculateVolume = new CalculateVolumeFigures();
-                    calculateVolume.WriteOperation(_volumeFigure.TypeFigyre, TextBoxList, _volumeFigure);
+                    calculateVolume.WriteOperation(_volumeFigure.TypeFigyre, textBoxList, _volumeFigure);
                 }
             }
             catch (ArgumentException)
@@ -135,10 +135,10 @@ namespace View
         private void SelectionFigyre()
         {
             IValumeFigyre VolumeFigure = null;
-            if (TextBoxList != null)
+            if (textBoxList != null)
             {
                 var calculateVolume = new CalculateVolumeFigures();
-                VolumeFigure = calculateVolume.CalculateOperaion(((Figures)cbTypeFigure.SelectedIndex).ToString(), TextBoxList);
+                VolumeFigure = calculateVolume.CalculateOperaion(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList);
                 if (VolumeFigure != null)
                 {
                     VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);

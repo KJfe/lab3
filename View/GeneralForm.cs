@@ -316,7 +316,11 @@ namespace View
         /// Объявление подписй к Label
         /// </summary>
         private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
-
+        /// <summary>
+        /// Отображение параметров, если выбран элемент в Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex == -1)
