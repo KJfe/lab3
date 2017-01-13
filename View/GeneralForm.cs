@@ -60,8 +60,9 @@ namespace View
         {
             if (_e == null)
                 return;
+            
             int index = _e.RowIndex;
-            AddOrModify modifyFigure = new AddOrModify(false, listFigure[index]);
+            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, listFigure[index]);
             modifyFigure.Delegate = this;
             modifyFigure.FormClosed += (obj, arg) =>
             {

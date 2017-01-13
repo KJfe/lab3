@@ -104,9 +104,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ValumeFigyre\Model.csproj">
       <Project>{d5b2e53a-8768-4a26-a9c6-972c8a0abd9d}</Project>
       <Name>Model</Name>

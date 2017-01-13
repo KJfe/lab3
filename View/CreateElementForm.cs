@@ -14,19 +14,18 @@ namespace View
         /// <summary>
         /// Объявление делегата, создание TextBox
         /// </summary>
-        private Dictionary<string, Func< BindingList<TextBox>, List<ControlCollection>, BindingList<TextBox>>> _createTextBox;
+        private Dictionary<string, Func< BindingList<TextBox>, List<ControlCollection>, bool, BindingList<TextBox>>> _createTextBox;
         /// <summary>
         ///Объявление делегата, создание Label
         /// </summary>
         private Dictionary<string, Func<BindingList<Label>, List<ControlCollection>, BindingList<Label>>> _createLabel;
-
         /// <summary>
         /// Конструктор
         /// </summary>
         public CreateElementForm()
         {
             _createTextBox =
-                new Dictionary<string, Func<BindingList<TextBox>, List<ControlCollection>, BindingList<TextBox>>>
+                new Dictionary<string, Func<BindingList<TextBox>, List<ControlCollection>, bool, BindingList<TextBox>>>
                 {
                     { "Box", this.TextBoxForBox},
                     { "Sphear", this.TextBoxForSphear},
@@ -48,11 +47,11 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public BindingList<TextBox> CreatingTextBox(string nameOperation, BindingList<TextBox> textBoxList, List<ControlCollection> control)
+        public BindingList<TextBox> CreatingTextBox(string nameOperation, BindingList<TextBox> textBoxList, List<ControlCollection> control, bool enabledTextBox)
         {
             if (!_createTextBox.ContainsKey(nameOperation))
                 throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
-            return _createTextBox[nameOperation](textBoxList, control);
+            return _createTextBox[nameOperation](textBoxList, control, enabledTextBox);
         }
         /// <summary>
         /// вызов делегата для построения label
@@ -114,12 +113,12 @@ namespace View
         /// <param name="TextBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForBox(BindingList<TextBox> textBoxList, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForBox(BindingList<TextBox> textBoxList, List<ControlCollection> control, bool enabledTextBox)
         {
             ClearBindingListTextBox(textBoxList, control);
-            textBoxList.Add(CreatingTextBox("Width", 6, 60, control));
-            textBoxList.Add(CreatingTextBox("Height", 6, 100, control));
-            textBoxList.Add(CreatingTextBox("Deep", 6, 140, control));
+            textBoxList.Add(CreatingTextBox("Width", 6, 60, control, enabledTextBox));
+            textBoxList.Add(CreatingTextBox("Height", 6, 100, control, enabledTextBox));
+            textBoxList.Add(CreatingTextBox("Deep", 6, 140, control, enabledTextBox));
             return textBoxList;
         }
         /// <summary>
@@ -128,10 +127,10 @@ namespace View
         /// <param name="textBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForSphear(BindingList<TextBox> textBoxList, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForSphear(BindingList<TextBox> textBoxList, List<ControlCollection> control, bool enabledTextBox)
         {
             ClearBindingListTextBox(textBoxList, control);
-            textBoxList.Add(CreatingTextBox("Radius", 6, 60, control));
+            textBoxList.Add(CreatingTextBox("Radius", 6, 60, control, enabledTextBox));
             return textBoxList;
         }
         /// <summary>
@@ -140,11 +139,11 @@ namespace View
         /// <param name="textBoxList"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private BindingList<TextBox> TextBoxForPyramid(BindingList<TextBox> textBoxList, List<ControlCollection> control)
+        private BindingList<TextBox> TextBoxForPyramid(BindingList<TextBox> textBoxList, List<ControlCollection> control, bool enabledTextBox)
         {
             ClearBindingListTextBox(textBoxList, control);
-            textBoxList.Add(CreatingTextBox("Area", 6, 60, control));
-            textBoxList.Add(CreatingTextBox("Height", 6, 100, control));
+            textBoxList.Add(CreatingTextBox("Area", 6, 60, control, enabledTextBox));
+            textBoxList.Add(CreatingTextBox("Height", 6, 100, control, enabledTextBox));
             return textBoxList;
         }
 
@@ -187,7 +186,13 @@ namespace View
             labelList.Add(CreatingLabel("Height", 6, 85, control));
             return labelList;
         }
-        
+
+        private BindingList<TextBox> VisibleTextBoxForBox(BindingList<TextBox> textBoxList)
+        {
+
+            return textBoxList;
+        }
+
         /// <summary>
         /// Создание TextBox
         /// </summary>
@@ -196,13 +201,14 @@ namespace View
         /// <param name="locationY"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        private TextBox CreatingTextBox(string name, int locationX, int locationY, List<ControlCollection> control)
+        private TextBox CreatingTextBox(string name, int locationX, int locationY, List<ControlCollection> control, bool enabledTextBox)
         {
             TextBox textBox = new TextBox();
             textBox.Name = name;
             textBox.Location = new System.Drawing.Point(locationX, locationY);
             textBox.Size = new System.Drawing.Size(100, 20);
             textBox.Visible = true;
+            textBox.Enabled = enabledTextBox;
             //не обязательно передавать в обычнх контрол можно сразу передедать через groupBox
             //control[0].Add(textBox);
             control[1].Add(textBox);

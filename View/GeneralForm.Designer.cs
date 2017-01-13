@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Modify = new System.Windows.Forms.Button();
             this.TypeFigure = new System.Windows.Forms.Label();
             this.ZParametr = new System.Windows.Forms.TextBox();
             this.YParametr = new System.Windows.Forms.TextBox();
@@ -47,7 +48,7 @@
             this.AddFigure = new System.Windows.Forms.Button();
             this.saveDialog = new System.Windows.Forms.SaveFileDialog();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
-            this.Modify = new System.Windows.Forms.Button();
+            this.CheckOrModify = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -55,6 +56,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.CheckOrModify);
             this.groupBox1.Controls.Add(this.Modify);
             this.groupBox1.Controls.Add(this.TypeFigure);
             this.groupBox1.Controls.Add(this.ZParametr);
@@ -70,6 +72,17 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elements";
+            // 
+            // Modify
+            // 
+            this.Modify.Enabled = false;
+            this.Modify.Location = new System.Drawing.Point(5, 287);
+            this.Modify.Name = "Modify";
+            this.Modify.Size = new System.Drawing.Size(75, 23);
+            this.Modify.TabIndex = 10;
+            this.Modify.Text = "Modify";
+            this.Modify.UseVisualStyleBackColor = true;
+            this.Modify.Click += new System.EventHandler(this.Modify_Click);
             // 
             // TypeFigure
             // 
@@ -126,26 +139,26 @@
             // Grid
             // 
             this.Grid.AllowUserToAddRows = false;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Figure,
             this.Volume});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Grid.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Grid.DefaultCellStyle = dataGridViewCellStyle6;
             this.Grid.Location = new System.Drawing.Point(6, 19);
             this.Grid.Name = "Grid";
             this.Grid.ReadOnly = true;
@@ -227,16 +240,17 @@
             this.openDialog.FileName = "openFileDialog1";
             this.openDialog.Filter = "(*.vol)|*.vol";
             // 
-            // Modify
+            // CheckOrModify
             // 
-            this.Modify.Enabled = false;
-            this.Modify.Location = new System.Drawing.Point(5, 287);
-            this.Modify.Name = "Modify";
-            this.Modify.Size = new System.Drawing.Size(75, 23);
-            this.Modify.TabIndex = 10;
-            this.Modify.Text = "Modify";
-            this.Modify.UseVisualStyleBackColor = true;
-            this.Modify.Click += new System.EventHandler(this.Modify_Click);
+            this.CheckOrModify.AutoSize = true;
+            this.CheckOrModify.Checked = true;
+            this.CheckOrModify.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CheckOrModify.Location = new System.Drawing.Point(87, 291);
+            this.CheckOrModify.Name = "CheckOrModify";
+            this.CheckOrModify.Size = new System.Drawing.Size(69, 17);
+            this.CheckOrModify.TabIndex = 11;
+            this.CheckOrModify.Text = "Checked";
+            this.CheckOrModify.UseVisualStyleBackColor = true;
             // 
             // GeneralForm
             // 
@@ -278,6 +292,7 @@
         private System.Windows.Forms.TextBox XParametr;
         private System.Windows.Forms.Label TypeFigure;
         private System.Windows.Forms.Button Modify;
+        private System.Windows.Forms.CheckBox CheckOrModify;
     }
 }
 

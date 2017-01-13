@@ -68,10 +68,7 @@ namespace View
             }
             set
             {
-                _readOnly = value;
-                /*Width.Enabled = !value;
-                Height.Enabled = !value;
-                Deep.Enabled = !value;*/
+                _readOnly = !value;
                 cbTypeFigure.Enabled = !value;
                 Ok.Enabled = !value;
             }
@@ -90,7 +87,7 @@ namespace View
             listContol.Add(groupBox1.Controls);
             try
             {
-                textBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList, listContol);
+                textBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList, listContol, _readOnly);
                 labelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), labelList, listContol);
                 if (_volumeFigure!=null)
                 {
