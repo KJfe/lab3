@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ValumeFigyre
 {
     //Реализуем интерфейс Параллепипеда
+    [Serializable()]
     public class Box : IValumeFigyre
     {
         /// <summary>

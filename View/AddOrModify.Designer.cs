@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Close = new System.Windows.Forms.Button();
-            this.objectControl1 = new View.ObjectControl();
+            this.objectControlForFigure = new View.ObjectControl();
             this.SuspendLayout();
             // 
             // Close
@@ -42,14 +42,14 @@
             this.Close.UseVisualStyleBackColor = true;
             this.Close.Click += new System.EventHandler(this.Close_Click);
             // 
-            // objectControl1
+            // objectControlForFigure
             // 
-            this.objectControl1.Location = new System.Drawing.Point(3, 5);
-            this.objectControl1.Name = "objectControl1";
-            this.objectControl1.ObjectFigur = null;
-            this.objectControl1.ReadOnly = false;
-            this.objectControl1.Size = new System.Drawing.Size(165, 229);
-            this.objectControl1.TabIndex = 0;
+            this.objectControlForFigure.Location = new System.Drawing.Point(3, 5);
+            this.objectControlForFigure.Name = "objectControlForFigure";
+            this.objectControlForFigure.ObjectFigur = null;
+            this.objectControlForFigure.ReadOnly = false;
+            this.objectControlForFigure.Size = new System.Drawing.Size(165, 229);
+            this.objectControlForFigure.TabIndex = 0;
             // 
             // AddOrModify
             // 
@@ -57,7 +57,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(168, 237);
             this.Controls.Add(this.Close);
-            this.Controls.Add(this.objectControl1);
+            this.Controls.Add(this.objectControlForFigure);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AddOrModify";
             this.Text = "AddOrModify";
@@ -67,7 +67,7 @@
 
         #endregion
 
-        private ObjectControl objectControl1;
+        private ObjectControl objectControlForFigure;
         private System.Windows.Forms.Button Close;
     }
 }

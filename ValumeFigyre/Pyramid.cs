@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ValumeFigyre
 {
     //Реализуем интерфейс пирамиды
+    [Serializable]
     public class Pyramid : IValumeFigyre
     {
         /// <summary>

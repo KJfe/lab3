@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ValumeFigyre
 {
     //Реализуем интерфейс шара
+    [Serializable]
     public class Sphear : IValumeFigyre
     {
         /// <summary>

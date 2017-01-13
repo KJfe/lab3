@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +14,23 @@ using ValumeFigyre;
 
 namespace View
 {
+    [Serializable]
     public partial class GeneralForm : Form, IAddObjectDelegate
     {
         /// <summary>
-        /// Приватное поле
+        /// Приватные поля
         /// </summary>
         private IValumeFigyre _figure;
-        private DataGridViewCellEventArgs _e;
+        private int _rowIndexGrid;
+        /// <summary>
+        /// объявление Подписей к TextBox
+        /// </summary>
+        private BindingList<Label> labelList = new BindingList<Label>();
+        /// <summary>
+        /// Объявление подписй к Label
+        /// </summary>
+        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
+
         /// <summary>
         /// Реализация интефейса при запуске
         /// </summary>
@@ -30,7 +41,8 @@ namespace View
         /// <summary>
         /// Создание List<> для хранения данных в системе и работой с ними
         /// </summary>
-        private List<IValumeFigyre> listFigure = new List<IValumeFigyre>();
+       
+        public List<IValumeFigyre> listFigure = new List<IValumeFigyre>();
         /// <summary>
         /// Вызов формы для создания фигуры
         /// </summary>
@@ -58,20 +70,19 @@ namespace View
         /// <param name="e"></param>
         private void Modify_Click(object sender, EventArgs e)
         {
-            if (_e == null)
+            if (_rowIndexGrid == -1)
                 return;
-            
-            int index = _e.RowIndex;
-            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, listFigure[index]);
+            //int index = _e.RowIndex;
+            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, listFigure[_rowIndexGrid]);
             modifyFigure.Delegate = this;
             modifyFigure.FormClosed += (obj, arg) =>
             {
                 if (_figure != null)
                 {
-                    listFigure.RemoveAt(index);
-                    listFigure.Insert(index, _figure);
-                    Grid.Rows.RemoveAt(index);
-                    Grid.Rows.Insert(index, _figure.TypeFigyre, _figure.Valume);
+                    listFigure.RemoveAt(_rowIndexGrid);
+                    listFigure.Insert(_rowIndexGrid, _figure);
+                    Grid.Rows.RemoveAt(_rowIndexGrid);
+                    Grid.Rows.Insert(_rowIndexGrid, _figure.TypeFigyre, _figure.Valume);
                     _figure = null;
                 }
             };
@@ -97,74 +108,18 @@ namespace View
             }
         }
         /// <summary>
-        /// Сохранения делегата
-        /// </summary>
-        /// <param name="figure"></param>
-        public void DidFinish(IValumeFigyre figure)
-        {
-            _figure = figure;
-        }
-        /// <summary>
-        /// Создание случайных данных, 10 фигур
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Random_Click(object sender, EventArgs e)
-        {
-#if DEBUG
-            Random random = new Random();
-            //double randomValue;
-            int maxRandom;
-            int maxGridSize;
-            maxRandom = 10;
-            maxGridSize = 10;
-
-            for (int i = 0; i < maxGridSize; i++)
-            {
-                switch (random.Next(0, 3))
-                {
-                    case 0:
-                        {
-                            Box boxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
-                                width: random.NextDouble() + random.Next(0, maxRandom),
-                                deep: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(boxVolume);
-                            break;
-                        }
-                    case 1:
-                        {
-                            Sphear sphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(sphearVolume);
-                            break;
-                        }
-                    case 2:
-                        {
-                            Pyramid pyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
-                                height: random.NextDouble() + random.Next(0, maxRandom));
-                            listFigure.Add(pyramidVolume);
-                            break;
-                        }
-                    default:
-                        break;
-                }
-
-            }
-            Grid.Rows.Clear();
-            foreach (var figure in listFigure)
-            {
-                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
-            }
-#endif
-        }
-        /// <summary>
         /// сохранение данных таблицы в XML файл
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Save_Click(object sender, EventArgs e)
         {
+            /*XmlSerializer formatter = new XmlSerializer(typeof(IValumeFigyre), new Type[] { typeof(List<IValumeFigyre>) });
+            saveDialog.ShowDialog();
+            formatter.Serialize(File.Create(saveDialog.FileName), listFigure);
+            MessageBox.Show("Vol file successfully saved.", "Complete");*/
             try
-            {
+            { 
                 DataSet dataSet = new DataSet(); // создаем пока что пустой кэш данных
                 DataTable dataTabel = new DataTable(); // создаем пока что пустую таблицу данных
                 dataTabel.TableName = "Figures"; // название таблицы
@@ -174,8 +129,11 @@ namespace View
                 dataTabel.Columns.Add("Height");
                 dataTabel.Columns.Add("Deep");
                 dataSet.Tables.Add(dataTabel); //в ds создается таблица, с названием и колонками, созданными выше
-                foreach(var figures in listFigure)
+                
+                foreach (var figures in listFigure)
                 {
+                    
+
                     DataRow daraRow = dataSet.Tables["Figures"].NewRow();
                     daraRow["Figure"] = figures.TypeFigyre;  //в столбец этой строки заносим данные из первого столбца dataGridView1
                     daraRow["Volume"] = figures.Valume; // то же самое со вторыми столбцами
@@ -256,13 +214,17 @@ namespace View
         /// <param name="e"></param>
         private void Open_Click(object sender, EventArgs e)
         {
-            // openDialog.ShowDialog();
             if (openDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
             else if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length != 0)) // если существует данный файл
             {
+                /*XmlSerializer formatter = new XmlSerializer(typeof(List<IValumeFigyre>));
+                saveDialog.ShowDialog();
+                listFigure.Add(formatter.Deserialize(File.Create(saveDialog.FileName))as IValumeFigyre);
+                WriteInGrid();
+                MessageBox.Show("Vol file successfully saved.", "Complete");*/
                 DataSet dataSet = new DataSet(); // создаем новый пустой кэш данных
                 try
                 {
@@ -306,62 +268,77 @@ namespace View
             }
         }
         /// <summary>
-        /// Отображение подробных данных в таблице
-        /// </summary>
-        
-        /// <summary>
-        /// объявление Подписей к TextBox
-        /// </summary>
-        private BindingList<Label> labelList = new BindingList<Label>();
-        /// <summary>
-        /// Объявление подписй к Label
-        /// </summary>
-        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
-        /// <summary>
         /// Отображение параметров, если выбран элемент в Grid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1)
-                return;
-            _e = e;
+            _rowIndexGrid = e.RowIndex;
+            if (_rowIndexGrid == -1)
+                return;            
             Modify.Enabled = true;
-            TypeFigure.Text = listFigure[e.RowIndex].TypeFigyre;
-            if (listFigure[e.RowIndex].TypeFigyre == "Sphear")
-            {
-                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
-                YParametr.Text = "";
-                ZParametr.Text = "";
-            }
-            else if (listFigure[e.RowIndex].TypeFigyre == "Box")
-            {
-                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
-                YParametr.Text = listFigure[e.RowIndex].Parametr[1].ToString();
-                ZParametr.Text = listFigure[e.RowIndex].Parametr[2].ToString();
-            }
-            else
-            {
-                XParametr.Text = listFigure[e.RowIndex].Parametr[0].ToString();
-                YParametr.Text = listFigure[e.RowIndex].Parametr[1].ToString();
-                ZParametr.Text = "";
-            }
-            // возможно переделать под динамическое создание текст боксов для отображения свойств выбранного объекта в Grid
-            /*List<System.Windows.Forms.Control.ControlCollection> listContol = new List<System.Windows.Forms.Control.ControlCollection>();
-            listContol.Add(Controls);
-            listContol.Add(groupBox1.Controls);
-            CreateElementForm textBox = new CreateElementForm();
-            textBox.CreatingTextBox(ListFigure[e.RowIndex].TypeFigyre, TextBoxList, listContol);
-            try
-            {
-                TextBoxList = textBox.CreatingTextBox(ListFigure[e.RowIndex].TypeFigyre, TextBoxList, listContol);
-            }
-            catch (ArgumentException)
-            {
-                MessageBox.Show("The size of the parameters of the first figure more than necessary", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }*/
         }
-        
+
+        /// <summary>
+        /// Сохранения делегата
+        /// </summary>
+        /// <param name="figure"></param>
+        public void DidFinish(IValumeFigyre figure)
+        {
+            _figure = figure;
+        }
+        /// <summary>
+        /// Создание случайных данных, 10 фигур
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Random_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            Random random = new Random();
+            //double randomValue;
+            int maxRandom;
+            int maxGridSize;
+            maxRandom = 10;
+            maxGridSize = 10;
+
+            for (int i = 0; i < maxGridSize; i++)
+            {
+                switch (random.Next(0, 3))
+                {
+                    case 0:
+                        {
+                            Box boxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
+                                width: random.NextDouble() + random.Next(0, maxRandom),
+                                deep: random.NextDouble() + random.Next(0, maxRandom));
+                            listFigure.Add(boxVolume);
+                            break;
+                        }
+                    case 1:
+                        {
+                            Sphear sphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
+                            listFigure.Add(sphearVolume);
+                            break;
+                        }
+                    case 2:
+                        {
+                            Pyramid pyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
+                                height: random.NextDouble() + random.Next(0, maxRandom));
+                            listFigure.Add(pyramidVolume);
+                            break;
+                        }
+                    default:
+                        break;
+                }
+
+            }
+            Grid.Rows.Clear();
+            foreach (var figure in listFigure)
+            {
+                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+            }
+#endif
+        }
     }
 }

@@ -25,8 +25,8 @@ namespace View
         public AddOrModify(bool ModifyOrCreate, IValumeFigyre ModifyFigure)
         {
             InitializeComponent();
-            objectControl1.ReadOnly = ModifyOrCreate;
-            objectControl1.ObjectFigur = ModifyFigure;
+            objectControlForFigure.ReadOnly = ModifyOrCreate;
+            objectControlForFigure.ObjectFigur = ModifyFigure;
         }
         /// <summary>
         /// Закрытие ормы
@@ -35,7 +35,7 @@ namespace View
         /// <param name="e"></param>
         private void Close_Click(object sender, EventArgs e)
         {
-            Delegate.DidFinish(objectControl1.ObjectFigur);
+            Delegate.DidFinish(objectControlForFigure.ObjectFigur);
             Close();
         }
     }
