@@ -10,6 +10,13 @@ namespace View
 {
     public class InspectionParametr
     {
+        /// <summary>
+        /// перегрузка string
+        /// проверка входного значния, если все хорошо то выходит значение double, иначе выводим окно с ошибка
+        /// </summary>
+        /// <param name="edit"></param>
+        /// <param name="editDesc"></param>
+        /// <returns></returns>
         public static double Parametr(string edit, string editDesc)
         {
             double doubleEdit = 0;
@@ -28,7 +35,14 @@ namespace View
             }
             return doubleEdit;
         }
-        public static double ParametrObject(object edit, string editDesc)
+        /// <summary>
+        /// перегрузка object
+        /// проверка входного значния, если все хорошо то выходит значение double, иначе выводим окно с ошибка
+        /// </summary>
+        /// <param name="edit"></param>
+        /// <param name="editDesc"></param>
+        /// <returns></returns>
+        public static double Parametr(object edit, string editDesc)
         {
             double doubleEdit = 0;
             try

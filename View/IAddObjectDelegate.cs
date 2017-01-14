@@ -7,8 +7,15 @@ using ValumeFigyre;
 
 namespace View
 {
+    /// <summary>
+    /// интефейс для делегата
+    /// </summary>
     public interface IAddObjectDelegate
     {
-        void DidFinish(IValumeFigyre figure);
+        /// <summary>
+        /// реализация делегата
+        /// </summary>
+        /// <param name="figure"></param>
+        void DidFinish(IVolumeFigure figure);
     }
 }

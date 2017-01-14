@@ -35,7 +35,7 @@ namespace ValumeFigyre
                                 Box ValumeBox = new Box(height: ReadParametr.dRead(), width: ReadParametr.dRead(), deep: ReadParametr.dRead());
                                 Console.Clear();
                                 //ValumeBox.Rewrite();
-                                Console.WriteLine("Объем Параллепипела = {0}", ValumeBox.Valume);
+                                Console.WriteLine("Объем Параллепипела = {0}", ValumeBox.Volume);
                                 Console.Read();
                                 break;
                             }
@@ -45,7 +45,7 @@ namespace ValumeFigyre
                                 Sphear ValumeSphear = new Sphear(radius: ReadParametr.dRead());
                                 Console.Clear();
                                 //ValumeSphear.Rewrite();
-                                Console.WriteLine("Объем шара = {0}", ValumeSphear.Valume);
+                                Console.WriteLine("Объем шара = {0}", ValumeSphear.Volume);
                                 Console.Read();
                                 break;
                             }
@@ -55,7 +55,7 @@ namespace ValumeFigyre
                                 Pyramid ValumePyramid = new Pyramid(area: ReadParametr.dRead(),height: ReadParametr.dRead());
                                 Console.Clear();
                                 //ValumePyramid.Rewrite();
-                                Console.WriteLine("Объем шара = {0}", ValumePyramid.Valume);
+                                Console.WriteLine("Объем шара = {0}", ValumePyramid.Volume);
                                 Console.Read();
                                 break;
                             }

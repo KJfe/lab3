@@ -14,15 +14,15 @@ namespace View
         /// <summary>
         /// Объявление итерфейса
         /// </summary>
-        private IValumeFigyre _volumeFigure = null;
+        private IVolumeFigure _volumeFigure = null;
         /// <summary>
         /// Объявление делегата, расчитывающий объем
         /// </summary>
-        private Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre>> _calculateVolume;
+        private Dictionary<string, Func<BindingList<TextBox>, IVolumeFigure>> _calculateVolume;
         /// <summary>
         /// Объявление делегата, записывающий имеющиеся данные в TextBox
         /// </summary>
-        private Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre, int>> _writeTextBox;
+        private Dictionary<string, Func<BindingList<TextBox>, IVolumeFigure, int>> _writeTextBox;
 
         /// <summary>
         /// Конструктор
@@ -30,14 +30,14 @@ namespace View
         public CalculateVolumeFigures()
         {
             _calculateVolume =
-                new Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre>>
+                new Dictionary<string, Func<BindingList<TextBox>, IVolumeFigure>>
                 {
                     { "Box", this.CalculateForBox},
                     { "Sphear", this.CalculateForSphear},
                     { "Pyramid", this.CalculateForPyramid},
                 };
             _writeTextBox =
-                new Dictionary<string, Func<BindingList<TextBox>, IValumeFigyre, int>>
+                new Dictionary<string, Func<BindingList<TextBox>, IVolumeFigure, int>>
                 {
                     { "Box", this.WriteForBox},
                     { "Sphear", this.WriteForSphear},
@@ -52,7 +52,7 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public IValumeFigyre CalculateOperaion(string nameOperation, BindingList<TextBox> textBoxList)
+        public IVolumeFigure CalculateOperaion(string nameOperation, BindingList<TextBox> textBoxList)
         {
             if (!_calculateVolume.ContainsKey(nameOperation))
                 throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
@@ -65,7 +65,7 @@ namespace View
         /// <param name="ss"></param>
         /// <param name="control"></param>
         /// <returns></returns>
-        public int WriteOperation(string nameOperation, BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
+        public int WriteOperation(string nameOperation, BindingList<TextBox> textBoxList, IVolumeFigure parametrs)
         {
             if (!_writeTextBox.ContainsKey(nameOperation))
                 throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
@@ -77,7 +77,7 @@ namespace View
         /// </summary>
         /// <param name="textBoxList"></param>
         /// <returns></returns>
-        private IValumeFigyre CalculateForBox(BindingList<TextBox> textBoxList)
+        private IVolumeFigure CalculateForBox(BindingList<TextBox> textBoxList)
         {
             double heightBox = InspectionParametr.Parametr(textBoxList[0].Text, textBoxList[0].Name);
             double widthBox = InspectionParametr.Parametr(textBoxList[1].Text, textBoxList[1].Name);
@@ -90,7 +90,7 @@ namespace View
         /// </summary>
         /// <param name="TextBoxList"></param>
         /// <returns></returns>
-        private IValumeFigyre CalculateForSphear(BindingList<TextBox> textoxBList)
+        private IVolumeFigure CalculateForSphear(BindingList<TextBox> textoxBList)
         {
             double radiusSphear = InspectionParametr.Parametr(textoxBList[0].Text, textoxBList[0].Name);
             _volumeFigure = new Sphear(radius: radiusSphear);
@@ -101,7 +101,7 @@ namespace View
         /// </summary>
         /// <param name="textBoxList"></param>
         /// <returns></returns>
-        private IValumeFigyre CalculateForPyramid(BindingList<TextBox> textBoxList)
+        private IVolumeFigure CalculateForPyramid(BindingList<TextBox> textBoxList)
         {
             double areaPyramid = InspectionParametr.Parametr(textBoxList[0].Text, textBoxList[0].Name);
             double heightPyramid = InspectionParametr.Parametr(textBoxList[1].Text, textBoxList[1].Name);
@@ -114,7 +114,7 @@ namespace View
         /// </summary>
         /// <param name="textBoxList"></param>
         /// <returns></returns>
-        private int WriteForBox(BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
+        private int WriteForBox(BindingList<TextBox> textBoxList, IVolumeFigure parametrs)
         {
             textBoxList[0].Text = parametrs.Parametr[0].ToString();
             textBoxList[1].Text = parametrs.Parametr[1].ToString();
@@ -126,7 +126,7 @@ namespace View
         /// </summary>
         /// <param name="textBoxList"></param>
         /// <returns></returns>
-        private int WriteForSphear(BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
+        private int WriteForSphear(BindingList<TextBox> textBoxList, IVolumeFigure parametrs)
         {
             textBoxList[0].Text = parametrs.Parametr[0].ToString();
             return 1;
@@ -136,7 +136,7 @@ namespace View
         /// </summary>
         /// <param name="textBoxList"></param>
         /// <returns></returns>
-        private int WriteForPyramid(BindingList<TextBox> textBoxList, IValumeFigyre parametrs)
+        private int WriteForPyramid(BindingList<TextBox> textBoxList, IVolumeFigure parametrs)
         {
             textBoxList[0].Text = parametrs.Parametr[0].ToString();
             textBoxList[1].Text = parametrs.Parametr[1].ToString();

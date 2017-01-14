@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace View
 {
+    /// <summary>
+    /// Exception если элемент в ячейке неверный
+    /// </summary>
     public class CellOutOfRangeExxeption:Exception
     {
-        public CellOutOfRangeExxeption(string editDesc) : base(string.Format("Range Error in cell {0} ", editDesc))
-        {
-
-        } 
+        /// <summary>
+        /// Ориентации ошибки
+        /// </summary>
+        /// <param name="editDesc"></param>
+        public CellOutOfRangeExxeption(string editDesc) : base(string.Format("Range Error in cell {0} ", editDesc)) { } 
     }
 }

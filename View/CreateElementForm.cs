@@ -187,12 +187,6 @@ namespace View
             return labelList;
         }
 
-        private BindingList<TextBox> VisibleTextBoxForBox(BindingList<TextBox> textBoxList)
-        {
-
-            return textBoxList;
-        }
-
         /// <summary>
         /// Создание TextBox
         /// </summary>

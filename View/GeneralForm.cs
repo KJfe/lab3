@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Xml.Serialization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using ValumeFigyre;
 
 
@@ -20,7 +16,7 @@ namespace View
         /// <summary>
         /// Приватные поля
         /// </summary>
-        private IValumeFigyre _figure;
+        private IVolumeFigure _figure;
         private int _rowIndexGrid;
         /// <summary>
         /// объявление Подписей к TextBox
@@ -41,8 +37,7 @@ namespace View
         /// <summary>
         /// Создание List<> для хранения данных в системе и работой с ними
         /// </summary>
-       
-        private List<IValumeFigyre> ListFigure = new List<IValumeFigyre>();
+        private List<IVolumeFigure> ListFigure = new List<IVolumeFigure>();
         /// <summary>
         /// Вызов формы для создания фигуры
         /// </summary>
@@ -82,7 +77,7 @@ namespace View
                     ListFigure.RemoveAt(_rowIndexGrid);
                     ListFigure.Insert(_rowIndexGrid, _figure);
                     Grid.Rows.RemoveAt(_rowIndexGrid);
-                    Grid.Rows.Insert(_rowIndexGrid, _figure.TypeFigyre, _figure.Valume);
+                    Grid.Rows.Insert(_rowIndexGrid, _figure.TypeFigure, _figure.Volume);
                     _figure = null;
                 }
             };
@@ -107,6 +102,7 @@ namespace View
                 catch (System.InvalidOperationException)  { }
             }
         }
+        public static FigureCollection list = new FigureCollection();
         /// <summary>
         /// сохранение данных таблицы в XML файл
         /// </summary>
@@ -118,7 +114,7 @@ namespace View
             saveDialog.ShowDialog();
             formatter.Serialize(File.Create(saveDialog.FileName), listFigure);
             MessageBox.Show("Vol file successfully saved.", "Complete");*/
-            try
+            /*try
             { 
                 DataSet dataSet = new DataSet(); // создаем пока что пустой кэш данных
                 DataTable dataTabel = new DataTable(); // создаем пока что пустую таблицу данных
@@ -133,17 +129,17 @@ namespace View
                 foreach (var figures in ListFigure)
                 {
                     
-
+                    
                     DataRow daraRow = dataSet.Tables["Figures"].NewRow();
-                    daraRow["Figure"] = figures.TypeFigyre;  //в столбец этой строки заносим данные из первого столбца dataGridView1
-                    daraRow["Volume"] = figures.Valume; // то же самое со вторыми столбцами
-                    if (figures.TypeFigyre=="Parallepiped")
+                    daraRow["Figure"] = figures.TypeFigure;  //в столбец этой строки заносим данные из первого столбца dataGridView1
+                    daraRow["Volume"] = figures.Volume; // то же самое со вторыми столбцами
+                    if (figures.TypeFigure=="Parallepiped")
                     {
                         daraRow["Width"] = figures.Parametr[0];
                         daraRow["Height"] = figures.Parametr[1];
                         daraRow["Deep"] = figures.Parametr[2];
                     }
-                    else if(figures.TypeFigyre == "Sphear")
+                    else if(figures.TypeFigure == "Sphear")
                     {
                         daraRow["Width"] = figures.Parametr[0];
                         daraRow["Height"] = "";
@@ -164,6 +160,23 @@ namespace View
             catch
             {
                 MessageBox.Show("Unable to save file Vol", "Error");
+            }*/
+
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(IVolumeFigure));
+                //SaveFileDialog sfd = new SaveFileDialog();
+                saveDialog.ShowDialog();
+                    using (StreamWriter writer = new StreamWriter(saveDialog.FileName))
+                    {
+                        serializer.Serialize(writer, ListFigure);
+                        writer.Close();
+                    }
+                MessageBox.Show("Vol file successfully saved.", "Complete");
+            }
+            catch
+            {
+                MessageBox.Show("Unable to save file.", "Error.");
             }
         }
         /// <summary>
@@ -180,21 +193,21 @@ namespace View
                     {
 
                         ListFigure.Add(new Box(
-                            InspectionParametr.ParametrObject(item["Height"], "Height"),
-                            InspectionParametr.ParametrObject(item["Width"], "Width"),
-                            InspectionParametr.ParametrObject(item["Deep"], "Deep")));
+                            InspectionParametr.Parametr(item["Height"], "Height"),
+                            InspectionParametr.Parametr(item["Width"], "Width"),
+                            InspectionParametr.Parametr(item["Deep"], "Deep")));
                     }
                     else if (item["Figure"].ToString() == "Sphear")
                     {
                         ListFigure.Add(new Sphear(
-                            InspectionParametr.ParametrObject(item["Width"], "Radius")
+                            InspectionParametr.Parametr(item["Width"], "Radius")
                             ));
                     }
                     else
                     {
                         ListFigure.Add(new Pyramid(
-                            InspectionParametr.ParametrObject(item["Width"], "Area"),
-                            InspectionParametr.ParametrObject(item["Height"], "Height")));
+                            InspectionParametr.Parametr(item["Width"], "Area"),
+                            InspectionParametr.Parametr(item["Height"], "Height")));
                     }
                 }
                 catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
@@ -246,7 +259,7 @@ namespace View
             Grid.Rows.Clear();
             foreach (var figur in ListFigure)
             {
-                Grid.Rows.Add(figur.TypeFigyre, figur.Valume);
+                Grid.Rows.Add(figur.TypeFigure, figur.Volume);
             }
         }
         /// <summary>
@@ -267,24 +280,14 @@ namespace View
                 MessageBox.Show("Table is empty", "Error");
             }
         }
-        /// <summary>
-        /// Отображение параметров, если выбран элемент в Grid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            _rowIndexGrid = e.RowIndex;
-            if (_rowIndexGrid == -1)
-                return;            
-            Modify.Enabled = true;
-        }
+        
+
 
         /// <summary>
         /// Сохранения делегата
         /// </summary>
         /// <param name="figure"></param>
-        public void DidFinish(IValumeFigyre figure)
+        public void DidFinish(IVolumeFigure figure)
         {
             _figure = figure;
         }
@@ -336,9 +339,21 @@ namespace View
             Grid.Rows.Clear();
             foreach (var figure in ListFigure)
             {
-                Grid.Rows.Add(figure.TypeFigyre, figure.Valume);
+                Grid.Rows.Add(figure.TypeFigure, figure.Volume);
             }
 #endif
+        }
+        /// <summary>
+        /// Отображение параметров, если выбран элемент в Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Grid_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            _rowIndexGrid = e.RowIndex;
+            if (_rowIndexGrid == -1)
+                return;
+            Modify.Enabled = true;
         }
     }
 }

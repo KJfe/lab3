@@ -17,17 +17,19 @@ namespace View
         /// объявление делегата
         /// </summary>
         public IAddObjectDelegate Delegate { get; set; }
+
         /// <summary>
         /// инициализация конструктора и входных параметров
         /// </summary>
         /// <param name="ModifyOrCreate"></param>
         /// <param name="ModifyFigure"></param>
-        public AddOrModify(bool ModifyOrCreate, IValumeFigyre ModifyFigure)
+        public AddOrModify(bool ModifyOrCreate, IVolumeFigure ModifyFigure)
         {
             InitializeComponent();
             objectControlForFigure.ReadOnly = ModifyOrCreate;
             objectControlForFigure.ObjectFigur = ModifyFigure;
         }
+
         /// <summary>
         /// Закрытие ормы
         /// </summary>

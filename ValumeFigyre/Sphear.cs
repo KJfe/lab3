@@ -8,7 +8,7 @@ namespace ValumeFigyre
 {
     //Реализуем интерфейс шара
     [Serializable]
-    public class Sphear : IValumeFigyre
+    public class Sphear : IVolumeFigure
     {
         /// <summary>
         /// реализация поля
@@ -25,7 +25,7 @@ namespace ValumeFigyre
         /// <summary>
         /// Реализация интерфеййса, расчет объема
         /// </summary>
-        public double Valume
+        public double Volume
         {
             get
             {
@@ -35,7 +35,7 @@ namespace ValumeFigyre
         /// <summary>
         /// Реализация интерфеййса, передача типа фигуры
         /// </summary>
-        public string TypeFigyre
+        public string TypeFigure
         {
             get
             {

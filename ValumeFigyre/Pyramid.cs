@@ -8,7 +8,7 @@ namespace ValumeFigyre
 {
     //Реализуем интерфейс пирамиды
     [Serializable]
-    public class Pyramid : IValumeFigyre
+    public class Pyramid : IVolumeFigure
     {
         /// <summary>
         /// реализация полей
@@ -28,7 +28,7 @@ namespace ValumeFigyre
         /// <summary>
         /// Реализация интерфеййса, расчет объема
         /// </summary>
-        public double Valume
+        public double Volume
         {
             get
             {
@@ -39,7 +39,7 @@ namespace ValumeFigyre
         /// <summary>
         /// Реализация интерфеййса, передача типа фигуры
         /// </summary>
-        public string TypeFigyre
+        public string TypeFigure
         {
             get
             {

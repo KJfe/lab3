@@ -5,19 +5,19 @@ namespace ValumeFigyre
 {
     //Определен набор обстрактных методов
     
-    public interface IValumeFigyre
+    public interface IVolumeFigure
     {
         /// <summary>
         /// Возвращает Объем фигуры
         /// </summary>
-        double Valume
+        double Volume
         {
             get;
         }
         /// <summary>
         /// Возвращает тип фигуры
         /// </summary>
-        string TypeFigyre
+        string TypeFigure
         {
             get;
         }

@@ -21,7 +21,7 @@ namespace UnitTests.Model
         public double VolumeTest(double area, double height)
         {
             Pyramid ValumePyramid = new Pyramid(area, height);
-            return ValumePyramid.Valume;
+            return ValumePyramid.Volume;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace UnitTests.Model
         public double VolumeTest(double radius)
         {
             Sphear ValumeSphear = new Sphear(radius);
-            return ValumeSphear.Valume;
+            return ValumeSphear.Volume;
         }
        
     }

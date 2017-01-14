@@ -16,13 +16,14 @@ namespace View
         Sphear = 1,
         Pyramid = 2
     };
+
     public partial class ObjectControl : UserControl
     {
         /// <summary>
         /// Реализация полей
         /// </summary>
         private bool _readOnly;
-        private IValumeFigyre _volumeFigure;
+        private IVolumeFigure _volumeFigure;
         /// <summary>
         /// Реализация UserControl (праметр формы)
         /// </summary>
@@ -42,7 +43,7 @@ namespace View
         /// <summary>
         /// Метод принимающий/отправляющий данные
         /// </summary>
-        public IValumeFigyre ObjectFigur
+        public IVolumeFigure ObjectFigur
         {
             get
             {
@@ -51,9 +52,9 @@ namespace View
             set
             {
                 _volumeFigure = value;
-                if (_volumeFigure == null|| value.TypeFigyre == "")
+                if (_volumeFigure == null|| value.TypeFigure == "")
                     return;
-                Figures typeFigur = (Figures) Enum.Parse(typeof(Figures), value.TypeFigyre);
+                Figures typeFigur = (Figures) Enum.Parse(typeof(Figures), value.TypeFigure);
                 cbTypeFigure.SelectedIndex = Convert.ToInt32(typeFigur);
             }
         }
@@ -92,7 +93,7 @@ namespace View
                 if (_volumeFigure!=null)
                 {
                     var calculateVolume = new CalculateVolumeFigures();
-                    calculateVolume.WriteOperation(_volumeFigure.TypeFigyre, textBoxList, _volumeFigure);
+                    calculateVolume.WriteOperation(_volumeFigure.TypeFigure, textBoxList, _volumeFigure);
                 }
             }
             catch (ArgumentException)
@@ -131,14 +132,14 @@ namespace View
         /// </summary>
         private void SelectionFigyre()
         {
-            IValumeFigyre VolumeFigure = null;
+            IVolumeFigure VolumeFigure = null;
             if (textBoxList != null)
             {
                 var calculateVolume = new CalculateVolumeFigures();
                 VolumeFigure = calculateVolume.CalculateOperaion(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList);
                 if (VolumeFigure != null)
                 {
-                    VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);
+                    VolumeFigureText.Text = Convert.ToString(VolumeFigure.Volume);
                     _volumeFigure = VolumeFigure;
                 }
             }

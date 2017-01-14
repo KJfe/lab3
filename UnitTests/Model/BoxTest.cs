@@ -24,7 +24,7 @@ namespace UnitTests.ValumeFigyre
         public double VolumeTest(double height, double width, double deep)
         {
             Box ValumeBox = new Box(height, width, deep);
-            return ValumeBox.Valume;
+            return ValumeBox.Volume;
         }
         
     }
