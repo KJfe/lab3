@@ -11,12 +11,8 @@ using ValumeFigyre;
 namespace View
 {
     [Serializable]
-    public partial class GeneralForm : Form, IAddObjectDelegate
+    public partial class GeneralForm : Form
     {
-        /// <summary>
-        /// Приватные поля
-        /// </summary>
-        private IVolumeFigure _figure;
         private int _rowIndexGrid;
         /// <summary>
         /// объявление Подписей к TextBox
@@ -39,50 +35,65 @@ namespace View
         /// </summary>
         private List<IVolumeFigure> ListFigure = new List<IVolumeFigure>();
         /// <summary>
-        /// Вызов формы для создания фигуры
+        /// Вызов формы для создания, редактирования или чтения фигуры
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddFigyre_Click(object sender, EventArgs e)
         {
-            AddOrModify addFigure = new AddOrModify(false,null);
-            addFigure.Delegate = this;
-            addFigure.FormClosed += (obj, arg) =>
-            {
-                if (_figure != null)
-                {
-                    ListFigure.Add(_figure);
-                    _figure = null;
-                }
-                WriteInGrid(); // Запись данных Таблицу
-            };
-            addFigure.ShowDialog();
-        }
-        /// <summary>
-        /// Вызов формы для редактирования данных
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Modify_Click(object sender, EventArgs e)
-        {
+            bool enabledTextBox = true;
+            IVolumeFigure figure=null;
             if (_rowIndexGrid == -1)
                 return;
-            //int index = _e.RowIndex;
-            AddOrModify modifyFigure = new AddOrModify(CheckOrModify.Checked, ListFigure[_rowIndexGrid]);
-            modifyFigure.Delegate = this;
-            modifyFigure.FormClosed += (obj, arg) =>
+            if (Creating.Checked || ModifyRb.Checked)
             {
-                if (_figure != null)
+                enabledTextBox = false;
+            }
+            if((ModifyRb.Checked||Reading.Checked)&&(ListFigure.Count!=0))
+            {
+                figure = ListFigure[_rowIndexGrid];   
+            }
+            else if (!Creating.Checked) return;
+            AddOrModify FormAddOrModifyFigure = new AddOrModify(enabledTextBox, figure);
+            FormAddOrModifyFigure.onMakeFigure += DidFinish;
+            FormAddOrModifyFigure.ShowDialog();
+        }
+
+        /// <summary>
+        /// метод срабатывающий на событи при нажатии в другой форме на Ок
+        /// </summary>
+        /// <param name="volumefigure"></param>
+        private void DidFinish(IVolumeFigure volumefigure)
+        {
+            if (volumefigure != null)
+            {
+                if (Creating.Checked)
+                {
+                    ListFigure.Add(volumefigure);
+                    Grid.Rows.Add(volumefigure.TypeFigure, volumefigure.Volume);
+                }
+                if (ModifyRb.Checked)
                 {
                     ListFigure.RemoveAt(_rowIndexGrid);
-                    ListFigure.Insert(_rowIndexGrid, _figure);
                     Grid.Rows.RemoveAt(_rowIndexGrid);
-                    Grid.Rows.Insert(_rowIndexGrid, _figure.TypeFigure, _figure.Volume);
-                    _figure = null;
+                    ListFigure.Insert(_rowIndexGrid,volumefigure);
+                    //надо подумать есть проблема
+                    if(Grid.RowCount==1)
+                    {
+                        Grid.Rows.Add(volumefigure.TypeFigure, volumefigure.Volume);
+                    }
+                    else
+                    {
+                        Grid.Rows.Insert(_rowIndexGrid, volumefigure.TypeFigure, volumefigure.Volume);
+                        Grid.CurrentCell = Grid.Rows[_rowIndexGrid-1].Cells[0];
+                    }
+                        
                 }
-            };
-            modifyFigure.ShowDialog();
+                volumefigure = null;
+            }
         }
+
+
         /// <summary>
         /// Удаление построчно
         /// </summary>
@@ -96,13 +107,11 @@ namespace View
                 {
                     ListFigure.RemoveAt(Grid.CurrentRow.Index);
                     Grid.Rows.Remove(Grid.CurrentRow);
-                    if (ListFigure.Count == 0)
-                        Modify.Enabled = false;
                 }
                 catch (System.InvalidOperationException)  { }
             }
         }
-        public static FigureCollection list = new FigureCollection();
+        //public static FigureCollection list = new FigureCollection();
         /// <summary>
         /// сохранение данных таблицы в XML файл
         /// </summary>
@@ -273,23 +282,11 @@ namespace View
             {
                 Grid.Rows.Clear();
                 ListFigure.Clear();
-                Modify.Enabled = false;
             }
             else
             {
                 MessageBox.Show("Table is empty", "Error");
             }
-        }
-        
-
-
-        /// <summary>
-        /// Сохранения делегата
-        /// </summary>
-        /// <param name="figure"></param>
-        public void DidFinish(IVolumeFigure figure)
-        {
-            _figure = figure;
         }
         /// <summary>
         /// Создание случайных данных, 10 фигур
@@ -353,7 +350,6 @@ namespace View
             _rowIndexGrid = e.RowIndex;
             if (_rowIndexGrid == -1)
                 return;
-            Modify.Enabled = true;
         }
     }
 }

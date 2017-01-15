@@ -20,6 +20,13 @@ namespace View
     public partial class ObjectControl : UserControl
     {
         /// <summary>
+        /// создание события для передачи параметров в форму
+        /// </summary>
+        /// <param name="IVolumeFigure"></param>
+        public delegate void CalculateVolumeFigure(IVolumeFigure IVolumeFigure);
+        public event CalculateVolumeFigure onCalculateVolume;
+
+        /// <summary>
         /// Реализация полей
         /// </summary>
         private bool _readOnly;
@@ -113,6 +120,7 @@ namespace View
             try
             {
                 SelectionFigyre();
+                onCalculateVolume(_volumeFigure);
             }
             catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
             {

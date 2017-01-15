@@ -62,7 +62,6 @@
       <DependentUpon>GeneralForm.cs</DependentUpon>
     </Compile>
     <Compile Include="General.cs" />
-    <Compile Include="IAddObjectDelegate.cs" />
     <Compile Include="InspectionParametr.cs" />
     <Compile Include="CellFormatException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
