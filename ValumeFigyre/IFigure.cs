@@ -3,8 +3,9 @@ using System.IO;
 using System.Xml.Serialization;
 namespace ValumeFigyre
 {
-    //Определен набор обстрактных методов
-    
+    /// <summary>
+    /// определен набор обстрактных методов
+    /// </summary>
     public interface IVolumeFigure
     {
         /// <summary>

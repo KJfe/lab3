@@ -10,7 +10,6 @@ using ValumeFigyre;
 
 namespace View
 {
-    [Serializable]
     public partial class GeneralForm : Form
     {
         private int _rowIndexGrid;
@@ -119,10 +118,16 @@ namespace View
         /// <param name="e"></param>
         private void Save_Click(object sender, EventArgs e)
         {
-            /*XmlSerializer formatter = new XmlSerializer(typeof(IValumeFigyre), new Type[] { typeof(List<IValumeFigyre>) });
+            XmlSerializer formatter = new XmlSerializer(typeof(IVolumeFigure));
             saveDialog.ShowDialog();
-            formatter.Serialize(File.Create(saveDialog.FileName), listFigure);
-            MessageBox.Show("Vol file successfully saved.", "Complete");*/
+            //formatter.Serialize(File.Create(saveDialog.FileName), ListFigure[0]);
+
+            using (StreamWriter writer = new StreamWriter(saveDialog.FileName))
+            {
+                formatter.Serialize(writer, ListFigure[0]);
+                writer.Close();
+            }
+            MessageBox.Show("Vol file successfully saved.", "Complete");
             /*try
             { 
                 DataSet dataSet = new DataSet(); // создаем пока что пустой кэш данных
