@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Box.cs" />
-    <Compile Include="FigureCollection.cs" />
+    <Compile Include="Figure.cs" />
     <Compile Include="Pyramid.cs" />
     <Compile Include="ReadParametr.cs" />
     <Compile Include="Sphear.cs" />

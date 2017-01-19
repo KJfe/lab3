@@ -30,25 +30,26 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeneralForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Random = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ModifyRb = new System.Windows.Forms.RadioButton();
             this.Clear = new System.Windows.Forms.Button();
+            this.RemoveFigure = new System.Windows.Forms.Button();
+            this.Creating = new System.Windows.Forms.RadioButton();
+            this.Make = new System.Windows.Forms.Button();
+            this.Reading = new System.Windows.Forms.RadioButton();
             this.Open = new System.Windows.Forms.Button();
             this.Grid = new System.Windows.Forms.DataGridView();
             this.Figure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Volume = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Save = new System.Windows.Forms.Button();
-            this.Random = new System.Windows.Forms.Button();
-            this.RemoveFigure = new System.Windows.Forms.Button();
-            this.Make = new System.Windows.Forms.Button();
             this.saveDialog = new System.Windows.Forms.SaveFileDialog();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Reading = new System.Windows.Forms.RadioButton();
-            this.Creating = new System.Windows.Forms.RadioButton();
-            this.ModifyRb = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -65,6 +66,41 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elements";
             // 
+            // Random
+            // 
+            this.Random.Location = new System.Drawing.Point(193, 333);
+            this.Random.Name = "Random";
+            this.Random.Size = new System.Drawing.Size(75, 23);
+            this.Random.TabIndex = 2;
+            this.Random.Text = "Random";
+            this.Random.UseVisualStyleBackColor = true;
+            this.Random.Click += new System.EventHandler(this.Random_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.ModifyRb);
+            this.groupBox3.Controls.Add(this.Clear);
+            this.groupBox3.Controls.Add(this.RemoveFigure);
+            this.groupBox3.Controls.Add(this.Creating);
+            this.groupBox3.Controls.Add(this.Make);
+            this.groupBox3.Controls.Add(this.Reading);
+            this.groupBox3.Location = new System.Drawing.Point(6, 256);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(268, 71);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Operations on the figures";
+            // 
+            // ModifyRb
+            // 
+            this.ModifyRb.AutoSize = true;
+            this.ModifyRb.Location = new System.Drawing.Point(196, 14);
+            this.ModifyRb.Name = "ModifyRb";
+            this.ModifyRb.Size = new System.Drawing.Size(56, 17);
+            this.ModifyRb.TabIndex = 2;
+            this.ModifyRb.Text = "Modyfi";
+            this.ModifyRb.UseVisualStyleBackColor = true;
+            // 
             // Clear
             // 
             this.Clear.Location = new System.Drawing.Point(187, 37);
@@ -74,6 +110,49 @@
             this.Clear.Text = "Clear";
             this.Clear.UseVisualStyleBackColor = true;
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
+            // 
+            // RemoveFigure
+            // 
+            this.RemoveFigure.Location = new System.Drawing.Point(91, 37);
+            this.RemoveFigure.Name = "RemoveFigure";
+            this.RemoveFigure.Size = new System.Drawing.Size(89, 23);
+            this.RemoveFigure.TabIndex = 1;
+            this.RemoveFigure.Text = "Remove Figure";
+            this.RemoveFigure.UseVisualStyleBackColor = true;
+            this.RemoveFigure.Click += new System.EventHandler(this.RemoveFigyre_Click);
+            // 
+            // Creating
+            // 
+            this.Creating.AutoSize = true;
+            this.Creating.Checked = true;
+            this.Creating.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.Creating.Location = new System.Drawing.Point(98, 14);
+            this.Creating.Name = "Creating";
+            this.Creating.Size = new System.Drawing.Size(64, 17);
+            this.Creating.TabIndex = 1;
+            this.Creating.TabStop = true;
+            this.Creating.Text = "Creating";
+            this.Creating.UseVisualStyleBackColor = true;
+            // 
+            // Make
+            // 
+            this.Make.Location = new System.Drawing.Point(10, 37);
+            this.Make.Name = "Make";
+            this.Make.Size = new System.Drawing.Size(75, 23);
+            this.Make.TabIndex = 0;
+            this.Make.Text = "Make";
+            this.Make.UseVisualStyleBackColor = true;
+            this.Make.Click += new System.EventHandler(this.AddFigyre_Click);
+            // 
+            // Reading
+            // 
+            this.Reading.AutoSize = true;
+            this.Reading.Location = new System.Drawing.Point(10, 14);
+            this.Reading.Name = "Reading";
+            this.Reading.Size = new System.Drawing.Size(65, 17);
+            this.Reading.TabIndex = 0;
+            this.Reading.Text = "Reading";
+            this.Reading.UseVisualStyleBackColor = true;
             // 
             // Open
             // 
@@ -138,36 +217,6 @@
             this.Save.UseVisualStyleBackColor = true;
             this.Save.Click += new System.EventHandler(this.Save_Click);
             // 
-            // Random
-            // 
-            this.Random.Location = new System.Drawing.Point(193, 333);
-            this.Random.Name = "Random";
-            this.Random.Size = new System.Drawing.Size(75, 23);
-            this.Random.TabIndex = 2;
-            this.Random.Text = "Random";
-            this.Random.UseVisualStyleBackColor = true;
-            this.Random.Click += new System.EventHandler(this.Random_Click);
-            // 
-            // RemoveFigure
-            // 
-            this.RemoveFigure.Location = new System.Drawing.Point(91, 37);
-            this.RemoveFigure.Name = "RemoveFigure";
-            this.RemoveFigure.Size = new System.Drawing.Size(89, 23);
-            this.RemoveFigure.TabIndex = 1;
-            this.RemoveFigure.Text = "Remove Figure";
-            this.RemoveFigure.UseVisualStyleBackColor = true;
-            this.RemoveFigure.Click += new System.EventHandler(this.RemoveFigyre_Click);
-            // 
-            // Make
-            // 
-            this.Make.Location = new System.Drawing.Point(10, 37);
-            this.Make.Name = "Make";
-            this.Make.Size = new System.Drawing.Size(75, 23);
-            this.Make.TabIndex = 0;
-            this.Make.Text = "Make";
-            this.Make.UseVisualStyleBackColor = true;
-            this.Make.Click += new System.EventHandler(this.AddFigyre_Click);
-            // 
             // saveDialog
             // 
             this.saveDialog.Filter = "(*.vol)|*.vol";
@@ -177,69 +226,23 @@
             this.openDialog.FileName = "openFileDialog1";
             this.openDialog.Filter = "(*.vol)|*.vol";
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.ModifyRb);
-            this.groupBox3.Controls.Add(this.Clear);
-            this.groupBox3.Controls.Add(this.RemoveFigure);
-            this.groupBox3.Controls.Add(this.Creating);
-            this.groupBox3.Controls.Add(this.Make);
-            this.groupBox3.Controls.Add(this.Reading);
-            this.groupBox3.Location = new System.Drawing.Point(6, 256);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(268, 71);
-            this.groupBox3.TabIndex = 12;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Operations on the figures";
-            // 
-            // Reading
-            // 
-            this.Reading.AutoSize = true;
-            this.Reading.Location = new System.Drawing.Point(10, 14);
-            this.Reading.Name = "Reading";
-            this.Reading.Size = new System.Drawing.Size(65, 17);
-            this.Reading.TabIndex = 0;
-            this.Reading.Text = "Reading";
-            this.Reading.UseVisualStyleBackColor = true;
-            // 
-            // Creating
-            // 
-            this.Creating.AutoSize = true;
-            this.Creating.Checked = true;
-            this.Creating.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Creating.Location = new System.Drawing.Point(98, 14);
-            this.Creating.Name = "Creating";
-            this.Creating.Size = new System.Drawing.Size(64, 17);
-            this.Creating.TabIndex = 1;
-            this.Creating.TabStop = true;
-            this.Creating.Text = "Creating";
-            this.Creating.UseVisualStyleBackColor = true;
-            // 
-            // ModifyRb
-            // 
-            this.ModifyRb.AutoSize = true;
-            this.ModifyRb.Location = new System.Drawing.Point(196, 14);
-            this.ModifyRb.Name = "ModifyRb";
-            this.ModifyRb.Size = new System.Drawing.Size(56, 17);
-            this.ModifyRb.TabIndex = 2;
-            this.ModifyRb.Text = "Modyfi";
-            this.ModifyRb.UseVisualStyleBackColor = true;
-            // 
             // GeneralForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(296, 376);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "GeneralForm";
             this.Text = "Volume figures";
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Grid)).EndInit();
             this.ResumeLayout(false);
 
         }
