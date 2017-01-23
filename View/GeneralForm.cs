@@ -30,7 +30,6 @@ namespace View
             {
                 LilstFigures = new ListOfIVolumeFigure()
             };
-
         /// <summary>
         /// Реализация интефейса при запуске
         /// </summary>
@@ -38,11 +37,6 @@ namespace View
         {
             InitializeComponent();
         }
-
-        /// <summary>
-        /// Создание List<> для хранения данных в системе и работой с ними
-        /// </summary>
-        //private List<IVolumeFigure> ListFigur = new List<IVolumeFigure>();
         /// <summary>
         /// Вызов формы для создания, редактирования или чтения фигуры
         /// </summary>
