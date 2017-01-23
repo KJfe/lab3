@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Xml.Serialization;
-namespace ValumeFigyre
+﻿namespace VolumeFigyre
 {
     /// <summary>
     /// определен набор обстрактных методов
@@ -22,13 +19,5 @@ namespace ValumeFigyre
         {
             get;
         }
-        /// <summary>
-        /// Возвращает массив входных параметров
-        /// </summary>
-        double[] Parametr
-        {
-            get;
-        }
-
     }
 }

@@ -5,7 +5,7 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using ValumeFigyre;
+using VolumeFigyre;
 
 
 namespace View

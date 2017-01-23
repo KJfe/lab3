@@ -1,27 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ValumeFigyre
+namespace VolumeFigyre
 {
     //Реализуем интерфейс шара
-    [Serializable]
     public class Sphear : IVolumeFigure
     {
         /// <summary>
         /// реализация поля
         /// </summary>
-        private double _radius;
+        private double Radius;
         /// <summary>
-        /// Конструктор класса шара, приме параметров
+        /// Конструктор класса шара
         /// </summary>
-        /// <param name="radius"></param>
-        public Sphear(double radius)
-        {         
-                _radius = radius;     
-        }
+        public Sphear() { }
         /// <summary>
         /// Реализация интерфеййса, расчет объема
         /// </summary>
@@ -29,7 +20,7 @@ namespace ValumeFigyre
         {
             get
             {
-                return Math.Round(((4 * Math.PI * Math.Pow(_radius, 3)) / 3),3);
+                return Math.Round(((4 * Math.PI * Math.Pow(Radius, 3)) / 3),3);
             }
         }
         /// <summary>
@@ -40,17 +31,6 @@ namespace ValumeFigyre
             get
             {
                 return "Sphear";
-            }
-        }
-        /// <summary>
-        /// Реализация интерфеййса, передача массива параметров
-        /// </summary>
-        public double[] Parametr
-        {
-            get
-            {
-                double[] p = { Math.Round(_radius,3) };
-                return p;
             }
         }
     }
