@@ -4,7 +4,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-namespace VolumeFigyre
+namespace Model
 {
     /// <summary>
     /// клас интерфейса IXmlSerializable, серализация и десериализация литса 
@@ -29,14 +29,14 @@ namespace VolumeFigyre
         /// <param name="reader"></param>
         public void ReadXml(XmlReader reader)
         {
-            reader.ReadStartElement("VolumeFigure");
+            reader.ReadStartElement("LilstFigures");
             while (reader.IsStartElement("IVolumeFigure"))
             {
                 Type type = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
                 XmlSerializer serial = new XmlSerializer(type);
                 reader.ReadStartElement("IVolumeFigure");
                 this.Add((IVolumeFigure)serial.Deserialize(reader));
-                reader.ReadStartElement();
+                reader.ReadEndElement();
             }
             reader.ReadEndElement();
         }

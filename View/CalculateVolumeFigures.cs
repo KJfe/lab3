@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using VolumeFigyre;
+using Model;
 
 namespace View
 {
@@ -82,7 +82,12 @@ namespace View
             double heightBox = InspectionParametr.Parametr(textBoxList[0].Text, textBoxList[0].Name);
             double widthBox = InspectionParametr.Parametr(textBoxList[1].Text, textBoxList[1].Name);
             double deepBox = InspectionParametr.Parametr(textBoxList[2].Text, textBoxList[2].Name);
-            _volumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
+            _volumeFigure = new Box
+            {
+                Height = heightBox,
+                Width = widthBox,
+                Deep = deepBox
+            };
             return _volumeFigure;
         }
         /// <summary>
@@ -93,7 +98,7 @@ namespace View
         private IVolumeFigure CalculateForSphear(BindingList<TextBox> textoxBList)
         {
             double radiusSphear = InspectionParametr.Parametr(textoxBList[0].Text, textoxBList[0].Name);
-            _volumeFigure = new Sphear(radius: radiusSphear);
+            _volumeFigure = new Sphear { Radius = radiusSphear };
             return _volumeFigure;
         }
         /// <summary>
@@ -105,7 +110,11 @@ namespace View
         {
             double areaPyramid = InspectionParametr.Parametr(textBoxList[0].Text, textBoxList[0].Name);
             double heightPyramid = InspectionParametr.Parametr(textBoxList[1].Text, textBoxList[1].Name);
-            _volumeFigure = new Pyramid(area: areaPyramid, height: heightPyramid);
+            _volumeFigure = new Pyramid
+            {
+                Area = areaPyramid,
+                Height = heightPyramid
+            };
             return _volumeFigure;
         }
 

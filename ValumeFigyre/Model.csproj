@@ -44,12 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Box.cs" />
-    <Compile Include="Figure.cs" />
+    <Compile Include="ListFigure.cs" />
+    <Compile Include="ListOfIVolumeFigure.cs" />
+    <Compile Include="main.cs" />
     <Compile Include="Pyramid.cs" />
-    <Compile Include="ReadParametr.cs" />
     <Compile Include="Sphear.cs" />
     <Compile Include="IFigure.cs" />
-    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

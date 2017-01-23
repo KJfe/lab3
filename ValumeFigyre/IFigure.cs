@@ -1,4 +1,4 @@
-﻿namespace VolumeFigyre
+﻿namespace Model
 {
     /// <summary>
     /// определен набор обстрактных методов
@@ -16,6 +16,14 @@
         /// Возвращает тип фигуры
         /// </summary>
         string TypeFigure
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Возвращает массив входных параметров
+        /// </summary>
+        double[] Parametr
         {
             get;
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VolumeFigyre
+namespace Model
 {
     //Реализуем интерфейс Параллепипеда
     public class Box : IVolumeFigure
@@ -33,6 +33,17 @@ namespace VolumeFigyre
             get
             {
                 return "Box";
+            }
+        }
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(Width, 3), Math.Round(Height, 3), Math.Round(Deep, 3) };
+                return p;
             }
         }
     }

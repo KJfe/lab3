@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VolumeFigyre
+namespace Model
 {
     //Реализуем интерфейс шара
     public class Sphear : IVolumeFigure
@@ -8,7 +8,7 @@ namespace VolumeFigyre
         /// <summary>
         /// реализация поля
         /// </summary>
-        private double Radius;
+        public double Radius;
         /// <summary>
         /// Конструктор класса шара
         /// </summary>
@@ -31,6 +31,17 @@ namespace VolumeFigyre
             get
             {
                 return "Sphear";
+            }
+        }
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(Radius, 3) };
+                return p;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VolumeFigyre
+namespace Model
 {
     //Реализуем интерфейс пирамиды
     public class Pyramid : IVolumeFigure
@@ -8,8 +8,8 @@ namespace VolumeFigyre
         /// <summary>
         /// реализация полей
         /// </summary>
-        private double Area;
-        private double Height;
+        public double Area;
+        public double Height;
         /// <summary>
         /// Конструктор класса 
         /// </summary>
@@ -33,6 +33,17 @@ namespace VolumeFigyre
             get
             {
                 return "Pyramid";
+            }
+        }
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
+        public double[] Parametr
+        {
+            get
+            {
+                double[] p = { Math.Round(Area, 3), Math.Round(Height, 3) };
+                return p;
             }
         }
     }
