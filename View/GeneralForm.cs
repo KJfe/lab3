@@ -87,9 +87,14 @@ namespace View
                     else
                     {
                         Grid.Rows.Insert(_rowIndexGrid, volumefigure.TypeFigure, volumefigure.Volume);
-                        Grid.CurrentCell = Grid.Rows[_rowIndexGrid-1].Cells[0];
+                        Grid.CurrentCell = Grid.Rows[_rowIndexGrid].Cells[0];
                     }
-                        
+                    //Grid.Rows[0].Cells[1].
+                    /*ListParametrsFigures.LilstFigures.Insert(_rowIndexGrid, volumefigure);
+                    Grid.Rows.Clear();
+                    WriteInGrid();*/
+
+
                 }
                 volumefigure = null;
             }
@@ -201,7 +206,7 @@ namespace View
         private void Random_Click(object sender, EventArgs e)
         {
 #if DEBUG
-            /*Random random = new Random();
+            Random random = new Random();
             //double randomValue;
             int maxRandom;
             int maxGridSize;
@@ -214,23 +219,32 @@ namespace View
                 {
                     case 0:
                         {
-                            Box boxVolume = new Box(height: random.NextDouble() + random.Next(0, maxRandom),
-                                width: random.NextDouble() + random.Next(0, maxRandom),
-                                deep: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(boxVolume);
+                            Box boxVolume = new Box
+                            {
+                                Height = random.NextDouble() + random.Next(0, maxRandom),
+                                Width = random.NextDouble() + random.Next(0, maxRandom),
+                                Deep = random.NextDouble() + random.Next(0, maxRandom)
+                            };
+                            ListParametrsFigures.LilstFigures.Add(boxVolume);
                             break;
                         }
                     case 1:
                         {
-                            Sphear sphearVolume = new Sphear(radius: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(sphearVolume);
+                            Sphear sphearVolume = new Sphear
+                            {
+                                Radius = random.NextDouble() + random.Next(0, maxRandom)
+                            };
+                            ListParametrsFigures.LilstFigures.Add(sphearVolume);
                             break;
                         }
                     case 2:
                         {
-                            Pyramid pyramidVolume = new Pyramid(area: random.NextDouble() + random.Next(0, maxRandom),
-                                height: random.NextDouble() + random.Next(0, maxRandom));
-                            ListFigure.Add(pyramidVolume);
+                            Pyramid pyramidVolume = new Pyramid
+                            {
+                                Area = random.NextDouble() + random.Next(0, maxRandom),
+                                Height = random.NextDouble() + random.Next(0, maxRandom)
+                            };
+                            ListParametrsFigures.LilstFigures.Add(pyramidVolume);
                             break;
                         }
                     default:
@@ -239,10 +253,10 @@ namespace View
 
             }
             Grid.Rows.Clear();
-            foreach (var figure in ListFigure)
+            foreach (var figure in ListParametrsFigures.LilstFigures)
             {
                 Grid.Rows.Add(figure.TypeFigure, figure.Volume);
-            }*/
+            }
 #endif
         }
         /// <summary>

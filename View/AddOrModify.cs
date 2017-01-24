@@ -39,6 +39,7 @@ namespace View
         private void InPut(IVolumeFigure volumefigure)
         {
             onMakeFigure(volumefigure);
+            Close();
         }
         /// <summary>
         /// Закрытие ормы
