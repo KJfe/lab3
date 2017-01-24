@@ -55,7 +55,9 @@ namespace View
         public IVolumeFigure CalculateOperaion(string nameOperation, BindingList<TextBox> textBoxList)
         {
             if (!_calculateVolume.ContainsKey(nameOperation))
+            {
                 throw new ArgumentException(string.Format("Operation {0} is invalid", nameOperation), "op");
+            }
             return _calculateVolume[nameOperation](textBoxList);
         }
         /// <summary>

@@ -30,6 +30,7 @@ namespace View
             {
                 LilstFigures = new ListOfIVolumeFigure()
             };
+
         /// <summary>
         /// Реализация интефейса при запуске
         /// </summary>
@@ -37,6 +38,7 @@ namespace View
         {
             InitializeComponent();
         }
+
         /// <summary>
         /// Вызов формы для создания, редактирования или чтения фигуры
         /// </summary>
@@ -61,6 +63,7 @@ namespace View
             FormAddOrModifyFigure.onMakeFigure += DidFinish;
             FormAddOrModifyFigure.ShowDialog();
         }
+
         /// <summary>
         /// метод срабатывающий на событи при нажатии в другой форме на Ок
         /// </summary>
@@ -87,7 +90,7 @@ namespace View
                     else
                     {
                         Grid.Rows.Insert(_rowIndexGrid, volumefigure.TypeFigure, volumefigure.Volume);
-                        Grid.CurrentCell = Grid.Rows[_rowIndexGrid].Cells[0];
+                        Grid.CurrentCell = Grid.Rows[_rowIndexGrid-1].Cells[0];
                     }
                     //Grid.Rows[0].Cells[1].
                     /*ListParametrsFigures.LilstFigures.Insert(_rowIndexGrid, volumefigure);
@@ -149,8 +152,8 @@ namespace View
             if (openDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
-            }
-            else if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length != 0)) // если существует данный файл
+            }// если существует данный файл
+            else if ((File.Exists(openDialog.FileName)) && (openDialog.FileName.Length != 0)) 
             {
                 try
                 {
