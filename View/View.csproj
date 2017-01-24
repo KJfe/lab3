@@ -52,7 +52,9 @@
     <Compile Include="AddOrModify.Designer.cs">
       <DependentUpon>AddOrModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="CalculateVolumeFigures.cs" />
     <Compile Include="CellOutOfRangeExxeption.cs" />
+    <Compile Include="CreateElementForm.cs" />
     <Compile Include="GeneralForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,7 +62,6 @@
       <DependentUpon>GeneralForm.cs</DependentUpon>
     </Compile>
     <Compile Include="General.cs" />
-    <Compile Include="IAddObjectDelegate.cs" />
     <Compile Include="InspectionParametr.cs" />
     <Compile Include="CellFormatException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,9 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ValumeFigyre\Model.csproj">

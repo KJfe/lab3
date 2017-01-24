@@ -1,47 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ValumeFigyre
+namespace Model
 {
     //Реализуем интерфейс Параллепипеда
-    public class Box : IValumeFigyre
+    public class Box : IVolumeFigure
     {
-        private double _height;
-        private double _width;
-        private double _deep;
-
-        public Box(double height, double width, double deep)
-        {
-                _height = height;
-                _width =width;
-                _deep = deep;
-        }
-
-        //Реализуем свойства интерфейса
-        public double Valume
-        {
-            get
-            {
-                return Math.Round(_height * _width * _deep,3);
-            }
-        }
-
-        public string TypeFigyre
+        /// <summary>
+        /// реализация полей
+        /// </summary>
+        public double Height;
+        public double Width;
+        public double Deep;
+        /// <summary>
+        /// крнструктор 
+        /// </summary>
+        public Box() { }
+        /// <summary>
+        /// Реализация интерфеййса, расчет объема
+        /// </summary>
+        public double Volume
         {
             get
             {
-                return "Parallepiped";
+                return Math.Round(Height * Width * Deep,3);
             }
         }
-
+        /// <summary>
+        /// Реализация интерфеййса, передача типа фигуры
+        /// </summary>
+        public string TypeFigure
+        {
+            get
+            {
+                return "Box";
+            }
+        }
+        /// <summary>
+        /// Реализация интерфеййса, передача массива параметров
+        /// </summary>
         public double[] Parametr
         {
             get
             {
-                double[] p = { Math.Round(_width,3), Math.Round(_height, 3), Math.Round(_deep, 3) };
+                double[] p = { Math.Round(Width, 3), Math.Round(Height, 3), Math.Round(Deep, 3) };
                 return p;
             }
         }

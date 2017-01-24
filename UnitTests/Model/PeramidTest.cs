@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValumeFigyre;
+using Model;
 using NUnit.Framework;
 
 namespace UnitTests.Model
@@ -21,7 +21,7 @@ namespace UnitTests.Model
         public double VolumeTest(double area, double height)
         {
             Pyramid ValumePyramid = new Pyramid(area, height);
-            return ValumePyramid.Valume;
+            return ValumePyramid.Volume;
         }
     }
 }

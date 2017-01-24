@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValumeFigyre;
+using Model;
 using NUnit.Framework;
 
 namespace UnitTests.ValumeFigyre
@@ -24,7 +24,7 @@ namespace UnitTests.ValumeFigyre
         public double VolumeTest(double height, double width, double deep)
         {
             Box ValumeBox = new Box(height, width, deep);
-            return ValumeBox.Valume;
+            return ValumeBox.Volume;
         }
         
     }

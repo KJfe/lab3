@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D5B2E53A-8768-4A26-A9C6-972C8A0ABD9D}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ValumeFigyre</RootNamespace>
     <AssemblyName>ValumeFigyre</AssemblyName>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,11 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Box.cs" />
+    <Compile Include="ListFigure.cs" />
+    <Compile Include="ListOfIVolumeFigure.cs" />
     <Compile Include="Pyramid.cs" />
-    <Compile Include="ReadParametr.cs" />
     <Compile Include="Sphear.cs" />
-    <Compile Include="IFigyre.cs" />
-    <Compile Include="Main.cs" />
+    <Compile Include="IFigure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

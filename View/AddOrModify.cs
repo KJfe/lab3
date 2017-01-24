@@ -7,23 +7,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ValumeFigyre;
+using Model;
 
 namespace View
 {
     public partial class AddOrModify : Form
     {
-        public IAddObjectDelegate Delegate { get; set; }
-        public AddOrModify(bool ModifyOrCreate, IValumeFigyre ModifyFigure)
+        /// <summary>
+        /// Создаем свое событие, что бы передать параметр по нажатию на кнопку Ок
+        /// </summary>
+        /// <param name="IVolumeFigure"></param>
+        public delegate void CalculateVolumeFigure(IVolumeFigure IVolumeFigure);
+        public event CalculateVolumeFigure onMakeFigure;
+        /// <summary>
+        /// инициализация конструктора и входных параметров
+        /// </summary>
+        /// <param name="ModifyOrCreate"></param>
+        /// <param name="ModifyFigure"></param>
+        public AddOrModify(bool ModifyOrCreate, IVolumeFigure ModifyFigure)
         {
             InitializeComponent();
-            objectControl1.ReadOnly = ModifyOrCreate;
-            objectControl1.Object = ModifyFigure;
+            objectControlForFigure.ReadOnly = ModifyOrCreate;
+            objectControlForFigure.ObjectFigur = ModifyFigure;
+            objectControlForFigure.onCalculateVolume += InPut;
         }
-
+        /// <summary>
+        /// метод для передачи параметров фигуры в основное окно
+        /// (вызов событи и передача ему параметров)
+        /// </summary>
+        /// <param name="volumefigure"></param>
+        private void InPut(IVolumeFigure volumefigure)
+        {
+            onMakeFigure(volumefigure);
+            Close();
+        }
+        /// <summary>
+        /// Закрытие ормы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Close_Click(object sender, EventArgs e)
         {
-            Delegate.DidFinish(objectControl1.Object);
             Close();
         }
     }

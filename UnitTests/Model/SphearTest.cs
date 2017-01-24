@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValumeFigyre;
+using Model;
 using NUnit.Framework;
 
 namespace UnitTests.Model
@@ -21,7 +21,7 @@ namespace UnitTests.Model
         public double VolumeTest(double radius)
         {
             Sphear ValumeSphear = new Sphear(radius);
-            return ValumeSphear.Valume;
+            return ValumeSphear.Volume;
         }
        
     }

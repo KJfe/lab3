@@ -1,165 +1,126 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
-using ValumeFigyre;
+using Model;
 
 namespace View
 {
+    /// <summary>
+    /// Список Фигур
+    /// </summary>
     enum Figures : int
     {
         Box = 0,
         Sphear = 1,
         Pyramid = 2
     };
+
     public partial class ObjectControl : UserControl
     {
+        /// <summary>
+        /// создание события для передачи параметров в форму
+        /// </summary>
+        /// <param name="IVolumeFigure"></param>
+        public delegate void CalculateVolumeFigure(IVolumeFigure IVolumeFigure);
+        public event CalculateVolumeFigure onCalculateVolume;
+
+        /// <summary>
+        /// Реализация полей
+        /// </summary>
+        private bool _readOnly;
+        private IVolumeFigure _volumeFigure;
+        /// <summary>
+        /// Реализация UserControl (праметр формы)
+        /// </summary>
         public ObjectControl()
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// объявление Подписей к TextBox
+        /// </summary>
+        private BindingList<Label> labelList = new BindingList<Label>();
+        /// <summary>
+        /// Объявление подписй к Label
+        /// </summary>
+        private BindingList<TextBox> textBoxList = new BindingList<TextBox>();
 
-        private IValumeFigyre _VolumeFigure;
-        public IValumeFigyre Object
+        /// <summary>
+        /// Метод принимающий/отправляющий данные
+        /// </summary>
+        public IVolumeFigure ObjectFigur
         {
             get
             {
-                return _VolumeFigure;
+                return _volumeFigure;
             }
             set
             {
-                _VolumeFigure = value;
-                if (_VolumeFigure == null)
+                _volumeFigure = value;
+                if (_volumeFigure == null|| value.TypeFigure == "")
                     return;
-                if (value.TypeFigyre == "Sphear")
-                { 
-                    Width.Text = value.Parametr[0].ToString();
-                    Height.Text = "";
-                    Deep.Text = "";
-                    Width.Visible = true;
-                    Height.Visible = false;
-                    Deep.Visible = false;
-                    cbTypeFigure.SelectedIndex = 1;
-                }
-                else if (value.TypeFigyre == "Parallepiped")
-                {    
-                    Width.Text = value.Parametr[0].ToString();
-                    Height.Text = value.Parametr[1].ToString();
-                    Deep.Text = value.Parametr[2].ToString();
-                    Width.Visible = true;
-                    Height.Visible = true;
-                    Deep.Visible = true;
-                    cbTypeFigure.SelectedIndex = 0;
-                }
-                else
-                {                   
-                    Width.Text = value.Parametr[0].ToString();
-                    Height.Text = value.Parametr[1].ToString();
-                    Deep.Text = "";
-                    Width.Visible = true;
-                    Height.Visible = true;
-                    Deep.Visible = false;
-                    cbTypeFigure.SelectedIndex = 2;
-                }
+                Figures typeFigur = (Figures) Enum.Parse(typeof(Figures), value.TypeFigure);
+                cbTypeFigure.SelectedIndex = Convert.ToInt32(typeFigur);
             }
         }
-
-        private bool _ReadOnly;
+        /// <summary>
+        /// Метод разрешающий/запрещающий редактировать параметры
+        /// </summary>
         public bool ReadOnly
         {
             get
             {
-                return _ReadOnly;
+                return _readOnly;
             }
             set
             {
-                _ReadOnly = value;
-                Width.Enabled = !value;
-                Height.Enabled = !value;
-                Deep.Enabled = !value;
+                _readOnly = !value;
+                cbTypeFigure.Enabled = !value;
+                Ok.Enabled = !value;
             }
         }
 
+        /// <summary>
+        /// Выбор необходимый тип фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void cbTypeFigure_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch ((Figures)cbTypeFigure.SelectedIndex)
+            List<ControlCollection> listContol = new List<ControlCollection>();
+            var create = new CreateElementForm();
+            listContol.Add(Controls);
+            listContol.Add(groupBox1.Controls);
+            try
             {
-                case Figures.Box:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Width";
-                        labelHeight.Visible = true;
-                        Height.Visible = true;
-                        labelDeep.Visible = true;
-                        Deep.Visible = true;
-                        break;
-                    }
-                case Figures.Sphear:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Radius";
-                        labelHeight.Visible = false;
-                        Height.Visible = false;
-                        labelDeep.Visible = false;
-                        Deep.Visible = false;
-                        break;
-                    }
-                case Figures.Pyramid:
-                    {
-                        labelWidth.Visible = true;
-                        Width.Visible = true;
-                        labelWidth.Text = "Area";
-                        labelHeight.Visible = true;
-                        Height.Visible = true;
-                        labelDeep.Visible = false;
-                        Deep.Visible = false;
-                        break;
-                    }
-                default:
-                    break;
+                textBoxList = create.CreatingTextBox(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList, listContol, _readOnly);
+                labelList = create.CreateLabel(((Figures)cbTypeFigure.SelectedIndex).ToString(), labelList, listContol);
+                if (_volumeFigure!=null)
+                {
+                    var calculateVolume = new CalculateVolumeFigures();
+                    calculateVolume.WriteOperation(_volumeFigure.TypeFigure, textBoxList, _volumeFigure);
+                }
             }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("The size of the parameters of the first figure more than necessary", "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            
         }
-
-        private void SelectionFigyre()
-        {
-            IValumeFigyre VolumeFigure = null;
-            switch ((Figures)cbTypeFigure.SelectedIndex)
-            {
-                case Figures.Box:
-                    {
-                        double heightBox = InspectionParametr.Parametr(Height.Text, Height.Name);
-                        double widthBox = InspectionParametr.Parametr(Width.Text, Width.Name);
-                        double deepBox = InspectionParametr.Parametr(Deep.Text, Deep.Name);
-                        VolumeFigure = new Box(height: heightBox, width: widthBox, deep: deepBox);
-                        break;
-                    }
-                case Figures.Sphear:
-                    {
-                        double radiusSphear = InspectionParametr.Parametr(Width.Text, "Radius");
-                        VolumeFigure = new Sphear(radius: radiusSphear);
-                        break;
-                    }
-
-                case Figures.Pyramid:
-                    {
-                        double heightPyramid = InspectionParametr.Parametr(Height.Text, Height.Name);
-                        double areaPyramid = InspectionParametr.Parametr(Width.Text, "Area");
-                        VolumeFigure = new Pyramid(height: heightPyramid, area: areaPyramid);
-                        break;
-                    }
-            }
-            if (VolumeFigure != null)
-            {
-                VolumeFigureText.Text = Convert.ToString(VolumeFigure.Valume);                
-                Object= VolumeFigure;
-            }
-        }
-
+        
+        /// <summary>
+        /// проверка при расчете объема фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Ok_Click(object sender, EventArgs e)
         {
             try
             {
                 SelectionFigyre();
+                onCalculateVolume(_volumeFigure);
             }
             catch (CellOutOfRangeExxeption cellOutOfRangeExxeption)
             {
@@ -169,7 +130,27 @@ namespace View
             {
                 MessageBox.Show(cellFormatError.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("System error: 3");
+            }
         }
-
+        /// <summary>
+        /// расчет объема фигуры
+        /// </summary>
+        private void SelectionFigyre()
+        {
+            IVolumeFigure VolumeFigure = null;
+            if (textBoxList != null)
+            {
+                var calculateVolume = new CalculateVolumeFigures();
+                VolumeFigure = calculateVolume.CalculateOperaion(((Figures)cbTypeFigure.SelectedIndex).ToString(), textBoxList);
+                if (VolumeFigure != null)
+                {
+                    VolumeFigureText.Text = Convert.ToString(VolumeFigure.Volume);
+                    _volumeFigure = VolumeFigure;
+                }
+            }
+        }
     }
 }

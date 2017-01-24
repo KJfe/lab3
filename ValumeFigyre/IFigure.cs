@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ValumeFigyre
+﻿namespace Model
 {
-    //Определен набор обстрактных методов
-    public interface IValumeFigyre
+    /// <summary>
+    /// определен набор обстрактных методов
+    /// </summary>
+    public interface IVolumeFigure
     {
         /// <summary>
         /// Возвращает Объем фигуры
         /// </summary>
-        double Valume
+        double Volume
         {
             get;
         }
         /// <summary>
         /// Возвращает тип фигуры
         /// </summary>
-        string TypeFigyre
+        string TypeFigure
         {
             get;
         }
+
         /// <summary>
         /// Возвращает массив входных параметров
         /// </summary>
@@ -30,6 +27,5 @@ namespace ValumeFigyre
         {
             get;
         }
-
     }
 }
